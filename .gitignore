@@ -4,3 +4,4 @@ test-results/
 playwright-report/
 .dev.vars
 _to_delete/
+dist/

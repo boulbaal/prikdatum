@@ -3,10 +3,11 @@
   "private": true,
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler deploy",
+    "deploy": "node tools/deploy.mjs",
     "db:local": "wrangler d1 execute prikdatum --local --file=schema.sql",
     "db:remote": "wrangler d1 execute prikdatum --remote --file=schema.sql",
-    "test": "playwright test"
+    "test": "playwright test",
+    "deploy:dirty": "node tools/deploy.mjs --allow-dirty"
   },
   "devDependencies": {
     "wrangler": "^4",

@@ -281,7 +281,7 @@ test.describe("Scenario's", () => {
     // Ali alleen kan op beide -> iedereen (1 van 1) -> GROEN, tie
     await expect(ali.locator('.status .balk')).toHaveClass(/groen/);
     await expect(ali.locator('.status .groot')).toHaveText('Meerdere dagen lukken voor iedereen');
-    await expect(ali.locator('.status .sub')).toHaveText('1 van 1 kunnen op elk van deze:');
+    await expect(ali.locator('.status .sub')).toHaveText('1 van 1 kan op elk van deze:');
 
     /* ---------- S2: Sofie komt binnen, ziet de namen en typt haar eigen ---------- */
     const sofieCtx = await browser.newContext(ctxOpties(testInfo));
@@ -456,7 +456,7 @@ test.describe("Scenario's", () => {
     await dag(page, D1).click();
     await expect(page.locator('.status .balk')).toHaveClass(/oranje/);
     await expect(page.locator('.status .groot')).toHaveText(/Beste dag tot nu: vr 9 okt/);
-    await expect(page.locator('.status .sub')).toHaveText('1 van 3 kunnen');
+    await expect(page.locator('.status .sub')).toHaveText('1 van 3 kan');
 
     // Ridwane en Ilyas kunnen ook op 9 okt -> 3 van 3 -> GROEN
     const o9 = (await (await request.get('/api/polls/' + id)).json()).options.find((x) => x.date === D1).id;
@@ -555,6 +555,92 @@ test.describe("Scenario's", () => {
     await ctx.close();
   });
 
+  test('S16 taaldetectie: browsertaal bepaalt de taal, onbekend -> Engels', async ({ browser }, testInfo) => {
+    // Duits
+    let ctx = await browser.newContext(ctxOpties(testInfo, { locale: 'de-DE' }));
+    let page = await ctx.newPage();
+    await page.goto('/');
+    await expect(page.locator('h1')).toHaveText('Wann treffen wir uns?');
+    expect(await page.evaluate(() => document.documentElement.lang)).toBe('de');
+    await ctx.close();
+    // Japans
+    ctx = await browser.newContext(ctxOpties(testInfo, { locale: 'ja-JP' }));
+    page = await ctx.newPage();
+    await page.goto('/');
+    await expect(page.locator('h1')).toHaveText('いつ会いましょう？');
+    await ctx.close();
+    // onbekende taal -> Engels, links-naar-rechts
+    ctx = await browser.newContext(ctxOpties(testInfo, { locale: 'is-IS' }));
+    page = await ctx.newPage();
+    await page.goto('/');
+    await expect(page.locator('h1')).toHaveText('When shall we meet?');
+    expect(await page.evaluate(() => document.documentElement.dir)).toBe('ltr');
+    await ctx.close();
+  });
+
+  test('S17 Arabisch: rechts-naar-links, weekstart zaterdag, één letter per weekdag', async ({ browser, request }, testInfo) => {
+    const { id } = await apiMaakPoll(request, {
+      title: 'عشاء', name: 'علي', options: [{ date: D1, time: T1 }],
+    });
+    const ctx = await browser.newContext(ctxOpties(testInfo, { locale: 'ar-EG' }));
+    const page = await ctx.newPage();
+    await page.goto('/p/' + id);
+    await expect(page.locator('h1')).toHaveText('عشاء');
+    expect(await page.evaluate(() => document.documentElement.dir)).toBe('rtl');
+    expect(await page.evaluate(() => document.documentElement.lang)).toBe('ar');
+    await expect(page.locator('#kalhint')).toHaveText('أدخل اسمك أولاً لتحديد الأيام.');
+    // Egypte: de week begint op zaterdag; korte weekdag = één letter
+    const kop = await page.locator('.maandblok').first().locator('.kalwd').allTextContents();
+    expect(kop.length).toBe(7);
+    expect(kop[0]).toBe('س'); // zaterdag
+    expect(kop.every((w) => w.length <= 2)).toBe(true);
+    // Latijnse cijfers in de datum (raster en tijd zijn dat ook)
+    await expect(page.locator('.status .groot')).toContainText('9');
+    await ctx.close();
+  });
+
+  test('S18 en-US: week begint op zondag, 12-uursklok, maand-dag volgorde', async ({ browser, request }, testInfo) => {
+    const { id } = await apiMaakPoll(request, {
+      title: 'Dinner', name: 'Ali', options: [{ date: D1, time: T1 }],
+    });
+    const ctx = await browser.newContext(ctxOpties(testInfo, { locale: 'en-US' }));
+    const page = await ctx.newPage();
+    await page.goto('/p/' + id);
+    await expect(page.locator('.status .groot')).toHaveText(/Fri, Oct 9 at 6:00 PM/);
+    const kop = await page.locator('.maandblok').first().locator('.kalwd').allTextContents();
+    expect(kop[0]).toBe('Sun');
+    expect(kop[6]).toBe('Sat');
+    // 1 oktober 2026 is een donderdag: bij zondagstart 4 lege cellen ervoor
+    await toonMaand(page, MAAND);
+    const leeg = await page.locator('.maandblok').first().locator('.dag.leeg').count();
+    expect(leeg).toBe(4);
+    await ctx.close();
+  });
+
+  test('S19 taalmenu: 20 talen, sluit met Escape en met een klik erbuiten', async ({ browser }, testInfo) => {
+    const ctx = await browser.newContext(ctxOpties(testInfo));
+    const page = await ctx.newPage();
+    await page.goto('/');
+    await page.locator('#vlag').click();
+    await expect(page.locator('#talen')).toBeVisible();
+    expect(await page.locator('#talen button').count()).toBe(20);
+    await expect(page.locator('#vlag')).toHaveAttribute('aria-expanded', 'true');
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#talen')).toBeHidden();
+    await page.locator('#vlag').click();
+    await expect(page.locator('#talen')).toBeVisible();
+    await page.mouse.click(4, 4); // buiten het menu
+    await expect(page.locator('#talen')).toBeHidden();
+    // kiezen: Hindi
+    await page.locator('#vlag').click();
+    await page.locator('#talen button', { hasText: 'हिन्दी' }).click();
+    await expect(page.locator('h1')).toHaveText('हम कब मिलें?');
+    await expect(page.locator('#vlag')).toContainText('HI');
+    await page.reload();
+    await expect(page.locator('h1')).toHaveText('हम कब मिलें?');
+    await ctx.close();
+  });
+
   test('S12 mobiel 360x740: geen horizontale scroll, knoppen >= 44px', async ({ browser, request }, testInfo) => {
     test.skip(!testInfo.project.use.viewport || testInfo.project.use.viewport.width !== 360,
       'alleen op het mobiele project');
@@ -596,6 +682,25 @@ test.describe('Statisch', () => {
       const treffers = html.split(woord).length - 1;
       expect(treffers, `"${woord}" moet precies 1x voorkomen (in STRINGS)`).toBe(1);
     }
+  });
+
+  test('alle 20 talen hebben alle sleutels, met dezelfde plaatshouders', () => {
+    const V = new Function('return ' + /const VERTALINGEN = (\{[\s\S]*?\n\});/.exec(html)[1])();
+    const T = new Function('return ' + /const TALEN = (\{[\s\S]*?\n\});/.exec(html)[1])();
+    expect(Object.keys(T).length).toBe(20);
+    const sleutels = Object.keys(V.en);
+    expect(sleutels.length).toBeGreaterThan(60);
+    const ph = (x) => [...new Set(((typeof x === 'string' ? x : Object.values(x).join(' ')).match(/\{\w+\}/g) || []))].sort().join();
+    for (const l of Object.keys(T)) {
+      expect(V[l], 'taal ' + l).toBeTruthy();
+      for (const k of sleutels) {
+        expect(V[l][k], l + ':' + k).toBeTruthy();
+        expect(ph(V[l][k]), l + ':' + k + ' plaatshouders').toBe(ph(V.en[k]));
+      }
+    }
+    // RTL-talen gemarkeerd
+    expect(T.ar.rtl).toBe(true);
+    expect(T.ur.rtl).toBe(true);
   });
 
   test('wrangler deploy --dry-run slaagt', ({}, testInfo) => {

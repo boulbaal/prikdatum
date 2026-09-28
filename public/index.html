@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="nl">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Whenly</title>
-<meta name="description" content="Prik samen een datum met vrienden. Zonder account, zonder gedoe.">
+<meta name="description" content="Pick a date together with friends, family or colleagues. No account, no fuss, free forever. Available in 20 languages.">
 <meta name="theme-color" content="#2F8F5B">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/favicon.png" type="image/png">
@@ -15,13 +15,16 @@
 <meta name="apple-mobile-web-app-title" content="Whenly">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Whenly">
-<meta property="og:title" content="Whenly — prik samen een datum">
-<meta property="og:description" content="Zonder account, zonder gedoe. Klik de dagen aan die lukken en deel de link.">
+<meta property="og:title" content="Whenly · pick a date together">
+<meta property="og:description" content="No account, no fuss. Tap the days that work and share the link. Free forever.">
 <meta property="og:image" content="https://whenly.vanali.workers.dev/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Whenly: pick a date together">
 <meta property="og:url" content="https://whenly.vanali.workers.dev/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Whenly — prik samen een datum">
-<meta name="twitter:description" content="Zonder account, zonder gedoe. Klik de dagen aan die lukken en deel de link.">
+<meta name="twitter:title" content="Whenly · pick a date together">
+<meta name="twitter:description" content="No account, no fuss. Tap the days that work and share the link. Free forever.">
 <meta name="twitter:image" content="https://whenly.vanali.workers.dev/og.png">
 <style>
   :root {
@@ -113,35 +116,51 @@
   /* vlaggetje */
   .kop { display: flex; align-items: flex-start; position: relative; min-height: 44px; }
   #vlag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     background: none;
-    padding: 0;
-    width: 44px;
+    padding: 0 8px 0 0;
     height: 44px;
     min-height: 44px;
-    font-size: 24px;
-    line-height: 44px;
-    text-align: left;
+    color: var(--tekst);
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .02em;
   }
+  #vlag svg { color: var(--groen); }
   #talen {
     position: absolute;
     top: 46px;
-    left: 0;
+    inset-inline-start: 0;
     background: #fff;
     border: 1px solid var(--lijn);
-    border-radius: 8px;
-    padding: 4px;
+    border-radius: 10px;
+    padding: 6px;
     z-index: 5;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    min-width: 300px;
+    max-width: calc(100vw - 32px);
+    max-height: min(70vh, 520px);
+    overflow-y: auto;
+    box-shadow: 0 6px 20px rgba(31, 41, 51, .10);
   }
   #talen button {
     display: block;
     width: 100%;
-    text-align: left;
+    text-align: start;
     background: none;
     color: var(--tekst);
     font-weight: 400;
-    padding: 10px 14px;
+    font-size: 15px;
+    padding: 10px 12px;
     white-space: nowrap;
+    border-radius: 8px;
   }
+  #talen button:hover { background: var(--lichtgroen); }
+  #talen button.actief { background: var(--lichtgroen); font-weight: 600; }
 
   /* deelbalk */
   .deel {
@@ -171,22 +190,22 @@
   .status .balk.oranje .groot { color: var(--oranje); }
   .status .balk.rood   { background: var(--lichtrood); }
   .status .balk.rood   .groot { color: var(--rood); }
-  .status .balk.definitief { border-left: 3px solid var(--groen); }
+  .status .balk.definitief { border-inline-start: 3px solid var(--groen); }
   .status .groot { font-size: 20px; font-weight: 600; color: var(--groen); }
   .status .sub { font-size: 14px; color: var(--gedempt); margin-top: 2px; }
   .status .stil { color: var(--gedempt); }
   .status .rijtje { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 6px; }
   .status .knopzone { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
-  .status input[type="time"] { width: 96px; padding: 8px; min-height: 44px; font-size: 15px; }
+  .status input[type="time"] { width: auto; min-width: 7.5em; max-width: 100%; padding: 8px; min-height: 44px; font-size: 15px; }
   .namenlijn { font-size: 14px; color: var(--gedempt); margin-top: 2px; }
 
   /* stipjes en vinkjes per persoon */
-  .stip { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: baseline; }
-  .naampje { display: inline-flex; align-items: center; margin-right: 10px; white-space: nowrap; }
+  .stip { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-inline-end: 5px; vertical-align: baseline; }
+  .naampje { display: inline-flex; align-items: center; margin-inline-end: 10px; white-space: nowrap; }
 
   /* wie ben je + gekleurde naamchips */
   .wie { font-size: 15px; margin: 16px 0 0; }
-  .wie b { font-weight: 600; }
+  .wie b { font-weight: 600; unicode-bidi: isolate; }
   .wie button.sec { padding: 4px 6px; min-height: 44px; font-size: 14px; }
   .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
   .chip {
@@ -201,7 +220,9 @@
     padding: 8px 14px;
     min-height: 44px;
   }
-  .chip .stip { margin-right: 0; }
+  .chip .stip { margin-inline-end: 0; }
+  .chip { max-width: 100%; }
+  .chip bdi { overflow-wrap: anywhere; }
   .chip.ik { border-color: var(--groen); background: var(--lichtgroen); font-weight: 600; }
   .nieuw { display: flex; gap: 8px; margin-top: 8px; }
 
@@ -215,7 +236,7 @@
   .maandblok { flex: 1 1 240px; min-width: 0; }
   .maandnaam { font-weight: 600; text-align: center; margin-bottom: 4px; }
   .kalgrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
-  .kalwd { font-size: 12px; color: var(--gedempt); text-align: center; padding: 2px 0; }
+  .kalwd { font-size: 12px; color: var(--gedempt); text-align: center; padding: 2px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .dag {
     min-height: 50px;
     border: 1px solid var(--lijn);
@@ -236,6 +257,8 @@
   .dag.optie { border-color: var(--groen); }
   .dag.mijn { background: var(--lichtgroen); border-color: var(--groen); font-weight: 600; }
   .dag.definitief { box-shadow: inset 3px 0 0 var(--groen); }
+  [dir="rtl"] .dag.definitief { box-shadow: inset -3px 0 0 var(--groen); }
+  [dir="rtl"] .kalkop button { transform: scaleX(-1); }
   .ddots { display: flex; align-items: center; justify-content: center; gap: 3px; min-height: 12px; flex-wrap: wrap; }
   .ddot { width: 7px; height: 7px; border-radius: 50%; }
   .dvink { font-size: 11px; font-weight: 700; line-height: 1; }
@@ -254,7 +277,7 @@
     padding: 8px 0;
     text-decoration: underline;
   }
-  .weg .bevestig button { margin-right: 8px; text-decoration: none; }
+  .weg .bevestig button { margin-inline-end: 8px; text-decoration: none; }
   .weg .bevestig button.ja { color: var(--rood); }
 
   .bezoek {
@@ -268,6 +291,17 @@
     color: var(--gedempt);
   }
   .verborgen { display: none !important; }
+
+  /* lettertypen per schrift (systeemfonts, niets extern) */
+  :lang(ar), :lang(ur) { font-family: "Segoe UI", "Noto Naskh Arabic", "Noto Sans Arabic", "Geeza Pro", Tahoma, Arial, sans-serif; }
+  :lang(ur) { line-height: 1.8; }
+  :lang(hi) { font-family: "Nirmala UI", "Noto Sans Devanagari", "Kohinoor Devanagari", Mangal, Arial, sans-serif; }
+  :lang(bn) { font-family: "Nirmala UI", "Noto Sans Bengali", "Kohinoor Bangla", Vrinda, Arial, sans-serif; }
+  :lang(zh) { font-family: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", sans-serif; }
+  :lang(ja) { font-family: -apple-system, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", Meiryo, "Noto Sans CJK JP", "Noto Sans JP", sans-serif; }
+  :lang(ko) { font-family: -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans CJK KR", "Noto Sans KR", sans-serif; }
+  :lang(ar) .dmeer, :lang(ur) .dmeer, :lang(hi) .dmeer, :lang(bn) .dmeer { font-size: 11px; }
+  :lang(ur) .dag, :lang(ar) .dag { line-height: 1.4; }
 
   /* boodschapsbalken (update / installeren) bovenaan */
   .melding {
@@ -338,7 +372,7 @@
   <div class="melding install verborgen" id="installBar">
     <span class="tekst" id="installTekst"></span>
     <button class="klein" id="installBtn" type="button"></button>
-    <button class="sluit" id="installSluit" type="button" aria-label="sluiten">×</button>
+    <button class="sluit" id="installSluit" type="button" aria-label="Close">×</button>
   </div>
   <div class="kop">
     <button id="vlag" type="button"></button>
@@ -354,76 +388,1416 @@
 <script>
 'use strict';
 
-/* ---------- vertalingen: alle tekst staat hier en nergens anders ---------- */
-const STRINGS = {
-  'make.title':        { nl: 'Wanneer spreken we af?', en: 'When shall we meet?', fr: 'Quand se voit-on ?' },
-  'make.tagline':      { nl: 'Prik samen een datum. Zonder account, zonder gedoe.', en: 'Pick a date together. No account, no fuss.', fr: 'Trouvez une date ensemble. Sans compte, sans tracas.' },
-  'make.what':         { nl: 'Waarover gaat het?', en: 'What is it about?', fr: "De quoi s'agit-il ?" },
-  'make.what.ph':      { nl: 'bv. Etentje, padel, weekend aan zee', en: 'e.g. Dinner, padel, weekend at the coast', fr: 'p.ex. Dîner, padel, week-end à la mer' },
-  'make.name':         { nl: 'Je naam', en: 'Your name', fr: 'Ton prénom' },
-  'make.name.ph':      { nl: 'bv. Ali', en: 'e.g. Ali', fr: 'p.ex. Ali' },
-  'make.submit':       { nl: 'Maak de afspraak', en: 'Create the poll', fr: 'Créer le rendez-vous' },
-  'share.ready':       { nl: 'Klaar. Deel deze link:', en: 'Done. Share this link:', fr: "C'est prêt. Partage ce lien :" },
-  'share.copy':        { nl: 'Kopieer', en: 'Copy', fr: 'Copier' },
-  'share.copied':      { nl: 'Gekopieerd', en: 'Copied', fr: 'Copié' },
-  'share.button':      { nl: 'Deel', en: 'Share', fr: 'Partager' },
-  'legend.you':        { nl: 'jij kan', en: 'you can', fr: 'toi' },
-  'legend.other':      { nl: 'iemand anders kan', en: 'someone else can', fr: "quelqu'un d'autre" },
-  'update.text':       { nl: 'Er is een nieuwe versie van Whenly.', en: 'A new version of Whenly is available.', fr: 'Une nouvelle version de Whenly est disponible.' },
-  'update.button':     { nl: 'Updaten', en: 'Update', fr: 'Mettre à jour' },
-  'install.text':      { nl: 'Zet Whenly op je beginscherm, als een app.', en: 'Add Whenly to your home screen, like an app.', fr: "Ajoute Whenly à ton écran d'accueil, comme une appli." },
-  'install.button':    { nl: 'Installeren', en: 'Install', fr: 'Installer' },
-  'install.ios':       { nl: 'Tik op  ⬆  (Deel) en dan “Zet op beginscherm”.', en: 'Tap  ⬆  (Share), then “Add to Home Screen”.', fr: 'Touche  ⬆  (Partager), puis « Sur l’écran d’accueil ».' },
-  'title.edit':        { nl: 'titel aanpassen', en: 'edit title', fr: 'modifier le titre' },
-  'title.save':        { nl: 'Bewaar', en: 'Save', fr: 'Enregistrer' },
-  'poll.nameFirst':    { nl: 'Vul eerst je naam in om aan te klikken.', en: 'Enter your name first to start ticking.', fr: "Indique d'abord ton prénom pour cocher." },
-  'poll.next':         { nl: 'Verder', en: 'Continue', fr: 'Continuer' },
-  'pick.who':          { nl: 'Ben je een van hen? Klik je naam aan:', en: 'Are you one of them? Click your name:', fr: "Es-tu l'un d'eux ? Clique sur ton prénom :" },
-  'visits':            { nl: 'Aantal bezocht: {n}', en: 'Times visited: {n}', fr: 'Nombre de visites : {n}' },
-  'cal.hint':          { nl: 'Klik de dagen aan die voor jou lukken', en: 'Click the days that work for you', fr: 'Clique sur les jours qui te conviennent' },
-  'cal.prev':          { nl: 'Vorige maand', en: 'Previous month', fr: 'Mois précédent' },
-  'cal.next':          { nl: 'Volgende maand', en: 'Next month', fr: 'Mois suivant' },
-  'cal.actAs':         { nl: 'Jij klikt aan als', en: 'You are ticking as', fr: 'Tu coches en tant que' },
-  'cal.switch':        { nl: 'iemand anders invullen', en: 'fill in for someone else', fr: "remplir pour quelqu'un d'autre" },
-  'cal.newName.ph':    { nl: 'of typ een nieuwe naam', en: 'or type a new name', fr: 'ou tape un nouveau prénom' },
-  'time.label':        { nl: 'Uur (optioneel, iedereen mag dit aanpassen)', en: 'Time (optional, anyone can change it)', fr: "Heure (optionnelle, modifiable par tous)" },
-  'poll.nobody':       { nl: 'nog niemand', en: 'nobody yet', fr: "personne pour l'instant" },
-  'poll.you':          { nl: 'jij', en: 'you', fr: 'toi' },
-  'poll.at':           { nl: 'om {time}', en: 'at {time}', fr: 'à {time}' },
-  'poll.leave':        { nl: 'Haal {name} weg uit deze afspraak', en: 'Remove {name} from this poll', fr: 'Retirer {name} de ce rendez-vous' },
-  'poll.leaveYes':     { nl: 'Ja, haal {name} weg', en: 'Yes, remove {name}', fr: 'Oui, retirer {name}' },
-  'poll.leaveNo':      { nl: 'Toch niet', en: 'Never mind', fr: 'Finalement non' },
-  'status.none':       { nl: 'Nog geen datum. Klik je dagen aan.', en: 'No date yet. Click your days.', fr: 'Pas encore de date. Coche tes jours.' },
-  'status.almost':     { nl: 'Beste dag tot nu: {date}', en: 'Best day so far: {date}', fr: "Meilleur jour jusqu'ici : {date}" },
-  'status.everyone':   { nl: 'Iedereen kan op {date}', en: 'Everyone can make {date}', fr: 'Tout le monde peut le {date}' },
-  'status.count':      { nl: '{n} van {total} kunnen', en: '{n} of {total} can make it', fr: '{n} sur {total} peuvent' },
-  'status.tie':        { nl: 'Meerdere dagen lopen voorop', en: 'Several days are leading', fr: 'Plusieurs jours en tête' },
-  'status.tieEveryone':{ nl: 'Meerdere dagen lukken voor iedereen', en: 'Several days work for everyone', fr: 'Plusieurs jours conviennent à tous' },
-  'status.tieCount':   { nl: '{n} van {total} kunnen op elk van deze:', en: '{n} of {total} can make each of these:', fr: '{n} sur {total} peuvent à chacune de ces dates :' },
-  'status.pick':       { nl: 'Deze nemen', en: 'Pick this one', fr: 'Choisir celle-ci' },
-  'status.fix':        { nl: 'Vastleggen', en: 'Lock it in', fr: 'Confirmer' },
-  'status.final':      { nl: 'Afgesproken: {date}', en: 'Agreed: {date}', fr: "C'est fixé : {date}" },
-  'status.unfix':      { nl: 'Toch niet', en: 'Undo', fr: 'Annuler' },
-  'err.save':          { nl: 'Kon niet opslaan. Probeer opnieuw.', en: "Couldn't save. Try again.", fr: "Impossible d'enregistrer. Réessaie." },
-  'err.duplicate_option': { nl: 'Die datum staat er al.', en: 'That date is already listed.', fr: 'Cette date existe déjà.' },
-  'err.option_in_use': { nl: 'Iemand anders heeft deze datum aangeklikt.', en: 'Someone else ticked this date.', fr: "Quelqu'un d'autre a coché cette date." },
-  'err.title_required': { nl: 'Vul in waarover het gaat.', en: "Say what it's about.", fr: "Indique de quoi il s'agit." },
-  'err.name_required': { nl: 'Vul je naam in.', en: 'Enter your name.', fr: 'Indique ton prénom.' },
-  'err.invalid_date':  { nl: 'Kies minstens één datum.', en: 'Pick at least one date.', fr: 'Choisis au moins une date.' },
-  'err.limit_reached': { nl: 'Deze afspraak zit vol.', en: 'This poll is full.', fr: 'Ce rendez-vous est complet.' },
-  'err.generic':       { nl: 'Er ging iets mis. Probeer opnieuw.', en: 'Something went wrong. Try again.', fr: 'Quelque chose a raté. Réessaie.' },
-  'notfound.title':    { nl: 'Deze afspraak bestaat niet', en: "This poll doesn't exist", fr: "Ce rendez-vous n'existe pas" },
-  'notfound.text':     { nl: 'Controleer de link, of maak een nieuwe.', en: 'Check the link, or create a new one.', fr: 'Vérifie le lien, ou crées-en un nouveau.' },
-  'notfound.new':      { nl: 'Nieuwe afspraak', en: 'New poll', fr: 'Nouveau rendez-vous' },
-  'footer':            { nl: 'Whenly · gratis, zonder account', en: 'Whenly · free, no account', fr: 'Whenly · gratuit, sans compte' },
-  'lang.nl':           { nl: 'Nederlands', en: 'Nederlands', fr: 'Nederlands' },
-  'lang.en':           { nl: 'English', en: 'English', fr: 'English' },
-  'lang.fr':           { nl: 'Français', en: 'Français', fr: 'Français' },
-  'donate.button':     { nl: 'Doneer', en: 'Donate', fr: 'Faire un don' },
-  'donate.intro':      { nl: 'Leuk dat je Whenly gebruikt! 🎉 Het blijft gratis — een kleine traktatie maakt me blij:', en: 'Glad you use Whenly! 🎉 It stays free — a small treat makes my day:', fr: 'Content que tu utilises Whenly ! 🎉 Ça reste gratuit — un petit geste me fait plaisir :' },
-  'donate.joke':       { nl: 'Echt groot fan? Dan mag het gek 😄', en: 'Really a big fan? Then go wild 😄', fr: 'Vraiment fan ? Alors lâche-toi 😄' },
-  'donate.free':       { nl: '… of kies zelf je bedrag', en: '… or pick your own amount', fr: '… ou choisis ton montant' },
-  'donate.thanks':     { nl: 'Merci! 🙏', en: 'Thanks! 🙏', fr: 'Merci ! 🙏' },
+/* ---------- talen: alle tekst staat hier en nergens anders ---------- */
+// 20 talen. naam = eigen naam van de taal (autoniem), locale = standaardregio
+// voor datums; als de browser dezelfde taal met een andere regio heeft
+// (en-US, pt-BR, ar-SA ...) wint die regio. rtl = van rechts naar links.
+const TALEN = {
+  en: { naam: 'English',          locale: 'en-GB' },
+  nl: { naam: 'Nederlands',       locale: 'nl-BE' },
+  fr: { naam: 'Français',         locale: 'fr-BE' },
+  de: { naam: 'Deutsch',          locale: 'de-DE' },
+  es: { naam: 'Español',          locale: 'es-ES' },
+  pt: { naam: 'Português',        locale: 'pt-PT' },
+  pl: { naam: 'Polski',           locale: 'pl-PL' },
+  uk: { naam: 'Українська',       locale: 'uk-UA' },
+  ru: { naam: 'Русский',          locale: 'ru-RU' },
+  tr: { naam: 'Türkçe',           locale: 'tr-TR' },
+  ar: { naam: 'العربية',          locale: 'ar-EG', rtl: true },
+  ur: { naam: 'اردو',             locale: 'ur-PK', rtl: true },
+  hi: { naam: 'हिन्दी',            locale: 'hi-IN' },
+  bn: { naam: 'বাংলা',            locale: 'bn-BD' },
+  id: { naam: 'Bahasa Indonesia', locale: 'id-ID' },
+  vi: { naam: 'Tiếng Việt',       locale: 'vi-VN' },
+  zh: { naam: '中文',             locale: 'zh-CN' },
+  ja: { naam: '日本語',           locale: 'ja-JP' },
+  ko: { naam: '한국어',           locale: 'ko-KR' },
+  sw: { naam: 'Kiswahili',        locale: 'sw-KE' },
+};
+// Per taal alle teksten. Een waarde mag een object met meervoudsvormen zijn
+// ({one, few, many, other ...}); t() kiest dan via Intl.PluralRules op {n}.
+// Ontbreekt een sleutel, dan valt t() terug op het Engels.
+const VERTALINGEN = {
+en: {
+  'make.title': 'When shall we meet?',
+  'make.tagline': 'Pick a date together. No account, no fuss.',
+  'make.what': 'What is it about?',
+  'make.what.ph': 'e.g. Dinner, padel, weekend at the coast',
+  'make.name': 'Your name',
+  'make.name.ph': 'e.g. Ali',
+  'make.submit': 'Create the poll',
+  'share.ready': 'Done. Share this link:',
+  'share.copy': 'Copy',
+  'share.copied': 'Copied',
+  'share.button': 'Share',
+  'legend.you': 'you can',
+  'legend.other': 'someone else can',
+  'update.text': 'A new version of Whenly is available.',
+  'update.button': 'Update',
+  'install.text': 'Add Whenly to your home screen, like an app.',
+  'install.button': 'Install',
+  'install.ios': 'Tap  ⬆  (Share), then “Add to Home Screen”.',
+  'title.edit': 'edit title',
+  'title.save': 'Save',
+  'poll.nameFirst': 'Enter your name first to start ticking.',
+  'poll.next': 'Continue',
+  'pick.who': 'Are you one of them? Click your name:',
+  'visits': 'Times visited: {n}',
+  'cal.hint': 'Click the days that work for you',
+  'cal.prev': 'Previous month',
+  'cal.next': 'Next month',
+  'cal.actAs': 'You are ticking as {name}',
+  'cal.switch': 'fill in for someone else',
+  'cal.newName.ph': 'or type a new name',
+  'time.label': 'Time (optional, anyone can change it)',
+  'poll.nobody': 'nobody yet',
+  'poll.you': 'you',
+  'poll.at': 'at {time}',
+  'poll.leave': 'Remove {name} from this poll',
+  'poll.leaveYes': 'Yes, remove {name}',
+  'poll.leaveNo': 'Never mind',
+  'status.none': 'No date yet. Click your days.',
+  'status.almost': 'Best day so far: {date}',
+  'status.everyone': 'Everyone can make {date}',
+  'status.count': { one: '{n} of {total} can make it', other: '{n} of {total} can make it' },
+  'status.tie': 'Several days are leading',
+  'status.tieEveryone': 'Several days work for everyone',
+  'status.tieCount': { one: '{n} of {total} can make each of these:', other: '{n} of {total} can make each of these:' },
+  'status.pick': 'Pick this one',
+  'status.fix': 'Lock it in',
+  'status.final': 'Agreed: {date}',
+  'status.unfix': 'Undo',
+  'err.save': "Couldn't save. Try again.",
+  'err.duplicate_option': 'That date is already listed.',
+  'err.option_in_use': 'Someone else ticked this date.',
+  'err.title_required': "Say what it's about.",
+  'err.name_required': 'Enter your name.',
+  'err.invalid_date': 'Pick at least one date.',
+  'err.limit_reached': 'This poll is full.',
+  'err.generic': 'Something went wrong. Try again.',
+  'notfound.title': "This poll doesn't exist",
+  'notfound.text': 'Check the link, or create a new one.',
+  'notfound.new': 'New poll',
+  'footer': 'Whenly · free, no account',
+  'donate.button': 'Donate',
+  'donate.intro': 'Glad you use Whenly! 🎉 It stays free. A small treat makes my day:',
+  'donate.joke': 'Really a big fan? Then go wild 😄',
+  'donate.free': '… or pick your own amount',
+  'donate.thanks': 'Thanks! 🙏',
+  'close': 'Close',
+  'lang.pick': 'Choose language',
+},
+nl: {
+  'make.title': 'Wanneer spreken we af?',
+  'make.tagline': 'Prik samen een datum. Zonder account, zonder gedoe.',
+  'make.what': 'Waarover gaat het?',
+  'make.what.ph': 'bv. Etentje, padel, weekend aan zee',
+  'make.name': 'Je naam',
+  'make.name.ph': 'bv. Ali',
+  'make.submit': 'Maak de afspraak',
+  'share.ready': 'Klaar. Deel deze link:',
+  'share.copy': 'Kopieer',
+  'share.copied': 'Gekopieerd',
+  'share.button': 'Deel',
+  'legend.you': 'jij kan',
+  'legend.other': 'iemand anders kan',
+  'update.text': 'Er is een nieuwe versie van Whenly.',
+  'update.button': 'Updaten',
+  'install.text': 'Zet Whenly op je beginscherm, als een app.',
+  'install.button': 'Installeren',
+  'install.ios': 'Tik op  ⬆  (Deel) en dan “Zet op beginscherm”.',
+  'title.edit': 'titel aanpassen',
+  'title.save': 'Bewaar',
+  'poll.nameFirst': 'Vul eerst je naam in om aan te klikken.',
+  'poll.next': 'Verder',
+  'pick.who': 'Ben je een van hen? Klik je naam aan:',
+  'visits': 'Aantal bezocht: {n}',
+  'cal.hint': 'Klik de dagen aan die voor jou lukken',
+  'cal.prev': 'Vorige maand',
+  'cal.next': 'Volgende maand',
+  'cal.actAs': 'Jij klikt aan als {name}',
+  'cal.switch': 'iemand anders invullen',
+  'cal.newName.ph': 'of typ een nieuwe naam',
+  'time.label': 'Uur (optioneel, iedereen mag dit aanpassen)',
+  'poll.nobody': 'nog niemand',
+  'poll.you': 'jij',
+  'poll.at': 'om {time}',
+  'poll.leave': 'Haal {name} weg uit deze afspraak',
+  'poll.leaveYes': 'Ja, haal {name} weg',
+  'poll.leaveNo': 'Toch niet',
+  'status.none': 'Nog geen datum. Klik je dagen aan.',
+  'status.almost': 'Beste dag tot nu: {date}',
+  'status.everyone': 'Iedereen kan op {date}',
+  'status.count': { one: '{n} van {total} kan', other: '{n} van {total} kunnen' },
+  'status.tie': 'Meerdere dagen lopen voorop',
+  'status.tieEveryone': 'Meerdere dagen lukken voor iedereen',
+  'status.tieCount': { one: '{n} van {total} kan op elk van deze:', other: '{n} van {total} kunnen op elk van deze:' },
+  'status.pick': 'Deze nemen',
+  'status.fix': 'Vastleggen',
+  'status.final': 'Afgesproken: {date}',
+  'status.unfix': 'Toch niet',
+  'err.save': 'Kon niet opslaan. Probeer opnieuw.',
+  'err.duplicate_option': 'Die datum staat er al.',
+  'err.option_in_use': 'Iemand anders heeft deze datum aangeklikt.',
+  'err.title_required': 'Vul in waarover het gaat.',
+  'err.name_required': 'Vul je naam in.',
+  'err.invalid_date': 'Kies minstens één datum.',
+  'err.limit_reached': 'Deze afspraak zit vol.',
+  'err.generic': 'Er ging iets mis. Probeer opnieuw.',
+  'notfound.title': 'Deze afspraak bestaat niet',
+  'notfound.text': 'Controleer de link, of maak een nieuwe.',
+  'notfound.new': 'Nieuwe afspraak',
+  'footer': 'Whenly · gratis, zonder account',
+  'donate.button': 'Doneer',
+  'donate.intro': 'Leuk dat je Whenly gebruikt! 🎉 Het blijft gratis. Een kleine traktatie maakt me blij:',
+  'donate.joke': 'Echt groot fan? Dan mag het gek 😄',
+  'donate.free': '… of kies zelf je bedrag',
+  'donate.thanks': 'Merci! 🙏',
+  'close': 'Sluiten',
+  'lang.pick': 'Taal kiezen',
+},
+fr: {
+  'make.title': 'Quand se voit-on ?',
+  'make.tagline': 'Trouvez une date ensemble. Sans compte, sans tracas.',
+  'make.what': "De quoi s'agit-il ?",
+  'make.what.ph': 'p.ex. Dîner, padel, week-end à la mer',
+  'make.name': 'Ton prénom',
+  'make.name.ph': 'p.ex. Ali',
+  'make.submit': 'Créer le rendez-vous',
+  'share.ready': "C'est prêt. Partage ce lien :",
+  'share.copy': 'Copier',
+  'share.copied': 'Copié',
+  'share.button': 'Partager',
+  'legend.you': 'toi',
+  'legend.other': "quelqu'un d'autre",
+  'update.text': 'Une nouvelle version de Whenly est disponible.',
+  'update.button': 'Mettre à jour',
+  'install.text': "Ajoute Whenly à ton écran d'accueil, comme une appli.",
+  'install.button': 'Installer',
+  'install.ios': 'Touche  ⬆  (Partager), puis « Sur l’écran d’accueil ».',
+  'title.edit': 'modifier le titre',
+  'title.save': 'Enregistrer',
+  'poll.nameFirst': "Indique d'abord ton prénom pour cocher.",
+  'poll.next': 'Continuer',
+  'pick.who': "Es-tu l'un d'eux ? Clique sur ton prénom :",
+  'visits': 'Nombre de visites : {n}',
+  'cal.hint': 'Clique sur les jours qui te conviennent',
+  'cal.prev': 'Mois précédent',
+  'cal.next': 'Mois suivant',
+  'cal.actAs': 'Tu coches en tant que {name}',
+  'cal.switch': "remplir pour quelqu'un d'autre",
+  'cal.newName.ph': 'ou tape un nouveau prénom',
+  'time.label': 'Heure (optionnelle, modifiable par tous)',
+  'poll.nobody': "personne pour l'instant",
+  'poll.you': 'toi',
+  'poll.at': 'à {time}',
+  'poll.leave': 'Retirer {name} de ce rendez-vous',
+  'poll.leaveYes': 'Oui, retirer {name}',
+  'poll.leaveNo': 'Finalement non',
+  'status.none': 'Pas encore de date. Coche tes jours.',
+  'status.almost': "Meilleur jour jusqu'ici : {date}",
+  'status.everyone': 'Tout le monde peut le {date}',
+  'status.count': { one: '{n} sur {total} peut', other: '{n} sur {total} peuvent' },
+  'status.tie': 'Plusieurs jours en tête',
+  'status.tieEveryone': 'Plusieurs jours conviennent à tous',
+  'status.tieCount': { one: '{n} sur {total} peut à chacune de ces dates :', other: '{n} sur {total} peuvent à chacune de ces dates :' },
+  'status.pick': 'Choisir celle-ci',
+  'status.fix': 'Confirmer',
+  'status.final': "C'est fixé : {date}",
+  'status.unfix': 'Annuler',
+  'err.save': "Impossible d'enregistrer. Réessaie.",
+  'err.duplicate_option': 'Cette date existe déjà.',
+  'err.option_in_use': "Quelqu'un d'autre a coché cette date.",
+  'err.title_required': "Indique de quoi il s'agit.",
+  'err.name_required': 'Indique ton prénom.',
+  'err.invalid_date': 'Choisis au moins une date.',
+  'err.limit_reached': 'Ce rendez-vous est complet.',
+  'err.generic': 'Quelque chose a raté. Réessaie.',
+  'notfound.title': "Ce rendez-vous n'existe pas",
+  'notfound.text': 'Vérifie le lien, ou crées-en un nouveau.',
+  'notfound.new': 'Nouveau rendez-vous',
+  'footer': 'Whenly · gratuit, sans compte',
+  'donate.button': 'Faire un don',
+  'donate.intro': 'Content que tu utilises Whenly ! 🎉 Ça reste gratuit. Un petit geste me fait plaisir :',
+  'donate.joke': 'Vraiment fan ? Alors lâche-toi 😄',
+  'donate.free': '… ou choisis ton montant',
+  'donate.thanks': 'Merci ! 🙏',
+  'close': 'Fermer',
+  'lang.pick': 'Choisir la langue',
+},
+de: {
+  'make.title': 'Wann treffen wir uns?',
+  'make.tagline': 'Findet gemeinsam einen Termin. Ohne Konto, ohne Aufwand.',
+  'make.what': 'Worum geht es?',
+  'make.what.ph': 'z. B. Abendessen, Padel, Wochenende am Meer',
+  'make.name': 'Dein Name',
+  'make.name.ph': 'z. B. Ali',
+  'make.submit': 'Umfrage erstellen',
+  'share.ready': 'Fertig. Teile diesen Link:',
+  'share.copy': 'Kopieren',
+  'share.copied': 'Kopiert',
+  'share.button': 'Teilen',
+  'legend.you': 'du kannst',
+  'legend.other': 'jemand anderes kann',
+  'update.text': 'Es gibt eine neue Version von Whenly.',
+  'update.button': 'Aktualisieren',
+  'install.text': 'Füge Whenly zum Startbildschirm hinzu, wie eine App.',
+  'install.button': 'Installieren',
+  'install.ios': 'Tippe auf  ⬆  (Teilen) und dann auf „Zum Home-Bildschirm“.',
+  'title.edit': 'Titel ändern',
+  'title.save': 'Speichern',
+  'poll.nameFirst': 'Gib zuerst deinen Namen ein, um Tage anzuklicken.',
+  'poll.next': 'Weiter',
+  'pick.who': 'Bist du eine dieser Personen? Klicke auf deinen Namen:',
+  'visits': 'Aufrufe: {n}',
+  'cal.hint': 'Klicke die Tage an, die dir passen',
+  'cal.prev': 'Vorheriger Monat',
+  'cal.next': 'Nächster Monat',
+  'cal.actAs': 'Du wählst als {name}',
+  'cal.switch': 'für jemand anderen eintragen',
+  'cal.newName.ph': 'oder gib einen neuen Namen ein',
+  'time.label': 'Uhrzeit (optional, jeder darf sie ändern)',
+  'poll.nobody': 'noch niemand',
+  'poll.you': 'du',
+  'poll.at': 'um {time}',
+  'poll.leave': '{name} aus dieser Umfrage entfernen',
+  'poll.leaveYes': 'Ja, {name} entfernen',
+  'poll.leaveNo': 'Doch nicht',
+  'status.none': 'Noch kein Termin. Klicke deine Tage an.',
+  'status.almost': 'Bester Tag bisher: {date}',
+  'status.everyone': 'Alle können am {date}',
+  'status.count': { one: '{n} von {total} kann', other: '{n} von {total} können' },
+  'status.tie': 'Mehrere Tage liegen vorn',
+  'status.tieEveryone': 'Mehrere Tage passen allen',
+  'status.tieCount': { one: '{n} von {total} kann an jedem dieser Tage:', other: '{n} von {total} können an jedem dieser Tage:' },
+  'status.pick': 'Diesen nehmen',
+  'status.fix': 'Festlegen',
+  'status.final': 'Abgemacht: {date}',
+  'status.unfix': 'Rückgängig',
+  'err.save': 'Konnte nicht speichern. Versuche es erneut.',
+  'err.duplicate_option': 'Dieses Datum gibt es schon.',
+  'err.option_in_use': 'Jemand anderes hat dieses Datum angeklickt.',
+  'err.title_required': 'Gib an, worum es geht.',
+  'err.name_required': 'Gib deinen Namen ein.',
+  'err.invalid_date': 'Wähle mindestens ein Datum.',
+  'err.limit_reached': 'Diese Umfrage ist voll.',
+  'err.generic': 'Etwas ist schiefgelaufen. Versuche es erneut.',
+  'notfound.title': 'Diese Umfrage gibt es nicht',
+  'notfound.text': 'Prüfe den Link oder erstelle eine neue.',
+  'notfound.new': 'Neue Umfrage',
+  'footer': 'Whenly · kostenlos, ohne Konto',
+  'donate.button': 'Spenden',
+  'donate.intro': 'Schön, dass du Whenly nutzt! 🎉 Es bleibt kostenlos. Eine kleine Aufmerksamkeit freut mich:',
+  'donate.joke': 'Richtig großer Fan? Dann darf es auch mehr sein 😄',
+  'donate.free': '… oder wähle deinen eigenen Betrag',
+  'donate.thanks': 'Danke! 🙏',
+  'close': 'Schließen',
+  'lang.pick': 'Sprache wählen',
+},
+es: {
+  'make.title': '¿Cuándo quedamos?',
+  'make.tagline': 'Elegid una fecha juntos. Sin cuenta, sin complicaciones.',
+  'make.what': '¿De qué se trata?',
+  'make.what.ph': 'p. ej. Cena, pádel, fin de semana en la playa',
+  'make.name': 'Tu nombre',
+  'make.name.ph': 'p. ej. Ali',
+  'make.submit': 'Crear la encuesta',
+  'share.ready': 'Listo. Comparte este enlace:',
+  'share.copy': 'Copiar',
+  'share.copied': 'Copiado',
+  'share.button': 'Compartir',
+  'legend.you': 'tú puedes',
+  'legend.other': 'otra persona puede',
+  'update.text': 'Hay una nueva versión de Whenly.',
+  'update.button': 'Actualizar',
+  'install.text': 'Añade Whenly a tu pantalla de inicio, como una app.',
+  'install.button': 'Instalar',
+  'install.ios': 'Toca  ⬆  (Compartir) y luego «Añadir a pantalla de inicio».',
+  'title.edit': 'editar título',
+  'title.save': 'Guardar',
+  'poll.nameFirst': 'Escribe primero tu nombre para marcar días.',
+  'poll.next': 'Continuar',
+  'pick.who': '¿Eres uno de ellos? Pulsa tu nombre:',
+  'visits': 'Visitas: {n}',
+  'cal.hint': 'Marca los días que te vienen bien',
+  'cal.prev': 'Mes anterior',
+  'cal.next': 'Mes siguiente',
+  'cal.actAs': 'Estás marcando como {name}',
+  'cal.switch': 'rellenar por otra persona',
+  'cal.newName.ph': 'o escribe un nombre nuevo',
+  'time.label': 'Hora (opcional, cualquiera puede cambiarla)',
+  'poll.nobody': 'nadie todavía',
+  'poll.you': 'tú',
+  'poll.at': 'a las {time}',
+  'poll.leave': 'Quitar a {name} de esta encuesta',
+  'poll.leaveYes': 'Sí, quitar a {name}',
+  'poll.leaveNo': 'Mejor no',
+  'status.none': 'Aún no hay fecha. Marca tus días.',
+  'status.almost': 'Mejor día hasta ahora: {date}',
+  'status.everyone': 'Todos pueden el {date}',
+  'status.count': { one: '{n} de {total} puede', other: '{n} de {total} pueden' },
+  'status.tie': 'Varios días van en cabeza',
+  'status.tieEveryone': 'Varios días les van bien a todos',
+  'status.tieCount': { one: '{n} de {total} puede en cada uno de estos:', other: '{n} de {total} pueden en cada uno de estos:' },
+  'status.pick': 'Elegir este',
+  'status.fix': 'Confirmar',
+  'status.final': 'Acordado: {date}',
+  'status.unfix': 'Deshacer',
+  'err.save': 'No se pudo guardar. Inténtalo de nuevo.',
+  'err.duplicate_option': 'Esa fecha ya está.',
+  'err.option_in_use': 'Otra persona ha marcado esta fecha.',
+  'err.title_required': 'Indica de qué se trata.',
+  'err.name_required': 'Escribe tu nombre.',
+  'err.invalid_date': 'Elige al menos una fecha.',
+  'err.limit_reached': 'Esta encuesta está llena.',
+  'err.generic': 'Algo salió mal. Inténtalo de nuevo.',
+  'notfound.title': 'Esta encuesta no existe',
+  'notfound.text': 'Revisa el enlace o crea una nueva.',
+  'notfound.new': 'Nueva encuesta',
+  'footer': 'Whenly · gratis, sin cuenta',
+  'donate.button': 'Donar',
+  'donate.intro': '¡Qué bien que uses Whenly! 🎉 Seguirá siendo gratis. Un pequeño detalle me alegra el día:',
+  'donate.joke': '¿Fan de verdad? Entonces no te cortes 😄',
+  'donate.free': '… o elige tu propio importe',
+  'donate.thanks': '¡Gracias! 🙏',
+  'close': 'Cerrar',
+  'lang.pick': 'Elegir idioma',
+},
+pt: {
+  'make.title': 'Quando nos encontramos?',
+  'make.tagline': 'Escolham uma data juntos. Sem conta, sem complicações.',
+  'make.what': 'Sobre o que é?',
+  'make.what.ph': 'ex. Jantar, padel, fim de semana na praia',
+  'make.name': 'O teu nome',
+  'make.name.ph': 'ex. Ali',
+  'make.submit': 'Criar a votação',
+  'share.ready': 'Pronto. Partilha este link:',
+  'share.copy': 'Copiar',
+  'share.copied': 'Copiado',
+  'share.button': 'Partilhar',
+  'legend.you': 'tu podes',
+  'legend.other': 'outra pessoa pode',
+  'update.text': 'Há uma nova versão do Whenly.',
+  'update.button': 'Atualizar',
+  'install.text': 'Adiciona o Whenly ao ecrã inicial, como uma app.',
+  'install.button': 'Instalar',
+  'install.ios': 'Toca em  ⬆  (Partilhar) e depois em «Adicionar ao ecrã principal».',
+  'title.edit': 'editar título',
+  'title.save': 'Guardar',
+  'poll.nameFirst': 'Escreve primeiro o teu nome para marcar dias.',
+  'poll.next': 'Continuar',
+  'pick.who': 'És um deles? Toca no teu nome:',
+  'visits': 'Visitas: {n}',
+  'cal.hint': 'Marca os dias que te dão jeito',
+  'cal.prev': 'Mês anterior',
+  'cal.next': 'Mês seguinte',
+  'cal.actAs': 'Estás a marcar como {name}',
+  'cal.switch': 'preencher por outra pessoa',
+  'cal.newName.ph': 'ou escreve um nome novo',
+  'time.label': 'Hora (opcional, qualquer pessoa pode alterar)',
+  'poll.nobody': 'ainda ninguém',
+  'poll.you': 'tu',
+  'poll.at': 'às {time}',
+  'poll.leave': 'Remover {name} desta votação',
+  'poll.leaveYes': 'Sim, remover {name}',
+  'poll.leaveNo': 'Afinal não',
+  'status.none': 'Ainda sem data. Marca os teus dias.',
+  'status.almost': 'Melhor dia até agora: {date}',
+  'status.everyone': 'Toda a gente pode em {date}',
+  'status.count': { one: '{n} de {total} pode', other: '{n} de {total} podem' },
+  'status.tie': 'Vários dias estão à frente',
+  'status.tieEveryone': 'Vários dias servem a toda a gente',
+  'status.tieCount': { one: '{n} de {total} pode em cada um destes:', other: '{n} de {total} podem em cada um destes:' },
+  'status.pick': 'Escolher este',
+  'status.fix': 'Confirmar',
+  'status.final': 'Combinado: {date}',
+  'status.unfix': 'Anular',
+  'err.save': 'Não foi possível guardar. Tenta outra vez.',
+  'err.duplicate_option': 'Essa data já existe.',
+  'err.option_in_use': 'Outra pessoa marcou esta data.',
+  'err.title_required': 'Indica sobre o que é.',
+  'err.name_required': 'Escreve o teu nome.',
+  'err.invalid_date': 'Escolhe pelo menos uma data.',
+  'err.limit_reached': 'Esta votação está cheia.',
+  'err.generic': 'Algo correu mal. Tenta outra vez.',
+  'notfound.title': 'Esta votação não existe',
+  'notfound.text': 'Verifica o link ou cria uma nova.',
+  'notfound.new': 'Nova votação',
+  'footer': 'Whenly · grátis, sem conta',
+  'donate.button': 'Doar',
+  'donate.intro': 'Que bom que usas o Whenly! 🎉 Continua grátis. Um pequeno mimo alegra-me o dia:',
+  'donate.joke': 'Grande fã? Então força 😄',
+  'donate.free': '… ou escolhe o teu valor',
+  'donate.thanks': 'Obrigado! 🙏',
+  'close': 'Fechar',
+  'lang.pick': 'Escolher idioma',
+},
+pl: {
+  'make.title': 'Kiedy się spotykamy?',
+  'make.tagline': 'Wybierzcie datę razem. Bez konta, bez zachodu.',
+  'make.what': 'O co chodzi?',
+  'make.what.ph': 'np. Kolacja, padel, weekend nad morzem',
+  'make.name': 'Twoje imię',
+  'make.name.ph': 'np. Ali',
+  'make.submit': 'Utwórz ankietę',
+  'share.ready': 'Gotowe. Udostępnij ten link:',
+  'share.copy': 'Kopiuj',
+  'share.copied': 'Skopiowano',
+  'share.button': 'Udostępnij',
+  'legend.you': 'ty możesz',
+  'legend.other': 'ktoś inny może',
+  'update.text': 'Jest nowa wersja Whenly.',
+  'update.button': 'Aktualizuj',
+  'install.text': 'Dodaj Whenly do ekranu głównego, jak aplikację.',
+  'install.button': 'Zainstaluj',
+  'install.ios': 'Stuknij  ⬆  (Udostępnij), a potem „Do ekranu początkowego”.',
+  'title.edit': 'zmień tytuł',
+  'title.save': 'Zapisz',
+  'poll.nameFirst': 'Najpierw wpisz swoje imię, aby zaznaczać dni.',
+  'poll.next': 'Dalej',
+  'pick.who': 'Jesteś jedną z tych osób? Kliknij swoje imię:',
+  'visits': 'Liczba odwiedzin: {n}',
+  'cal.hint': 'Zaznacz dni, które ci pasują',
+  'cal.prev': 'Poprzedni miesiąc',
+  'cal.next': 'Następny miesiąc',
+  'cal.actAs': 'Zaznaczasz jako {name}',
+  'cal.switch': 'wypełnij za kogoś innego',
+  'cal.newName.ph': 'lub wpisz nowe imię',
+  'time.label': 'Godzina (opcjonalnie, każdy może ją zmienić)',
+  'poll.nobody': 'jeszcze nikt',
+  'poll.you': 'ty',
+  'poll.at': 'o {time}',
+  'poll.leave': 'Usuń {name} z tej ankiety',
+  'poll.leaveYes': 'Tak, usuń {name}',
+  'poll.leaveNo': 'Jednak nie',
+  'status.none': 'Nie ma jeszcze daty. Zaznacz swoje dni.',
+  'status.almost': 'Najlepszy dzień do tej pory: {date}',
+  'status.everyone': 'Wszyscy mogą {date}',
+  'status.count': { one: '{n} z {total} może', few: '{n} z {total} mogą', many: '{n} z {total} może', other: '{n} z {total} może' },
+  'status.tie': 'Kilka dni prowadzi',
+  'status.tieEveryone': 'Kilka dni pasuje wszystkim',
+  'status.tieCount': { one: '{n} z {total} może w każdy z tych dni:', few: '{n} z {total} mogą w każdy z tych dni:', many: '{n} z {total} może w każdy z tych dni:', other: '{n} z {total} może w każdy z tych dni:' },
+  'status.pick': 'Wybierz ten',
+  'status.fix': 'Zatwierdź',
+  'status.final': 'Ustalone: {date}',
+  'status.unfix': 'Cofnij',
+  'err.save': 'Nie udało się zapisać. Spróbuj ponownie.',
+  'err.duplicate_option': 'Ta data już jest.',
+  'err.option_in_use': 'Ktoś inny zaznaczył tę datę.',
+  'err.title_required': 'Napisz, o co chodzi.',
+  'err.name_required': 'Wpisz swoje imię.',
+  'err.invalid_date': 'Wybierz co najmniej jedną datę.',
+  'err.limit_reached': 'Ta ankieta jest pełna.',
+  'err.generic': 'Coś poszło nie tak. Spróbuj ponownie.',
+  'notfound.title': 'Ta ankieta nie istnieje',
+  'notfound.text': 'Sprawdź link lub utwórz nową.',
+  'notfound.new': 'Nowa ankieta',
+  'footer': 'Whenly · za darmo, bez konta',
+  'donate.button': 'Wesprzyj',
+  'donate.intro': 'Fajnie, że używasz Whenly! 🎉 Pozostaje darmowe. Drobny gest sprawia mi radość:',
+  'donate.joke': 'Naprawdę wielki fan? To szalej 😄',
+  'donate.free': '… lub wybierz własną kwotę',
+  'donate.thanks': 'Dzięki! 🙏',
+  'close': 'Zamknij',
+  'lang.pick': 'Wybierz język',
+},
+uk: {
+  'make.title': 'Коли зустрічаємось?',
+  'make.tagline': 'Оберіть дату разом. Без акаунта, без клопоту.',
+  'make.what': 'Про що йдеться?',
+  'make.what.ph': 'напр. Вечеря, падел, вихідні на морі',
+  'make.name': 'Ваше ім’я',
+  'make.name.ph': 'напр. Алі',
+  'make.submit': 'Створити опитування',
+  'share.ready': 'Готово. Поділіться цим посиланням:',
+  'share.copy': 'Копіювати',
+  'share.copied': 'Скопійовано',
+  'share.button': 'Поділитися',
+  'legend.you': 'ви можете',
+  'legend.other': 'хтось інший може',
+  'update.text': 'Є нова версія Whenly.',
+  'update.button': 'Оновити',
+  'install.text': 'Додайте Whenly на головний екран, як застосунок.',
+  'install.button': 'Встановити',
+  'install.ios': 'Торкніться  ⬆  (Поділитися), потім «На Початковий екран».',
+  'title.edit': 'змінити назву',
+  'title.save': 'Зберегти',
+  'poll.nameFirst': 'Спочатку введіть ім’я, щоб відмічати дні.',
+  'poll.next': 'Далі',
+  'pick.who': 'Ви серед них? Натисніть своє ім’я:',
+  'visits': 'Переглядів: {n}',
+  'cal.hint': 'Відмітьте дні, які вам підходять',
+  'cal.prev': 'Попередній місяць',
+  'cal.next': 'Наступний місяць',
+  'cal.actAs': 'Ви відмічаєте як {name}',
+  'cal.switch': 'заповнити за когось іншого',
+  'cal.newName.ph': 'або введіть нове ім’я',
+  'time.label': 'Час (необов’язково, будь-хто може змінити)',
+  'poll.nobody': 'поки ніхто',
+  'poll.you': 'ви',
+  'poll.at': 'о {time}',
+  'poll.leave': 'Видалити {name} з цього опитування',
+  'poll.leaveYes': 'Так, видалити {name}',
+  'poll.leaveNo': 'Не треба',
+  'status.none': 'Дати ще немає. Відмітьте свої дні.',
+  'status.almost': 'Найкращий день поки що: {date}',
+  'status.everyone': 'Усі можуть {date}',
+  'status.count': { one: '{n} з {total} може', few: '{n} з {total} можуть', many: '{n} з {total} можуть', other: '{n} з {total} можуть' },
+  'status.tie': 'Кілька днів лідирують',
+  'status.tieEveryone': 'Кілька днів підходять усім',
+  'status.tieCount': { one: '{n} з {total} може в кожен із цих днів:', few: '{n} з {total} можуть у кожен із цих днів:', many: '{n} з {total} можуть у кожен із цих днів:', other: '{n} з {total} можуть у кожен із цих днів:' },
+  'status.pick': 'Обрати цей',
+  'status.fix': 'Затвердити',
+  'status.final': 'Домовились: {date}',
+  'status.unfix': 'Скасувати',
+  'err.save': 'Не вдалося зберегти. Спробуйте ще раз.',
+  'err.duplicate_option': 'Ця дата вже є.',
+  'err.option_in_use': 'Хтось інший відмітив цю дату.',
+  'err.title_required': 'Вкажіть, про що йдеться.',
+  'err.name_required': 'Введіть своє ім’я.',
+  'err.invalid_date': 'Оберіть хоча б одну дату.',
+  'err.limit_reached': 'Це опитування заповнене.',
+  'err.generic': 'Щось пішло не так. Спробуйте ще раз.',
+  'notfound.title': 'Такого опитування немає',
+  'notfound.text': 'Перевірте посилання або створіть нове.',
+  'notfound.new': 'Нове опитування',
+  'footer': 'Whenly · безкоштовно, без акаунта',
+  'donate.button': 'Підтримати',
+  'donate.intro': 'Приємно, що ви користуєтесь Whenly! 🎉 Воно залишається безкоштовним. Невеликий подарунок мене потішить:',
+  'donate.joke': 'Справжній фанат? Тоді можна й більше 😄',
+  'donate.free': '… або оберіть свою суму',
+  'donate.thanks': 'Дякую! 🙏',
+  'close': 'Закрити',
+  'lang.pick': 'Обрати мову',
+},
+ru: {
+  'make.title': 'Когда встречаемся?',
+  'make.tagline': 'Выберите дату вместе. Без аккаунта, без хлопот.',
+  'make.what': 'О чём речь?',
+  'make.what.ph': 'напр. Ужин, падел, выходные на море',
+  'make.name': 'Ваше имя',
+  'make.name.ph': 'напр. Али',
+  'make.submit': 'Создать опрос',
+  'share.ready': 'Готово. Поделитесь этой ссылкой:',
+  'share.copy': 'Копировать',
+  'share.copied': 'Скопировано',
+  'share.button': 'Поделиться',
+  'legend.you': 'вы можете',
+  'legend.other': 'кто-то другой может',
+  'update.text': 'Есть новая версия Whenly.',
+  'update.button': 'Обновить',
+  'install.text': 'Добавьте Whenly на главный экран, как приложение.',
+  'install.button': 'Установить',
+  'install.ios': 'Нажмите  ⬆  (Поделиться), затем «На экран „Домой“».',
+  'title.edit': 'изменить название',
+  'title.save': 'Сохранить',
+  'poll.nameFirst': 'Сначала введите имя, чтобы отмечать дни.',
+  'poll.next': 'Далее',
+  'pick.who': 'Вы среди них? Нажмите на своё имя:',
+  'visits': 'Просмотров: {n}',
+  'cal.hint': 'Отметьте дни, которые вам подходят',
+  'cal.prev': 'Предыдущий месяц',
+  'cal.next': 'Следующий месяц',
+  'cal.actAs': 'Вы отмечаете как {name}',
+  'cal.switch': 'заполнить за другого',
+  'cal.newName.ph': 'или введите новое имя',
+  'time.label': 'Время (необязательно, любой может изменить)',
+  'poll.nobody': 'пока никто',
+  'poll.you': 'вы',
+  'poll.at': 'в {time}',
+  'poll.leave': 'Удалить {name} из этого опроса',
+  'poll.leaveYes': 'Да, удалить {name}',
+  'poll.leaveNo': 'Не надо',
+  'status.none': 'Даты пока нет. Отметьте свои дни.',
+  'status.almost': 'Лучший день пока: {date}',
+  'status.everyone': 'Все могут {date}',
+  'status.count': { one: '{n} из {total} может', few: '{n} из {total} могут', many: '{n} из {total} могут', other: '{n} из {total} могут' },
+  'status.tie': 'Несколько дней лидируют',
+  'status.tieEveryone': 'Несколько дней подходят всем',
+  'status.tieCount': { one: '{n} из {total} может в каждый из этих дней:', few: '{n} из {total} могут в каждый из этих дней:', many: '{n} из {total} могут в каждый из этих дней:', other: '{n} из {total} могут в каждый из этих дней:' },
+  'status.pick': 'Выбрать этот',
+  'status.fix': 'Зафиксировать',
+  'status.final': 'Договорились: {date}',
+  'status.unfix': 'Отменить',
+  'err.save': 'Не удалось сохранить. Попробуйте ещё раз.',
+  'err.duplicate_option': 'Эта дата уже есть.',
+  'err.option_in_use': 'Кто-то другой отметил эту дату.',
+  'err.title_required': 'Укажите, о чём речь.',
+  'err.name_required': 'Введите своё имя.',
+  'err.invalid_date': 'Выберите хотя бы одну дату.',
+  'err.limit_reached': 'Этот опрос заполнен.',
+  'err.generic': 'Что-то пошло не так. Попробуйте ещё раз.',
+  'notfound.title': 'Такого опроса нет',
+  'notfound.text': 'Проверьте ссылку или создайте новый.',
+  'notfound.new': 'Новый опрос',
+  'footer': 'Whenly · бесплатно, без аккаунта',
+  'donate.button': 'Поддержать',
+  'donate.intro': 'Приятно, что вы пользуетесь Whenly! 🎉 Он остаётся бесплатным. Небольшой подарок меня порадует:',
+  'donate.joke': 'Настоящий фанат? Тогда можно и больше 😄',
+  'donate.free': '… или выберите свою сумму',
+  'donate.thanks': 'Спасибо! 🙏',
+  'close': 'Закрыть',
+  'lang.pick': 'Выбрать язык',
+},
+tr: {
+  'make.title': 'Ne zaman buluşuyoruz?',
+  'make.tagline': 'Birlikte bir tarih seçin. Hesap yok, uğraş yok.',
+  'make.what': 'Konu ne?',
+  'make.what.ph': 'örn. Akşam yemeği, padel, deniz kenarında hafta sonu',
+  'make.name': 'Adın',
+  'make.name.ph': 'örn. Ali',
+  'make.submit': 'Anketi oluştur',
+  'share.ready': 'Hazır. Bu bağlantıyı paylaş:',
+  'share.copy': 'Kopyala',
+  'share.copied': 'Kopyalandı',
+  'share.button': 'Paylaş',
+  'legend.you': 'sen uygunsun',
+  'legend.other': 'başkası uygun',
+  'update.text': 'Whenly’nin yeni bir sürümü var.',
+  'update.button': 'Güncelle',
+  'install.text': 'Whenly’yi ana ekranına ekle, uygulama gibi.',
+  'install.button': 'Yükle',
+  'install.ios': '⬆  (Paylaş) simgesine, sonra “Ana Ekrana Ekle”ye dokun.',
+  'title.edit': 'başlığı düzenle',
+  'title.save': 'Kaydet',
+  'poll.nameFirst': 'Günleri işaretlemek için önce adını yaz.',
+  'poll.next': 'Devam',
+  'pick.who': 'Bunlardan biri sen misin? Adına tıkla:',
+  'visits': 'Ziyaret sayısı: {n}',
+  'cal.hint': 'Sana uyan günleri işaretle',
+  'cal.prev': 'Önceki ay',
+  'cal.next': 'Sonraki ay',
+  'cal.actAs': '{name} olarak işaretliyorsun',
+  'cal.switch': 'başkası için doldur',
+  'cal.newName.ph': 'veya yeni bir ad yaz',
+  'time.label': 'Saat (isteğe bağlı, herkes değiştirebilir)',
+  'poll.nobody': 'henüz kimse yok',
+  'poll.you': 'sen',
+  'poll.at': 'saat {time}',
+  'poll.leave': '{name} adını bu anketten kaldır',
+  'poll.leaveYes': 'Evet, {name} adını kaldır',
+  'poll.leaveNo': 'Vazgeç',
+  'status.none': 'Henüz tarih yok. Günlerini işaretle.',
+  'status.almost': 'Şimdilik en iyi gün: {date}',
+  'status.everyone': 'Herkes {date} uygun',
+  'status.count': { one: '{total} kişiden {n} uygun', other: '{total} kişiden {n} uygun' },
+  'status.tie': 'Birkaç gün önde',
+  'status.tieEveryone': 'Birkaç gün herkese uyuyor',
+  'status.tieCount': { one: '{total} kişiden {n} bu günlerin her birinde uygun:', other: '{total} kişiden {n} bu günlerin her birinde uygun:' },
+  'status.pick': 'Bunu seç',
+  'status.fix': 'Kesinleştir',
+  'status.final': 'Anlaşıldı: {date}',
+  'status.unfix': 'Geri al',
+  'err.save': 'Kaydedilemedi. Tekrar dene.',
+  'err.duplicate_option': 'Bu tarih zaten var.',
+  'err.option_in_use': 'Bu tarihi başkası işaretledi.',
+  'err.title_required': 'Konunun ne olduğunu yaz.',
+  'err.name_required': 'Adını yaz.',
+  'err.invalid_date': 'En az bir tarih seç.',
+  'err.limit_reached': 'Bu anket dolu.',
+  'err.generic': 'Bir şeyler ters gitti. Tekrar dene.',
+  'notfound.title': 'Bu anket yok',
+  'notfound.text': 'Bağlantıyı kontrol et veya yeni bir tane oluştur.',
+  'notfound.new': 'Yeni anket',
+  'footer': 'Whenly · ücretsiz, hesapsız',
+  'donate.button': 'Bağış yap',
+  'donate.intro': 'Whenly kullandığın için teşekkürler! 🎉 Ücretsiz kalıyor. Küçük bir ikram beni mutlu eder:',
+  'donate.joke': 'Gerçekten büyük hayran mısın? O zaman çekinme 😄',
+  'donate.free': '… veya kendi tutarını seç',
+  'donate.thanks': 'Teşekkürler! 🙏',
+  'close': 'Kapat',
+  'lang.pick': 'Dil seç',
+},
+ar: {
+  'make.title': 'متى نلتقي؟',
+  'make.tagline': 'اختاروا موعداً معاً. بدون حساب، بدون تعقيد.',
+  'make.what': 'ما المناسبة؟',
+  'make.what.ph': 'مثلاً: عشاء، بادل، عطلة على البحر',
+  'make.name': 'اسمك',
+  'make.name.ph': 'مثلاً: علي',
+  'make.submit': 'أنشئ الاستطلاع',
+  'share.ready': 'تم. شارك هذا الرابط:',
+  'share.copy': 'نسخ',
+  'share.copied': 'تم النسخ',
+  'share.button': 'مشاركة',
+  'legend.you': 'أنت متاح',
+  'legend.other': 'شخص آخر متاح',
+  'update.text': 'يوجد إصدار جديد من Whenly.',
+  'update.button': 'تحديث',
+  'install.text': 'أضف Whenly إلى الشاشة الرئيسية، كتطبيق.',
+  'install.button': 'تثبيت',
+  'install.ios': 'اضغط على  ⬆  (مشاركة) ثم «إضافة إلى الشاشة الرئيسية».',
+  'title.edit': 'تعديل العنوان',
+  'title.save': 'حفظ',
+  'poll.nameFirst': 'أدخل اسمك أولاً لتحديد الأيام.',
+  'poll.next': 'متابعة',
+  'pick.who': 'هل أنت أحدهم؟ اضغط على اسمك:',
+  'visits': 'عدد الزيارات: {n}',
+  'cal.hint': 'حدد الأيام التي تناسبك',
+  'cal.prev': 'الشهر السابق',
+  'cal.next': 'الشهر التالي',
+  'cal.actAs': 'أنت تحدد باسم {name}',
+  'cal.switch': 'التعبئة نيابة عن شخص آخر',
+  'cal.newName.ph': 'أو اكتب اسماً جديداً',
+  'time.label': 'الوقت (اختياري، يمكن للجميع تغييره)',
+  'poll.nobody': 'لا أحد بعد',
+  'poll.you': 'أنت',
+  'poll.at': 'الساعة {time}',
+  'poll.leave': 'إزالة {name} من هذا الاستطلاع',
+  'poll.leaveYes': 'نعم، أزل {name}',
+  'poll.leaveNo': 'تراجع',
+  'status.none': 'لا يوجد موعد بعد. حدد أيامك.',
+  'status.almost': 'أفضل يوم حتى الآن: {date}',
+  'status.everyone': 'الجميع متاحون يوم {date}',
+  'status.count': { zero: '{n} من {total} متاحون', one: '{n} من {total} متاح', two: '{n} من {total} متاحان', few: '{n} من {total} متاحون', many: '{n} من {total} متاحون', other: '{n} من {total} متاحون' },
+  'status.tie': 'عدة أيام في المقدمة',
+  'status.tieEveryone': 'عدة أيام تناسب الجميع',
+  'status.tieCount': { zero: '{n} من {total} متاحون في كل من هذه الأيام:', one: '{n} من {total} متاح في كل من هذه الأيام:', two: '{n} من {total} متاحان في كل من هذه الأيام:', few: '{n} من {total} متاحون في كل من هذه الأيام:', many: '{n} من {total} متاحون في كل من هذه الأيام:', other: '{n} من {total} متاحون في كل من هذه الأيام:' },
+  'status.pick': 'اختيار هذا',
+  'status.fix': 'تثبيت',
+  'status.final': 'تم الاتفاق: {date}',
+  'status.unfix': 'تراجع',
+  'err.save': 'تعذر الحفظ. حاول مجدداً.',
+  'err.duplicate_option': 'هذا التاريخ موجود بالفعل.',
+  'err.option_in_use': 'شخص آخر حدد هذا التاريخ.',
+  'err.title_required': 'اكتب ما المناسبة.',
+  'err.name_required': 'أدخل اسمك.',
+  'err.invalid_date': 'اختر تاريخاً واحداً على الأقل.',
+  'err.limit_reached': 'هذا الاستطلاع ممتلئ.',
+  'err.generic': 'حدث خطأ ما. حاول مجدداً.',
+  'notfound.title': 'هذا الاستطلاع غير موجود',
+  'notfound.text': 'تحقق من الرابط أو أنشئ استطلاعاً جديداً.',
+  'notfound.new': 'استطلاع جديد',
+  'footer': 'Whenly · مجاني، بدون حساب',
+  'donate.button': 'تبرع',
+  'donate.intro': 'سعيد لأنك تستخدم Whenly! 🎉 سيبقى مجانياً. لفتة صغيرة تسعدني:',
+  'donate.joke': 'معجب كبير فعلاً؟ إذن لا تتردد 😄',
+  'donate.free': '… أو اختر المبلغ بنفسك',
+  'donate.thanks': 'شكراً! 🙏',
+  'close': 'إغلاق',
+  'lang.pick': 'اختر اللغة',
+},
+ur: {
+  'make.title': 'ہم کب ملیں؟',
+  'make.tagline': 'مل کر ایک تاریخ چنیں۔ کوئی اکاؤنٹ نہیں، کوئی جھنجھٹ نہیں۔',
+  'make.what': 'کس بارے میں ہے؟',
+  'make.what.ph': 'مثلاً: ڈنر، پیڈل، ساحل پر ویک اینڈ',
+  'make.name': 'آپ کا نام',
+  'make.name.ph': 'مثلاً: علی',
+  'make.submit': 'پول بنائیں',
+  'share.ready': 'ہو گیا۔ یہ لنک شیئر کریں:',
+  'share.copy': 'کاپی کریں',
+  'share.copied': 'کاپی ہو گیا',
+  'share.button': 'شیئر کریں',
+  'legend.you': 'آپ آ سکتے ہیں',
+  'legend.other': 'کوئی اور آ سکتا ہے',
+  'update.text': 'Whenly کا نیا ورژن دستیاب ہے۔',
+  'update.button': 'اپ ڈیٹ کریں',
+  'install.text': 'Whenly کو ایپ کی طرح ہوم اسکرین پر شامل کریں۔',
+  'install.button': 'انسٹال کریں',
+  'install.ios': '⬆  (شیئر) پر ٹیپ کریں، پھر ”ہوم اسکرین میں شامل کریں“۔',
+  'title.edit': 'عنوان بدلیں',
+  'title.save': 'محفوظ کریں',
+  'poll.nameFirst': 'دن چننے کے لیے پہلے اپنا نام لکھیں۔',
+  'poll.next': 'آگے',
+  'pick.who': 'کیا آپ ان میں سے ہیں؟ اپنے نام پر کلک کریں:',
+  'visits': 'وزٹس: {n}',
+  'cal.hint': 'وہ دن چنیں جو آپ کے لیے ٹھیک ہوں',
+  'cal.prev': 'پچھلا مہینہ',
+  'cal.next': 'اگلا مہینہ',
+  'cal.actAs': 'آپ {name} کے طور پر چن رہے ہیں',
+  'cal.switch': 'کسی اور کے لیے بھریں',
+  'cal.newName.ph': 'یا نیا نام لکھیں',
+  'time.label': 'وقت (اختیاری، کوئی بھی بدل سکتا ہے)',
+  'poll.nobody': 'ابھی کوئی نہیں',
+  'poll.you': 'آپ',
+  'poll.at': '{time} بجے',
+  'poll.leave': '{name} کو اس پول سے ہٹائیں',
+  'poll.leaveYes': 'ہاں، {name} کو ہٹائیں',
+  'poll.leaveNo': 'رہنے دیں',
+  'status.none': 'ابھی کوئی تاریخ نہیں۔ اپنے دن چنیں۔',
+  'status.almost': 'اب تک کا بہترین دن: {date}',
+  'status.everyone': 'سب {date} کو آ سکتے ہیں',
+  'status.count': { one: '{total} میں سے {n} آ سکتا ہے', other: '{total} میں سے {n} آ سکتے ہیں' },
+  'status.tie': 'کئی دن آگے ہیں',
+  'status.tieEveryone': 'کئی دن سب کے لیے ٹھیک ہیں',
+  'status.tieCount': { one: '{total} میں سے {n} ان میں سے ہر دن آ سکتا ہے:', other: '{total} میں سے {n} ان میں سے ہر دن آ سکتے ہیں:' },
+  'status.pick': 'یہ چنیں',
+  'status.fix': 'پکا کریں',
+  'status.final': 'طے ہوا: {date}',
+  'status.unfix': 'واپس لیں',
+  'err.save': 'محفوظ نہیں ہو سکا۔ دوبارہ کوشش کریں۔',
+  'err.duplicate_option': 'یہ تاریخ پہلے سے موجود ہے۔',
+  'err.option_in_use': 'کسی اور نے یہ تاریخ چنی ہے۔',
+  'err.title_required': 'لکھیں کہ کس بارے میں ہے۔',
+  'err.name_required': 'اپنا نام لکھیں۔',
+  'err.invalid_date': 'کم از کم ایک تاریخ چنیں۔',
+  'err.limit_reached': 'یہ پول بھر گیا ہے۔',
+  'err.generic': 'کچھ غلط ہو گیا۔ دوبارہ کوشش کریں۔',
+  'notfound.title': 'یہ پول موجود نہیں',
+  'notfound.text': 'لنک چیک کریں یا نیا بنائیں۔',
+  'notfound.new': 'نیا پول',
+  'footer': 'Whenly · مفت، بغیر اکاؤنٹ',
+  'donate.button': 'عطیہ دیں',
+  'donate.intro': 'خوشی ہوئی کہ آپ Whenly استعمال کرتے ہیں! 🎉 یہ مفت رہے گا۔ ایک چھوٹا سا تحفہ مجھے خوش کر دیتا ہے:',
+  'donate.joke': 'واقعی بڑے فین ہیں؟ تو کھل کر دیں 😄',
+  'donate.free': '… یا اپنی رقم خود چنیں',
+  'donate.thanks': 'شکریہ! 🙏',
+  'close': 'بند کریں',
+  'lang.pick': 'زبان چنیں',
+},
+hi: {
+  'make.title': 'हम कब मिलें?',
+  'make.tagline': 'साथ मिलकर एक तारीख़ चुनें। कोई अकाउंट नहीं, कोई झंझट नहीं।',
+  'make.what': 'किस बारे में है?',
+  'make.what.ph': 'जैसे: डिनर, पैडल, समुद्र किनारे वीकेंड',
+  'make.name': 'आपका नाम',
+  'make.name.ph': 'जैसे: अली',
+  'make.submit': 'पोल बनाएँ',
+  'share.ready': 'हो गया। यह लिंक शेयर करें:',
+  'share.copy': 'कॉपी करें',
+  'share.copied': 'कॉपी हो गया',
+  'share.button': 'शेयर करें',
+  'legend.you': 'आप आ सकते हैं',
+  'legend.other': 'कोई और आ सकता है',
+  'update.text': 'Whenly का नया वर्शन उपलब्ध है।',
+  'update.button': 'अपडेट करें',
+  'install.text': 'Whenly को ऐप की तरह होम स्क्रीन पर जोड़ें।',
+  'install.button': 'इंस्टॉल करें',
+  'install.ios': '⬆  (शेयर) पर टैप करें, फिर “होम स्क्रीन में जोड़ें”।',
+  'title.edit': 'शीर्षक बदलें',
+  'title.save': 'सहेजें',
+  'poll.nameFirst': 'दिन चुनने के लिए पहले अपना नाम लिखें।',
+  'poll.next': 'आगे बढ़ें',
+  'pick.who': 'क्या आप इनमें से एक हैं? अपने नाम पर क्लिक करें:',
+  'visits': 'विज़िट: {n}',
+  'cal.hint': 'वे दिन चुनें जो आपके लिए ठीक हों',
+  'cal.prev': 'पिछला महीना',
+  'cal.next': 'अगला महीना',
+  'cal.actAs': 'आप {name} के रूप में चुन रहे हैं',
+  'cal.switch': 'किसी और के लिए भरें',
+  'cal.newName.ph': 'या नया नाम लिखें',
+  'time.label': 'समय (वैकल्पिक, कोई भी बदल सकता है)',
+  'poll.nobody': 'अभी कोई नहीं',
+  'poll.you': 'आप',
+  'poll.at': '{time} बजे',
+  'poll.leave': '{name} को इस पोल से हटाएँ',
+  'poll.leaveYes': 'हाँ, {name} को हटाएँ',
+  'poll.leaveNo': 'रहने दें',
+  'status.none': 'अभी कोई तारीख़ नहीं। अपने दिन चुनें।',
+  'status.almost': 'अब तक का सबसे अच्छा दिन: {date}',
+  'status.everyone': 'सभी {date} आ सकते हैं',
+  'status.count': { one: '{total} में से {n} आ सकता है', other: '{total} में से {n} आ सकते हैं' },
+  'status.tie': 'कई दिन आगे हैं',
+  'status.tieEveryone': 'कई दिन सभी को ठीक हैं',
+  'status.tieCount': { one: '{total} में से {n} इनमें से हर दिन आ सकता है:', other: '{total} में से {n} इनमें से हर दिन आ सकते हैं:' },
+  'status.pick': 'यह चुनें',
+  'status.fix': 'पक्का करें',
+  'status.final': 'तय हुआ: {date}',
+  'status.unfix': 'वापस लें',
+  'err.save': 'सहेजा नहीं जा सका। फिर कोशिश करें।',
+  'err.duplicate_option': 'यह तारीख़ पहले से है।',
+  'err.option_in_use': 'किसी और ने यह तारीख़ चुनी है।',
+  'err.title_required': 'लिखें कि किस बारे में है।',
+  'err.name_required': 'अपना नाम लिखें।',
+  'err.invalid_date': 'कम से कम एक तारीख़ चुनें।',
+  'err.limit_reached': 'यह पोल भर गया है।',
+  'err.generic': 'कुछ गड़बड़ हुई। फिर कोशिश करें।',
+  'notfound.title': 'यह पोल मौजूद नहीं है',
+  'notfound.text': 'लिंक जाँचें या नया बनाएँ।',
+  'notfound.new': 'नया पोल',
+  'footer': 'Whenly · मुफ़्त, बिना अकाउंट',
+  'donate.button': 'दान करें',
+  'donate.intro': 'अच्छा लगा कि आप Whenly इस्तेमाल करते हैं! 🎉 यह मुफ़्त रहेगा। एक छोटी सी मदद से मुझे खुशी होगी:',
+  'donate.joke': 'सच में बड़े फ़ैन हैं? तो खुलकर दें 😄',
+  'donate.free': '… या अपनी राशि चुनें',
+  'donate.thanks': 'धन्यवाद! 🙏',
+  'close': 'बंद करें',
+  'lang.pick': 'भाषा चुनें',
+},
+bn: {
+  'make.title': 'আমরা কবে দেখা করব?',
+  'make.tagline': 'একসাথে একটি তারিখ বেছে নিন। কোনো অ্যাকাউন্ট নেই, কোনো ঝামেলা নেই।',
+  'make.what': 'কী নিয়ে?',
+  'make.what.ph': 'যেমন: ডিনার, প্যাডেল, সমুদ্রে সপ্তাহান্ত',
+  'make.name': 'আপনার নাম',
+  'make.name.ph': 'যেমন: আলি',
+  'make.submit': 'পোল তৈরি করুন',
+  'share.ready': 'হয়ে গেছে। এই লিংকটি শেয়ার করুন:',
+  'share.copy': 'কপি করুন',
+  'share.copied': 'কপি হয়েছে',
+  'share.button': 'শেয়ার করুন',
+  'legend.you': 'আপনি পারবেন',
+  'legend.other': 'অন্য কেউ পারবেন',
+  'update.text': 'Whenly-এর নতুন সংস্করণ এসেছে।',
+  'update.button': 'আপডেট করুন',
+  'install.text': 'Whenly-কে অ্যাপের মতো হোম স্ক্রিনে যোগ করুন।',
+  'install.button': 'ইনস্টল করুন',
+  'install.ios': '⬆  (শেয়ার) ট্যাপ করুন, তারপর “হোম স্ক্রিনে যোগ করুন”।',
+  'title.edit': 'শিরোনাম বদলান',
+  'title.save': 'সংরক্ষণ',
+  'poll.nameFirst': 'দিন বাছতে আগে আপনার নাম লিখুন।',
+  'poll.next': 'এগিয়ে যান',
+  'pick.who': 'আপনি কি এদের একজন? আপনার নামে ক্লিক করুন:',
+  'visits': 'ভিজিট: {n}',
+  'cal.hint': 'যে দিনগুলো আপনার জন্য ঠিক সেগুলো বেছে নিন',
+  'cal.prev': 'আগের মাস',
+  'cal.next': 'পরের মাস',
+  'cal.actAs': 'আপনি {name} হিসেবে বাছছেন',
+  'cal.switch': 'অন্য কারো হয়ে পূরণ করুন',
+  'cal.newName.ph': 'অথবা নতুন নাম লিখুন',
+  'time.label': 'সময় (ঐচ্ছিক, যে কেউ বদলাতে পারে)',
+  'poll.nobody': 'এখনো কেউ নয়',
+  'poll.you': 'আপনি',
+  'poll.at': '{time}-এ',
+  'poll.leave': '{name}-কে এই পোল থেকে সরান',
+  'poll.leaveYes': 'হ্যাঁ, {name}-কে সরান',
+  'poll.leaveNo': 'থাক',
+  'status.none': 'এখনো কোনো তারিখ নেই। আপনার দিন বেছে নিন।',
+  'status.almost': 'এখন পর্যন্ত সেরা দিন: {date}',
+  'status.everyone': 'সবাই {date} পারবেন',
+  'status.count': { one: '{total} জনের মধ্যে {n} জন পারবেন', other: '{total} জনের মধ্যে {n} জন পারবেন' },
+  'status.tie': 'কয়েকটি দিন এগিয়ে আছে',
+  'status.tieEveryone': 'কয়েকটি দিন সবার জন্য ঠিক',
+  'status.tieCount': { one: '{total} জনের মধ্যে {n} জন এই প্রতিটি দিনে পারবেন:', other: '{total} জনের মধ্যে {n} জন এই প্রতিটি দিনে পারবেন:' },
+  'status.pick': 'এটি নিন',
+  'status.fix': 'চূড়ান্ত করুন',
+  'status.final': 'ঠিক হলো: {date}',
+  'status.unfix': 'বাতিল',
+  'err.save': 'সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।',
+  'err.duplicate_option': 'এই তারিখ আগে থেকেই আছে।',
+  'err.option_in_use': 'অন্য কেউ এই তারিখ বেছে নিয়েছেন।',
+  'err.title_required': 'লিখুন কী নিয়ে।',
+  'err.name_required': 'আপনার নাম লিখুন।',
+  'err.invalid_date': 'অন্তত একটি তারিখ বেছে নিন।',
+  'err.limit_reached': 'এই পোল ভরে গেছে।',
+  'err.generic': 'কিছু একটা ভুল হয়েছে। আবার চেষ্টা করুন।',
+  'notfound.title': 'এই পোলটি নেই',
+  'notfound.text': 'লিংক দেখুন বা নতুন একটি তৈরি করুন।',
+  'notfound.new': 'নতুন পোল',
+  'footer': 'Whenly · বিনামূল্যে, অ্যাকাউন্ট ছাড়া',
+  'donate.button': 'দান করুন',
+  'donate.intro': 'ভালো লাগছে যে আপনি Whenly ব্যবহার করছেন! 🎉 এটি বিনামূল্যেই থাকবে। ছোট্ট একটি উপহার আমাকে খুশি করে:',
+  'donate.joke': 'সত্যিই বড় ভক্ত? তাহলে মন খুলে দিন 😄',
+  'donate.free': '… অথবা নিজের পরিমাণ বেছে নিন',
+  'donate.thanks': 'ধন্যবাদ! 🙏',
+  'close': 'বন্ধ করুন',
+  'lang.pick': 'ভাষা বেছে নিন',
+},
+id: {
+  'make.title': 'Kapan kita bertemu?',
+  'make.tagline': 'Pilih tanggal bersama. Tanpa akun, tanpa ribet.',
+  'make.what': 'Tentang apa?',
+  'make.what.ph': 'mis. Makan malam, padel, akhir pekan di pantai',
+  'make.name': 'Nama kamu',
+  'make.name.ph': 'mis. Ali',
+  'make.submit': 'Buat polling',
+  'share.ready': 'Selesai. Bagikan tautan ini:',
+  'share.copy': 'Salin',
+  'share.copied': 'Tersalin',
+  'share.button': 'Bagikan',
+  'legend.you': 'kamu bisa',
+  'legend.other': 'orang lain bisa',
+  'update.text': 'Ada versi baru Whenly.',
+  'update.button': 'Perbarui',
+  'install.text': 'Tambahkan Whenly ke layar utama, seperti aplikasi.',
+  'install.button': 'Pasang',
+  'install.ios': 'Ketuk  ⬆  (Bagikan), lalu “Tambah ke Layar Utama”.',
+  'title.edit': 'ubah judul',
+  'title.save': 'Simpan',
+  'poll.nameFirst': 'Isi nama kamu dulu untuk memilih hari.',
+  'poll.next': 'Lanjut',
+  'pick.who': 'Kamu salah satunya? Klik nama kamu:',
+  'visits': 'Jumlah kunjungan: {n}',
+  'cal.hint': 'Klik hari yang cocok untukmu',
+  'cal.prev': 'Bulan sebelumnya',
+  'cal.next': 'Bulan berikutnya',
+  'cal.actAs': 'Kamu memilih sebagai {name}',
+  'cal.switch': 'isi untuk orang lain',
+  'cal.newName.ph': 'atau ketik nama baru',
+  'time.label': 'Jam (opsional, siapa pun boleh mengubah)',
+  'poll.nobody': 'belum ada',
+  'poll.you': 'kamu',
+  'poll.at': 'pukul {time}',
+  'poll.leave': 'Hapus {name} dari polling ini',
+  'poll.leaveYes': 'Ya, hapus {name}',
+  'poll.leaveNo': 'Batal',
+  'status.none': 'Belum ada tanggal. Klik hari kamu.',
+  'status.almost': 'Hari terbaik sejauh ini: {date}',
+  'status.everyone': 'Semua bisa pada {date}',
+  'status.count': { other: '{n} dari {total} bisa' },
+  'status.tie': 'Beberapa hari unggul',
+  'status.tieEveryone': 'Beberapa hari cocok untuk semua',
+  'status.tieCount': { other: '{n} dari {total} bisa di setiap hari ini:' },
+  'status.pick': 'Pilih ini',
+  'status.fix': 'Tetapkan',
+  'status.final': 'Disepakati: {date}',
+  'status.unfix': 'Batalkan',
+  'err.save': 'Gagal menyimpan. Coba lagi.',
+  'err.duplicate_option': 'Tanggal itu sudah ada.',
+  'err.option_in_use': 'Orang lain sudah memilih tanggal ini.',
+  'err.title_required': 'Tulis tentang apa.',
+  'err.name_required': 'Isi nama kamu.',
+  'err.invalid_date': 'Pilih minimal satu tanggal.',
+  'err.limit_reached': 'Polling ini sudah penuh.',
+  'err.generic': 'Ada yang salah. Coba lagi.',
+  'notfound.title': 'Polling ini tidak ada',
+  'notfound.text': 'Periksa tautannya, atau buat yang baru.',
+  'notfound.new': 'Polling baru',
+  'footer': 'Whenly · gratis, tanpa akun',
+  'donate.button': 'Donasi',
+  'donate.intro': 'Senang kamu memakai Whenly! 🎉 Tetap gratis. Traktiran kecil membuatku senang:',
+  'donate.joke': 'Penggemar berat? Silakan lebih 😄',
+  'donate.free': '… atau pilih jumlahmu sendiri',
+  'donate.thanks': 'Terima kasih! 🙏',
+  'close': 'Tutup',
+  'lang.pick': 'Pilih bahasa',
+},
+vi: {
+  'make.title': 'Khi nào chúng ta gặp nhau?',
+  'make.tagline': 'Cùng chọn một ngày. Không cần tài khoản, không rắc rối.',
+  'make.what': 'Về việc gì?',
+  'make.what.ph': 'vd: Ăn tối, padel, cuối tuần đi biển',
+  'make.name': 'Tên của bạn',
+  'make.name.ph': 'vd: Ali',
+  'make.submit': 'Tạo bình chọn',
+  'share.ready': 'Xong. Chia sẻ liên kết này:',
+  'share.copy': 'Sao chép',
+  'share.copied': 'Đã sao chép',
+  'share.button': 'Chia sẻ',
+  'legend.you': 'bạn rảnh',
+  'legend.other': 'người khác rảnh',
+  'update.text': 'Có phiên bản mới của Whenly.',
+  'update.button': 'Cập nhật',
+  'install.text': 'Thêm Whenly vào màn hình chính, như một ứng dụng.',
+  'install.button': 'Cài đặt',
+  'install.ios': 'Nhấn  ⬆  (Chia sẻ), rồi chọn “Thêm vào MH chính”.',
+  'title.edit': 'sửa tiêu đề',
+  'title.save': 'Lưu',
+  'poll.nameFirst': 'Nhập tên của bạn trước để chọn ngày.',
+  'poll.next': 'Tiếp tục',
+  'pick.who': 'Bạn là một trong số họ? Nhấn vào tên bạn:',
+  'visits': 'Lượt xem: {n}',
+  'cal.hint': 'Nhấn vào những ngày bạn rảnh',
+  'cal.prev': 'Tháng trước',
+  'cal.next': 'Tháng sau',
+  'cal.actAs': 'Bạn đang chọn với tên {name}',
+  'cal.switch': 'điền giúp người khác',
+  'cal.newName.ph': 'hoặc nhập tên mới',
+  'time.label': 'Giờ (tùy chọn, ai cũng có thể đổi)',
+  'poll.nobody': 'chưa có ai',
+  'poll.you': 'bạn',
+  'poll.at': 'lúc {time}',
+  'poll.leave': 'Xóa {name} khỏi bình chọn này',
+  'poll.leaveYes': 'Có, xóa {name}',
+  'poll.leaveNo': 'Thôi',
+  'status.none': 'Chưa có ngày nào. Hãy chọn ngày của bạn.',
+  'status.almost': 'Ngày tốt nhất đến giờ: {date}',
+  'status.everyone': 'Mọi người đều rảnh {date}',
+  'status.count': { other: '{n}/{total} người rảnh' },
+  'status.tie': 'Nhiều ngày đang dẫn đầu',
+  'status.tieEveryone': 'Nhiều ngày phù hợp với tất cả',
+  'status.tieCount': { other: '{n}/{total} người rảnh vào mỗi ngày sau:' },
+  'status.pick': 'Chọn ngày này',
+  'status.fix': 'Chốt',
+  'status.final': 'Đã chốt: {date}',
+  'status.unfix': 'Hoàn tác',
+  'err.save': 'Không lưu được. Thử lại nhé.',
+  'err.duplicate_option': 'Ngày đó đã có rồi.',
+  'err.option_in_use': 'Người khác đã chọn ngày này.',
+  'err.title_required': 'Hãy cho biết về việc gì.',
+  'err.name_required': 'Nhập tên của bạn.',
+  'err.invalid_date': 'Chọn ít nhất một ngày.',
+  'err.limit_reached': 'Bình chọn này đã đầy.',
+  'err.generic': 'Có lỗi xảy ra. Thử lại nhé.',
+  'notfound.title': 'Bình chọn này không tồn tại',
+  'notfound.text': 'Kiểm tra liên kết, hoặc tạo mới.',
+  'notfound.new': 'Bình chọn mới',
+  'footer': 'Whenly · miễn phí, không cần tài khoản',
+  'donate.button': 'Ủng hộ',
+  'donate.intro': 'Rất vui vì bạn dùng Whenly! 🎉 Nó vẫn miễn phí. Một chút ủng hộ làm tôi vui cả ngày:',
+  'donate.joke': 'Fan cứng? Vậy thì đừng ngại 😄',
+  'donate.free': '… hoặc tự chọn số tiền',
+  'donate.thanks': 'Cảm ơn! 🙏',
+  'close': 'Đóng',
+  'lang.pick': 'Chọn ngôn ngữ',
+},
+zh: {
+  'make.title': '我们什么时候见面？',
+  'make.tagline': '一起选个日期。无需账号，轻松搞定。',
+  'make.what': '是关于什么的？',
+  'make.what.ph': '例如：聚餐、板式网球、海边周末',
+  'make.name': '你的名字',
+  'make.name.ph': '例如：Ali',
+  'make.submit': '创建投票',
+  'share.ready': '完成。分享这个链接：',
+  'share.copy': '复制',
+  'share.copied': '已复制',
+  'share.button': '分享',
+  'legend.you': '你可以',
+  'legend.other': '其他人可以',
+  'update.text': 'Whenly 有新版本。',
+  'update.button': '更新',
+  'install.text': '把 Whenly 添加到主屏幕，像应用一样使用。',
+  'install.button': '安装',
+  'install.ios': '点按  ⬆ （分享），然后选择“添加到主屏幕”。',
+  'title.edit': '修改标题',
+  'title.save': '保存',
+  'poll.nameFirst': '请先输入名字，再点选日期。',
+  'poll.next': '继续',
+  'pick.who': '你是其中一位吗？点击你的名字：',
+  'visits': '访问次数：{n}',
+  'cal.hint': '点选你方便的日子',
+  'cal.prev': '上个月',
+  'cal.next': '下个月',
+  'cal.actAs': '你正以 {name} 的身份选择',
+  'cal.switch': '替别人填写',
+  'cal.newName.ph': '或输入新名字',
+  'time.label': '时间（可选，任何人都可以修改）',
+  'poll.nobody': '还没有人',
+  'poll.you': '你',
+  'poll.at': '{time}',
+  'poll.leave': '把 {name} 从此投票中移除',
+  'poll.leaveYes': '是，移除 {name}',
+  'poll.leaveNo': '算了',
+  'status.none': '还没有日期。点选你的日子。',
+  'status.almost': '目前最佳日期：{date}',
+  'status.everyone': '{date} 所有人都可以',
+  'status.count': { other: '{total} 人中有 {n} 人可以' },
+  'status.tie': '有几天并列领先',
+  'status.tieEveryone': '有几天所有人都可以',
+  'status.tieCount': { other: '以下每一天都有 {total} 人中的 {n} 人可以：' },
+  'status.pick': '就选这天',
+  'status.fix': '确定',
+  'status.final': '已确定：{date}',
+  'status.unfix': '撤销',
+  'err.save': '保存失败，请重试。',
+  'err.duplicate_option': '这个日期已经有了。',
+  'err.option_in_use': '其他人已选择了这个日期。',
+  'err.title_required': '请填写主题。',
+  'err.name_required': '请输入你的名字。',
+  'err.invalid_date': '请至少选择一个日期。',
+  'err.limit_reached': '这个投票已满。',
+  'err.generic': '出了点问题，请重试。',
+  'notfound.title': '这个投票不存在',
+  'notfound.text': '请检查链接，或创建一个新的。',
+  'notfound.new': '新建投票',
+  'footer': 'Whenly · 免费，无需账号',
+  'donate.button': '捐赠',
+  'donate.intro': '很高兴你使用 Whenly！🎉 它会一直免费。小小心意让我开心一整天：',
+  'donate.joke': '真的很喜欢？那就放开手 😄',
+  'donate.free': '…或自定金额',
+  'donate.thanks': '谢谢！🙏',
+  'close': '关闭',
+  'lang.pick': '选择语言',
+},
+ja: {
+  'make.title': 'いつ会いましょう？',
+  'make.tagline': 'みんなで日程を決めよう。アカウント不要、手間なし。',
+  'make.what': '何の予定ですか？',
+  'make.what.ph': '例：食事会、パデル、海で週末',
+  'make.name': 'あなたの名前',
+  'make.name.ph': '例：Ali',
+  'make.submit': '日程調整を作成',
+  'share.ready': '完了。このリンクを共有：',
+  'share.copy': 'コピー',
+  'share.copied': 'コピーしました',
+  'share.button': '共有',
+  'legend.you': 'あなたOK',
+  'legend.other': '他の人OK',
+  'update.text': 'Whenly の新しいバージョンがあります。',
+  'update.button': '更新',
+  'install.text': 'Whenly をアプリのようにホーム画面に追加。',
+  'install.button': 'インストール',
+  'install.ios': '⬆（共有）をタップして「ホーム画面に追加」。',
+  'title.edit': 'タイトルを変更',
+  'title.save': '保存',
+  'poll.nameFirst': '日付を選ぶには、まず名前を入力してください。',
+  'poll.next': '次へ',
+  'pick.who': 'この中にいますか？名前をタップ：',
+  'visits': '閲覧数：{n}',
+  'cal.hint': '都合のよい日をタップ',
+  'cal.prev': '前の月',
+  'cal.next': '次の月',
+  'cal.actAs': '{name} として選択中',
+  'cal.switch': '他の人の分を入力',
+  'cal.newName.ph': 'または新しい名前を入力',
+  'time.label': '時刻（任意、誰でも変更できます）',
+  'poll.nobody': 'まだ誰もいません',
+  'poll.you': 'あなた',
+  'poll.at': '{time}',
+  'poll.leave': '{name} をこの日程調整から削除',
+  'poll.leaveYes': 'はい、{name} を削除',
+  'poll.leaveNo': 'やめる',
+  'status.none': 'まだ日程がありません。都合のよい日をタップ。',
+  'status.almost': '今のところ最有力：{date}',
+  'status.everyone': '{date} は全員OK',
+  'status.count': { other: '{total}人中{n}人OK' },
+  'status.tie': '複数の日が並んでいます',
+  'status.tieEveryone': '複数の日が全員OK',
+  'status.tieCount': { other: '以下の各日は{total}人中{n}人OK：' },
+  'status.pick': 'この日にする',
+  'status.fix': '確定',
+  'status.final': '決定：{date}',
+  'status.unfix': '取り消す',
+  'err.save': '保存できませんでした。もう一度お試しください。',
+  'err.duplicate_option': 'その日付はすでにあります。',
+  'err.option_in_use': '他の人がこの日付を選んでいます。',
+  'err.title_required': '何の予定か入力してください。',
+  'err.name_required': '名前を入力してください。',
+  'err.invalid_date': '日付を1つ以上選んでください。',
+  'err.limit_reached': 'この日程調整は満員です。',
+  'err.generic': '問題が発生しました。もう一度お試しください。',
+  'notfound.title': 'この日程調整は存在しません',
+  'notfound.text': 'リンクを確認するか、新しく作成してください。',
+  'notfound.new': '新しい日程調整',
+  'footer': 'Whenly · 無料、アカウント不要',
+  'donate.button': '寄付',
+  'donate.intro': 'Whenly を使ってくれてありがとう！🎉 ずっと無料です。ちょっとした応援がうれしいです：',
+  'donate.joke': '大ファンですか？なら思い切って 😄',
+  'donate.free': '…または金額を自由に選ぶ',
+  'donate.thanks': 'ありがとう！🙏',
+  'close': '閉じる',
+  'lang.pick': '言語を選択',
+},
+ko: {
+  'make.title': '언제 만날까요?',
+  'make.tagline': '함께 날짜를 정하세요. 계정 없이, 번거로움 없이.',
+  'make.what': '무슨 일인가요?',
+  'make.what.ph': '예: 저녁 식사, 파델, 바다에서 주말',
+  'make.name': '이름',
+  'make.name.ph': '예: Ali',
+  'make.submit': '투표 만들기',
+  'share.ready': '완료. 이 링크를 공유하세요:',
+  'share.copy': '복사',
+  'share.copied': '복사됨',
+  'share.button': '공유',
+  'legend.you': '나 가능',
+  'legend.other': '다른 사람 가능',
+  'update.text': 'Whenly의 새 버전이 있습니다.',
+  'update.button': '업데이트',
+  'install.text': 'Whenly를 앱처럼 홈 화면에 추가하세요.',
+  'install.button': '설치',
+  'install.ios': '⬆ (공유)를 누른 다음 “홈 화면에 추가”를 선택하세요.',
+  'title.edit': '제목 수정',
+  'title.save': '저장',
+  'poll.nameFirst': '날짜를 선택하려면 먼저 이름을 입력하세요.',
+  'poll.next': '계속',
+  'pick.who': '이 중 한 명인가요? 이름을 누르세요:',
+  'visits': '조회수: {n}',
+  'cal.hint': '가능한 날을 누르세요',
+  'cal.prev': '이전 달',
+  'cal.next': '다음 달',
+  'cal.actAs': '{name}(으)로 선택 중',
+  'cal.switch': '다른 사람 대신 입력',
+  'cal.newName.ph': '또는 새 이름 입력',
+  'time.label': '시간 (선택 사항, 누구나 변경 가능)',
+  'poll.nobody': '아직 없음',
+  'poll.you': '나',
+  'poll.at': '{time}',
+  'poll.leave': '이 투표에서 {name} 삭제',
+  'poll.leaveYes': '네, {name} 삭제',
+  'poll.leaveNo': '취소',
+  'status.none': '아직 날짜가 없어요. 가능한 날을 누르세요.',
+  'status.almost': '지금까지 가장 좋은 날: {date}',
+  'status.everyone': '{date}에 모두 가능',
+  'status.count': { other: '{total}명 중 {n}명 가능' },
+  'status.tie': '여러 날이 앞서고 있어요',
+  'status.tieEveryone': '여러 날이 모두에게 가능',
+  'status.tieCount': { other: '다음 각 날짜에 {total}명 중 {n}명 가능:' },
+  'status.pick': '이 날로',
+  'status.fix': '확정',
+  'status.final': '확정됨: {date}',
+  'status.unfix': '취소',
+  'err.save': '저장하지 못했어요. 다시 시도하세요.',
+  'err.duplicate_option': '그 날짜는 이미 있어요.',
+  'err.option_in_use': '다른 사람이 이 날짜를 선택했어요.',
+  'err.title_required': '무슨 일인지 적어 주세요.',
+  'err.name_required': '이름을 입력하세요.',
+  'err.invalid_date': '날짜를 하나 이상 선택하세요.',
+  'err.limit_reached': '이 투표는 가득 찼어요.',
+  'err.generic': '문제가 생겼어요. 다시 시도하세요.',
+  'notfound.title': '이 투표는 없어요',
+  'notfound.text': '링크를 확인하거나 새로 만드세요.',
+  'notfound.new': '새 투표',
+  'footer': 'Whenly · 무료, 계정 불필요',
+  'donate.button': '후원',
+  'donate.intro': 'Whenly를 써 주셔서 기뻐요! 🎉 계속 무료예요. 작은 응원이 큰 힘이 됩니다:',
+  'donate.joke': '진짜 팬이라면? 마음껏 😄',
+  'donate.free': '… 또는 금액 직접 정하기',
+  'donate.thanks': '고마워요! 🙏',
+  'close': '닫기',
+  'lang.pick': '언어 선택',
+},
+sw: {
+  'make.title': 'Tukutane lini?',
+  'make.tagline': 'Pangeni tarehe pamoja. Bila akaunti, bila usumbufu.',
+  'make.what': 'Inahusu nini?',
+  'make.what.ph': 'mf. Chakula cha jioni, padel, wikendi pwani',
+  'make.name': 'Jina lako',
+  'make.name.ph': 'mf. Ali',
+  'make.submit': 'Tengeneza kura',
+  'share.ready': 'Tayari. Shiriki kiungo hiki:',
+  'share.copy': 'Nakili',
+  'share.copied': 'Imenakiliwa',
+  'share.button': 'Shiriki',
+  'legend.you': 'unaweza',
+  'legend.other': 'mtu mwingine anaweza',
+  'update.text': 'Kuna toleo jipya la Whenly.',
+  'update.button': 'Sasisha',
+  'install.text': 'Ongeza Whenly kwenye skrini ya mwanzo, kama programu.',
+  'install.button': 'Sakinisha',
+  'install.ios': 'Gusa  ⬆  (Shiriki), kisha “Ongeza kwenye Skrini ya Mwanzo”.',
+  'title.edit': 'badilisha kichwa',
+  'title.save': 'Hifadhi',
+  'poll.nameFirst': 'Andika jina lako kwanza ili kuchagua siku.',
+  'poll.next': 'Endelea',
+  'pick.who': 'Je, wewe ni mmoja wao? Bofya jina lako:',
+  'visits': 'Idadi ya ziara: {n}',
+  'cal.hint': 'Bofya siku zinazokufaa',
+  'cal.prev': 'Mwezi uliopita',
+  'cal.next': 'Mwezi ujao',
+  'cal.actAs': 'Unachagua kama {name}',
+  'cal.switch': 'jaza kwa niaba ya mtu mwingine',
+  'cal.newName.ph': 'au andika jina jipya',
+  'time.label': 'Saa (si lazima, mtu yeyote anaweza kubadilisha)',
+  'poll.nobody': 'bado hakuna',
+  'poll.you': 'wewe',
+  'poll.at': 'saa {time}',
+  'poll.leave': 'Ondoa {name} kwenye kura hii',
+  'poll.leaveYes': 'Ndiyo, ondoa {name}',
+  'poll.leaveNo': 'Acha',
+  'status.none': 'Bado hakuna tarehe. Bofya siku zako.',
+  'status.almost': 'Siku bora hadi sasa: {date}',
+  'status.everyone': 'Kila mtu anaweza {date}',
+  'status.count': { one: '{n} kati ya {total} anaweza', other: '{n} kati ya {total} wanaweza' },
+  'status.tie': 'Siku kadhaa zinaongoza',
+  'status.tieEveryone': 'Siku kadhaa zinafaa kwa wote',
+  'status.tieCount': { one: '{n} kati ya {total} anaweza kila moja ya siku hizi:', other: '{n} kati ya {total} wanaweza kila moja ya siku hizi:' },
+  'status.pick': 'Chagua hii',
+  'status.fix': 'Thibitisha',
+  'status.final': 'Imekubaliwa: {date}',
+  'status.unfix': 'Tengua',
+  'err.save': 'Imeshindwa kuhifadhi. Jaribu tena.',
+  'err.duplicate_option': 'Tarehe hiyo tayari ipo.',
+  'err.option_in_use': 'Mtu mwingine amechagua tarehe hii.',
+  'err.title_required': 'Andika inahusu nini.',
+  'err.name_required': 'Andika jina lako.',
+  'err.invalid_date': 'Chagua angalau tarehe moja.',
+  'err.limit_reached': 'Kura hii imejaa.',
+  'err.generic': 'Kuna hitilafu. Jaribu tena.',
+  'notfound.title': 'Kura hii haipo',
+  'notfound.text': 'Angalia kiungo, au tengeneza mpya.',
+  'notfound.new': 'Kura mpya',
+  'footer': 'Whenly · bure, bila akaunti',
+  'donate.button': 'Changia',
+  'donate.intro': 'Nafurahi unatumia Whenly! 🎉 Itabaki bure. Zawadi ndogo hunifurahisha:',
+  'donate.joke': 'Shabiki mkubwa kweli? Basi usisite 😄',
+  'donate.free': '… au chagua kiasi chako',
+  'donate.thanks': 'Asante! 🙏',
+  'close': 'Funga',
+  'lang.pick': 'Chagua lugha',
+},
 };
 const BRAND = 'Whenly';
 // Wordt bij het deployen vervangen door het korte git-commitnummer.
@@ -431,8 +1805,6 @@ const VERSION = '__VERSION__';
 const VERSIE = VERSION.startsWith('__') ? 'dev' : VERSION;
 // PayPal voor de donatieknop: PayPal.me-naam (of e-mailadres). Leeg = verborgen.
 const PAYPAL = 'ABoullbahaiem';
-const LOCALES = { nl: 'nl-BE', en: 'en-GB', fr: 'fr-BE' };
-const FLAGS = { nl: '\u{1F1E7}\u{1F1EA}', en: '\u{1F1EC}\u{1F1E7}', fr: '\u{1F1EB}\u{1F1F7}' };
 // Eén vaste kleur per persoon (volgorde van binnenkomst), goed leesbaar op wit.
 const KLEUREN = ['#0072B2', '#E69F00', '#009E73', '#CC79A7', '#D55E00', '#56B4E9', '#8E63C6', '#6B7580'];
 const LS = {
@@ -444,19 +1816,62 @@ const LS = {
   just: 'prikdatum.justCreated',
 };
 
+/* ---------- taal en regio bepalen ---------- */
+function browserTalen() {
+  const lijst = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || 'en'];
+  return Array.from(lijst, (x) => String(x));
+}
+function basisTaal(tag) {
+  const b = tag.toLowerCase().split('-')[0];
+  return TALEN[b] ? b : null;
+}
+// Eerst de bewaarde keuze, dan de talen van de browser op volgorde van voorkeur, anders Engels.
 function bepaalTaal() {
   try {
     const opgeslagen = localStorage.getItem(LS.lang);
-    if (opgeslagen && STRINGS['lang.' + opgeslagen]) return opgeslagen;
+    if (opgeslagen && TALEN[opgeslagen]) return opgeslagen;
   } catch {}
-  const nav = (navigator.language || '').toLowerCase();
-  if (nav.startsWith('fr')) return 'fr';
-  if (nav.startsWith('en')) return 'en';
-  return 'nl';
+  for (const tag of browserTalen()) {
+    const b = basisTaal(tag);
+    if (b) return b;
+  }
+  return 'en';
+}
+// Datumlocale: de regio van de browser als die bij de taal hoort (en-US, pt-BR,
+// ar-SA ...), anders de standaardregio van de taal.
+function bepaalLocale(lang) {
+  for (const tag of browserTalen()) {
+    if (basisTaal(tag) === lang && tag.includes('-')) return tag;
+  }
+  return TALEN[lang].locale;
+}
+// Voor Intl: altijd de Gregoriaanse kalender en Latijnse cijfers, want het
+// kalenderraster en de ingetypte uren zijn dat ook.
+function datumLocale() {
+  const l = state.locale;
+  try { new Intl.DateTimeFormat(l); } catch { return TALEN[state.lang].locale + '-u-ca-gregory-nu-latn'; }
+  return l.includes('-u-') ? l : l + '-u-ca-gregory-nu-latn';
+}
+// Eerste dag van de week: 1 = maandag ... 7 = zondag. Via Intl als de browser
+// dat kent, anders een tabel per regio (CLDR).
+const WEEK_ZONDAG = new Set('AG AS BD BR BS BT BW BZ CA CO DM DO ET GT GU HK HN ID IL IN JM JP KE KH KR LA MH MM MO MT MX MZ NI NP PA PE PH PK PR PY SA SG SV TH TT TW UM US VE VI WS YE ZA ZW'.split(' '));
+const WEEK_ZATERDAG = new Set('AE AF BH DJ DZ EG IQ IR JO KW LY OM QA SD SY'.split(' '));
+function eersteWeekdag() {
+  let regio = '';
+  try {
+    const loc = new Intl.Locale(state.locale);
+    const wi = typeof loc.getWeekInfo === 'function' ? loc.getWeekInfo() : loc.weekInfo;
+    if (wi && wi.firstDay >= 1 && wi.firstDay <= 7) return wi.firstDay;
+    regio = (loc.maximize().region || '').toUpperCase();
+  } catch {}
+  if (WEEK_ZONDAG.has(regio)) return 7;
+  if (WEEK_ZATERDAG.has(regio)) return 6;
+  return 1;
 }
 
 const state = {
   lang: bepaalTaal(),
+  locale: null,        // wordt hieronder gezet (hangt af van lang)
   pollId: null,
   data: null,
   lastJson: '',
@@ -468,19 +1883,42 @@ const state = {
   nieuwOpen: false,
   tapDag: null,
 };
+state.locale = bepaalLocale(state.lang);
+
+function heeftTekst(sleutel) { return sleutel in VERTALINGEN.en; }
 
 function t(sleutel, vars) {
-  let s = (STRINGS[sleutel] || {})[state.lang] || '';
+  const taal = VERTALINGEN[state.lang] || VERTALINGEN.en;
+  let s = taal[sleutel];
+  if (s === undefined) s = VERTALINGEN.en[sleutel];
+  if (s === undefined) s = sleutel;
+  if (typeof s === 'object') {
+    // meervoudsvormen: kies op basis van {n}
+    const n = vars && vars.n !== undefined ? Number(vars.n) : 0;
+    let vorm = 'other';
+    try { vorm = new Intl.PluralRules(state.locale).select(n); } catch {}
+    s = s[vorm] !== undefined ? s[vorm] : (s.other !== undefined ? s.other : Object.values(s)[0]);
+  }
   if (vars) for (const k of Object.keys(vars)) s = s.replaceAll('{' + k + '}', String(vars[k]));
   return s;
+}
+
+// 'HH:MM' -> per regio (18:00, 6:00 PM, 18.00 ...)
+function fmtTijd(tijd) {
+  const m = /^(\d{1,2}):(\d{2})$/.exec(tijd || '');
+  if (!m) return tijd || '';
+  try {
+    return new Intl.DateTimeFormat(datumLocale(), { hour: 'numeric', minute: '2-digit' })
+      .format(new Date(2024, 0, 1, Number(m[1]), Number(m[2])));
+  } catch { return tijd; }
 }
 
 function fmtDatum(datum, tijd) {
   const d = new Date(datum + 'T12:00:00');
   const opties = { weekday: 'short', day: 'numeric', month: 'short' };
   if (d.getFullYear() !== new Date().getFullYear()) opties.year = 'numeric';
-  let s = new Intl.DateTimeFormat(LOCALES[state.lang], opties).format(d);
-  if (tijd) s += ' ' + t('poll.at', { time: tijd });
+  let s = new Intl.DateTimeFormat(datumLocale(), opties).format(d);
+  if (tijd) s += ' ' + t('poll.at', { time: fmtTijd(tijd) });
   return s;
 }
 
@@ -496,6 +1934,9 @@ function el(tag, cls, tekst) {
   if (tekst !== undefined) n.textContent = tekst;
   return n;
 }
+// Naam of titel van een gebruiker: geïsoleerd, zodat een Arabische naam in een
+// Nederlandse zin (of omgekeerd) de leestekens niet laat verspringen.
+function bdi(tekst) { return el('bdi', null, tekst); }
 
 async function api(pad, methode, body) {
   const res = await fetch('/api' + pad, {
@@ -510,38 +1951,88 @@ async function api(pad, methode, body) {
 
 function foutTekst(data) {
   const code = data && data.error;
-  return STRINGS['err.' + code] ? t('err.' + code) : t('err.generic');
+  return heeftTekst('err.' + code) ? t('err.' + code) : t('err.generic');
 }
 
-/* ---------- vlaggetje ---------- */
+/* ---------- taalkeuze (wereldbol + eigen naam van elke taal) ---------- */
 const vlagBtn = document.getElementById('vlag');
 const talenMenu = document.getElementById('talen');
 let hertaal = () => {};
 
+function wereldbol() {
+  const ns = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(ns, 'svg');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('width', '22');
+  svg.setAttribute('height', '22');
+  svg.setAttribute('aria-hidden', 'true');
+  const vorm = (tag, attrs) => {
+    const n = document.createElementNS(ns, tag);
+    for (const k of Object.keys(attrs)) n.setAttribute(k, attrs[k]);
+    n.setAttribute('fill', 'none');
+    n.setAttribute('stroke', 'currentColor');
+    n.setAttribute('stroke-width', '1.8');
+    return n;
+  };
+  svg.append(
+    vorm('circle', { cx: 12, cy: 12, r: 9 }),
+    vorm('ellipse', { cx: 12, cy: 12, rx: 4, ry: 9 }),
+    vorm('line', { x1: 3, y1: 12, x2: 21, y2: 12 }),
+  );
+  return svg;
+}
+
+// Alles wat buiten de schermen om van de taal afhangt.
+function pasTaalToe() {
+  document.documentElement.lang = state.lang;
+  document.documentElement.dir = TALEN[state.lang].rtl ? 'rtl' : 'ltr';
+  vlagBtn.textContent = '';
+  vlagBtn.append(wereldbol(), el('span', 'taalcode', state.lang.toUpperCase()));
+  vlagBtn.setAttribute('aria-label', t('lang.pick'));
+  vlagBtn.title = t('lang.pick');
+  document.getElementById('installSluit').setAttribute('aria-label', t('close'));
+  document.getElementById('voet').textContent = t('footer') + ' · v' + VERSIE;
+}
+
+function sluitTalen() {
+  talenMenu.classList.add('verborgen');
+  vlagBtn.setAttribute('aria-expanded', 'false');
+}
+
+function kiesTaal(l) {
+  state.lang = l;
+  state.locale = bepaalLocale(l);
+  try { localStorage.setItem(LS.lang, l); } catch {}
+  sluitTalen();
+  pasTaalToe();
+  bouwTalen();
+  doneerHertaal();
+  hertaal();
+}
+
 function bouwTalen() {
   talenMenu.textContent = '';
-  for (const l of ['nl', 'en', 'fr']) {
-    const b = el('button', null, FLAGS[l] + ' ' + t('lang.' + l));
+  for (const l of Object.keys(TALEN)) {
+    const b = el('button', l === state.lang ? 'actief' : null, TALEN[l].naam);
     b.type = 'button';
-    b.addEventListener('click', () => {
-      state.lang = l;
-      try { localStorage.setItem(LS.lang, l); } catch {}
-      talenMenu.classList.add('verborgen');
-      document.documentElement.lang = l;
-      vlagBtn.textContent = FLAGS[state.lang];
-      bouwTalen();
-      document.getElementById('voet').textContent = t('footer') + ' \u00B7 v' + VERSIE;
-      doneerHertaal();
-      hertaal();
-    });
+    b.lang = l;
+    if (l === state.lang) b.setAttribute('aria-current', 'true');
+    b.addEventListener('click', () => kiesTaal(l));
     talenMenu.appendChild(b);
   }
 }
-vlagBtn.addEventListener('click', () => talenMenu.classList.toggle('verborgen'));
-vlagBtn.textContent = FLAGS[state.lang];
-document.documentElement.lang = state.lang;
+
+vlagBtn.setAttribute('aria-haspopup', 'true');
+vlagBtn.setAttribute('aria-expanded', 'false');
+vlagBtn.addEventListener('click', (e) => {
+  e.stopPropagation();
+  const dicht = talenMenu.classList.toggle('verborgen');
+  vlagBtn.setAttribute('aria-expanded', String(!dicht));
+});
+document.addEventListener('click', (e) => { if (!talenMenu.contains(e.target)) sluitTalen(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') sluitTalen(); });
+pasTaalToe();
 bouwTalen();
-document.getElementById('voet').textContent = t('footer') + ' \u00B7 v' + VERSIE;
 
 /* ---------- doneren (PayPal.me) ---------- */
 let doneerHertaal = () => {};
@@ -613,13 +2104,13 @@ function schermMaken() {
   watLabel.htmlFor = 'titel';
   const titelIn = el('input');
   titelIn.type = 'text'; titelIn.id = 'titel'; titelIn.maxLength = 80; titelIn.autofocus = true;
-  titelIn.autocomplete = 'off';
+  titelIn.autocomplete = 'off'; titelIn.dir = 'auto';
 
   const naamLabel = el('label', 'label');
   naamLabel.htmlFor = 'naam';
   const naamIn = el('input');
   naamIn.type = 'text'; naamIn.id = 'naam'; naamIn.maxLength = 40;
-  naamIn.autocomplete = 'off';
+  naamIn.autocomplete = 'off'; naamIn.dir = 'auto';
   try { naamIn.value = localStorage.getItem(LS.name) || ''; } catch {}
 
   const maakBtn = el('button');
@@ -653,7 +2144,7 @@ function schermMaken() {
   });
 
   hertaal = () => {
-    document.title = t('make.title');
+    document.title = t('make.title') + ' \u00B7 ' + BRAND;
     titelKop.textContent = t('make.title');
     tagline.textContent = t('make.tagline');
     watLabel.textContent = t('make.what');
@@ -684,17 +2175,17 @@ function schermAfspraak(pollId) {
   /* --- vaste elementen die nooit mee her-renderen --- */
   const deel = el('div', 'deel verborgen');
   const deelTekst = el('span');
-  const deelUrl = el('span', 'url', location.origin + '/p/' + pollId);
+  const deelUrl = el('span', 'url', location.origin + '/p/' + pollId); deelUrl.dir = 'ltr';
   const kopieKnop = el('button', 'klein'); kopieKnop.type = 'button';
   deel.append(deelTekst, deelUrl, kopieKnop);
 
   const titelRij = el('div', 'titelrij');
-  const titelKop = el('h1');
+  const titelKop = el('h1'); titelKop.dir = 'auto';
   const deelKnop = el('button', 'sec klein'); deelKnop.type = 'button';
   deelKnop.style.cssText = 'margin:0 0 4px; padding:6px 0;';
   const titelEditBtn = el('button', 'sec'); titelEditBtn.type = 'button';
   const titelEditor = el('div', 'titeleditor verborgen');
-  const titelIn = el('input'); titelIn.type = 'text'; titelIn.maxLength = 80; titelIn.autocomplete = 'off';
+  const titelIn = el('input'); titelIn.type = 'text'; titelIn.maxLength = 80; titelIn.autocomplete = 'off'; titelIn.dir = 'auto';
   const titelOk = el('button', 'klein'); titelOk.type = 'button';
   titelEditor.append(titelIn, titelOk);
   titelRij.append(titelKop, titelEditBtn, titelEditor);
@@ -706,7 +2197,7 @@ function schermAfspraak(pollId) {
   naamLabel.htmlFor = 'joinnaam';
   const naamIn = el('input');
   naamIn.type = 'text'; naamIn.id = 'joinnaam'; naamIn.maxLength = 40;
-  naamIn.autocomplete = 'off';
+  naamIn.autocomplete = 'off'; naamIn.dir = 'auto';
   try { naamIn.value = localStorage.getItem(LS.name) || ''; } catch {}
   const verderBtn = el('button'); verderBtn.type = 'button';
   const naamFout = el('p', 'fout verborgen');
@@ -716,14 +2207,15 @@ function schermAfspraak(pollId) {
 
   const wieBar = el('p', 'wie verborgen');
   const wieTekst = el('span');
-  const wieNaam = el('b');
+  const wieNaam = el('b'); // geïsoleerd via CSS (unicode-bidi), zie .wie b
+  const wieNa = el('span');
   const wieWissel = el('button', 'sec'); wieWissel.type = 'button';
-  wieBar.append(wieTekst, wieNaam, document.createTextNode(' · '), wieWissel);
+  wieBar.append(wieTekst, wieNaam, wieNa, document.createTextNode(' · '), wieWissel);
 
   const chipsLabel = el('p', 'kopje verborgen');
   const chips = el('div', 'chips verborgen');
   const nieuwRij = el('div', 'nieuw verborgen');
-  const nieuwIn = el('input'); nieuwIn.type = 'text'; nieuwIn.maxLength = 40; nieuwIn.autocomplete = 'off';
+  const nieuwIn = el('input'); nieuwIn.type = 'text'; nieuwIn.maxLength = 40; nieuwIn.autocomplete = 'off'; nieuwIn.dir = 'auto';
   const nieuwOk = el('button', 'klein'); nieuwOk.type = 'button';
   nieuwRij.append(nieuwIn, nieuwOk);
 
@@ -993,7 +2485,7 @@ function schermAfspraak(pollId) {
       const stukje = el('span', 'naampje');
       const stip = el('span', 'stip');
       stip.style.background = kleurVan(pid);
-      stukje.append(stip, el('span', null, pid === state.me ? t('poll.you') : naamVan.get(pid)));
+      stukje.append(stip, pid === state.me ? el('span', null, t('poll.you')) : bdi(naamVan.get(pid)));
       houder.append(stukje);
     }
     return houder;
@@ -1089,18 +2581,24 @@ function schermAfspraak(pollId) {
   /* --- kalender: twee maanden tegelijk --- */
   function maandBlok(m, perDag, vandaag) {
     const d = state.data;
-    const locale = LOCALES[state.lang];
+    const locale = datumLocale();
     const blok = el('div', 'maandblok');
     blok.append(el('div', 'maandnaam', new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(m)));
 
     const grid = el('div', 'kalgrid');
+    // weekstart per regio (ma in Europa, zo in de VS/India/Japan, za in Egypte ...)
+    const eersteDag = eersteWeekdag(); // 1 = ma ... 7 = zo
     const maandag = new Date(2024, 0, 1); // een maandag
+    // Arabisch: de "korte" weekdag is de volledige naam, dus daar één letter (zoals Arabische kalenders doen)
+    const wdVorm = state.lang === 'ar' ? 'narrow' : 'short';
     for (let i = 0; i < 7; i++) {
-      const wd = new Date(maandag); wd.setDate(maandag.getDate() + i);
-      grid.append(el('div', 'kalwd', new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(wd)));
+      const wd = new Date(maandag); wd.setDate(maandag.getDate() + (eersteDag - 1) + i);
+      const cel = el('div', 'kalwd', new Intl.DateTimeFormat(locale, { weekday: wdVorm }).format(wd));
+      cel.title = new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(wd);
+      grid.append(cel);
     }
     const eerste = new Date(m.getFullYear(), m.getMonth(), 1);
-    const start = (eerste.getDay() + 6) % 7; // ma=0
+    const start = (eerste.getDay() - (eersteDag % 7) + 7) % 7; // 0 = valt op de eerste kolom
     const dagen = new Date(m.getFullYear(), m.getMonth() + 1, 0).getDate();
     for (let i = 0; i < start; i++) grid.append(el('div', 'dag leeg'));
     for (let dag = 1; dag <= dagen; dag++) {
@@ -1150,7 +2648,7 @@ function schermAfspraak(pollId) {
     kal.classList.toggle('inactief', !state.me);
     const d = state.data;
     const perDag = new Map(d.options.map((o) => [o.date, o]));
-    const locale = LOCALES[state.lang];
+    const locale = datumLocale();
     const m0 = state.kalMaand;
     const m1 = new Date(m0.getFullYear(), m0.getMonth() + 1, 1);
     const vandaag = isoDag(new Date());
@@ -1162,11 +2660,13 @@ function schermAfspraak(pollId) {
     const mnd = el('span', 'mnd');
     mnd.id = 'kalmaand';
     mnd.dataset.maand = m0.getFullYear() + '-' + String(m0.getMonth() + 1).padStart(2, '0');
-    const naam0 = new Intl.DateTimeFormat(locale, { month: 'long' }).format(m0);
-    const jaar1 = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(m1);
-    mnd.textContent = (m0.getFullYear() === m1.getFullYear())
-      ? naam0 + ' – ' + jaar1
-      : new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(m0) + ' – ' + jaar1;
+    // formatRange kent de conventies per taal ("oktober – november 2026", "2026年10月～11月")
+    const fmtM = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' });
+    try {
+      mnd.textContent = fmtM.formatRange(m0, m1);
+    } catch {
+      mnd.textContent = fmtM.format(m0) + ' – ' + fmtM.format(m1);
+    }
     const verder = el('button', null, '›'); verder.type = 'button';
     verder.setAttribute('aria-label', t('cal.next'));
     terug.addEventListener('click', () => { state.kalMaand = new Date(m0.getFullYear(), m0.getMonth() - 1, 1); bouwKal(); });
@@ -1207,9 +2707,12 @@ function schermAfspraak(pollId) {
 
     const ik = d.participants.find((p) => p.id === state.me);
     wieBar.classList.toggle('verborgen', !state.me);
-    wieTekst.textContent = t('cal.actAs') + ' ';
+    // "{name}" mag vooraan of achteraan staan, afhankelijk van de taal
+    const [voor, na] = t('cal.actAs').split('{name}');
+    wieTekst.textContent = voor || '';
     wieNaam.textContent = ik ? ik.name : '';
     wieNaam.style.color = ik ? kleurVan(ik.id) : '';
+    wieNa.textContent = na || '';
     wieWissel.textContent = t('cal.switch');
 
     // gekleurde naamchips: altijd zichtbaar zolang er deelnemers zijn.
@@ -1225,7 +2728,7 @@ function schermAfspraak(pollId) {
       b.type = 'button';
       const stip = el('span', 'stip');
       stip.style.background = kleurVan(p.id);
-      b.append(stip, el('span', null, p.name + (p.id === state.own ? ' (' + t('poll.you') + ')' : '')));
+      b.append(stip, bdi(p.name), el('span', null, p.id === state.own ? ' (' + t('poll.you') + ')' : ''));
       b.addEventListener('click', async () => {
         if (!state.own) {
           // fris toestel: deze naam claimen als de jouwe

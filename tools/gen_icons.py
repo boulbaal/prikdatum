@@ -88,8 +88,8 @@ def main():
     f_title = font(96, bold=True)
     f_sub = font(40, bold=False)
     d.text((430, 210), 'Whenly', font=f_title, fill=GROEN)
-    d.text((432, 330), 'Prik samen een datum.', font=f_sub, fill=TEKST)
-    d.text((432, 386), 'Zonder account, zonder gedoe.', font=f_sub, fill=GEDEMPT)
+    d.text((432, 330), 'Pick a date together.', font=f_sub, fill=TEKST)
+    d.text((432, 386), 'No account, no fuss. Free.', font=f_sub, fill=GEDEMPT)
     d.text((432, 470), 'whenly.vanali.workers.dev', font=font(30, bold=True), fill=GROEN)
     og.save(os.path.join(OUT, 'og.png'))
 
