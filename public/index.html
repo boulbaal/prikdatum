@@ -303,22 +303,30 @@
   .dag.verleden { border-style: dashed; }
   .dag.verleden.mijn, .dag.verleden.optie { border-style: solid; }
 
-  /* doneren */
+  /* doneren — licht en vrolijk */
   .doneer { margin-top: 22px; }
   .doneer-knop {
-    background: none; border: 1px solid var(--lijn); color: var(--groen);
-    border-radius: 22px; padding: 8px 18px; min-height: 44px; font-size: 14px;
+    background: none; border: 1px solid var(--groen); color: var(--groen);
+    border-radius: 22px; padding: 8px 20px; min-height: 44px; font-size: 15px; font-weight: 600;
   }
-  .doneer-paneel { margin-top: 12px; border: 1px solid var(--lijn); border-radius: 10px; padding: 14px; max-width: 360px; }
-  .doneer-intro { font-size: 14px; color: var(--tekst); margin: 0 0 10px; }
-  .doneer-rij { display: flex; flex-wrap: wrap; gap: 8px; }
+  .doneer-paneel {
+    margin-top: 12px; background: var(--lichtgroen); border: none;
+    border-radius: 16px; padding: 18px; max-width: 400px;
+    animation: fade .18s ease-out;
+  }
+  .doneer-intro { font-size: 15px; color: var(--tekst); margin: 0 0 14px; line-height: 1.45; }
+  .doneer-rij { display: flex; flex-wrap: wrap; gap: 10px; }
   .doneer-bedrag {
-    background: var(--lichtgroen); border: 1px solid var(--groen); color: var(--groen);
-    border-radius: 8px; padding: 10px 16px; min-height: 44px; font-weight: 600;
+    background: var(--groen); border: none; color: #fff;
+    border-radius: 12px; padding: 12px 20px; min-height: 48px; min-width: 62px;
+    font-weight: 700; font-size: 17px;
     text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 1px 2px rgba(47,143,91,.25); transition: transform .1s ease, filter .1s ease;
   }
-  .doneer-joke { font-size: 13px; color: var(--gedempt); margin: 12px 0 6px; }
-  .doneer-vrij { display: inline-block; margin-top: 10px; color: var(--groen); text-decoration: underline; font-size: 14px; }
+  .doneer-bedrag:hover { filter: brightness(1.06); transform: translateY(-1px); }
+  .doneer-bedrag:active { transform: translateY(0); }
+  .doneer-joke { font-size: 14px; color: var(--gedempt); margin: 16px 0 8px; }
+  .doneer-vrij { display: inline-block; margin-top: 14px; color: var(--groen); text-decoration: underline; font-size: 14px; }
 </style>
 </head>
 <body>
@@ -412,9 +420,9 @@ const STRINGS = {
   'lang.en':           { nl: 'English', en: 'English', fr: 'English' },
   'lang.fr':           { nl: 'Français', en: 'Français', fr: 'Français' },
   'donate.button':     { nl: 'Doneer', en: 'Donate', fr: 'Faire un don' },
-  'donate.intro':      { nl: 'Whenly is en blijft gratis. Vind je het handig? Trakteer me gerust:', en: "Whenly is free and stays free. Handy? Feel free to treat me:", fr: 'Whenly est et reste gratuit. Ça te sert ? Offre-moi un petit quelque chose :' },
+  'donate.intro':      { nl: 'Leuk dat je Whenly gebruikt! 🎉 Het blijft gratis — een kleine traktatie maakt me blij:', en: 'Glad you use Whenly! 🎉 It stays free — a small treat makes my day:', fr: 'Content que tu utilises Whenly ! 🎉 Ça reste gratuit — un petit geste me fait plaisir :' },
   'donate.joke':       { nl: 'Echt groot fan? Dan mag het gek 😄', en: 'Really a big fan? Then go wild 😄', fr: 'Vraiment fan ? Alors lâche-toi 😄' },
-  'donate.free':       { nl: 'Liever zelf een bedrag kiezen', en: 'Rather choose your own amount', fr: 'Plutôt choisir ton montant' },
+  'donate.free':       { nl: '… of kies zelf je bedrag', en: '… or pick your own amount', fr: '… ou choisis ton montant' },
   'donate.thanks':     { nl: 'Merci! 🙏', en: 'Thanks! 🙏', fr: 'Merci ! 🙏' },
 };
 const BRAND = 'Whenly';
@@ -578,7 +586,15 @@ let doneerHertaal = () => {};
     vrij.href = link(null); vrij.target = '_blank'; vrij.rel = 'noopener';
     paneel.append(vrij);
   }
-  btn.addEventListener('click', () => paneel.classList.toggle('verborgen'));
+  btn.addEventListener('click', () => {
+    paneel.classList.toggle('verborgen');
+    if (!paneel.classList.contains('verborgen')) {
+      // zorg dat het paneel echt in beeld komt (niet onder de vouw blijft)
+      setTimeout(() => {
+        try { paneel.scrollIntoView({ behavior: 'smooth', block: 'center' }); } catch { paneel.scrollIntoView(); }
+      }, 60);
+    }
+  });
   vul();
   doneerHertaal = vul;
 })();
