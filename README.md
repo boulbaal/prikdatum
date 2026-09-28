@@ -2,7 +2,7 @@
 
 **Probeer het live: [prikdatum.vanali.workers.dev](https://prikdatum.vanali.workers.dev)**
 
-**Een datum prikken met vrienden, zonder gedoe.** Typ waarover het gaat, kies een paar datums, deel de link. Wie de link opent, typt zijn naam en vinkt aan welke datums lukken. Zodra er een datum uitspringt, staat er bovenaan in het groen: *"We hebben een datum!"*
+**Een datum prikken met vrienden, zonder gedoe.** Typ waarover het gaat en je naam, en je staat op de afsprakenpagina met een open kalender. Dagen die lukken klik je gewoon aan. Deel de link; wie hem opent geeft eerst zijn naam en klikt dan mee. Zodra er een datum uitspringt, staat er bovenaan in het groen: *"We hebben een datum!"*
 
 Geen accounts. Geen wachtwoorden. Geen beheerder. Geen opslaan-knop. Iedereen met de link kan precies hetzelfde.
 
@@ -12,9 +12,9 @@ Geen accounts. Geen wachtwoorden. Geen beheerder. Geen opslaan-knop. Iedereen me
 
 ## Waarom dit fijn werkt
 
-- **Het gaat vanzelf** — een vinkje is meteen opgeslagen; er is geen opslaan-knop en geen enkel bevestigingsvenster.
-- **Iedereen is gelijk** — wie de link heeft kan datums toevoegen, aanvinken en de knoop doorhakken. Er is niets dat alleen "de maker" kan.
-- **Je naam is je identiteit** — dezelfde naam op een ander toestel geeft je je eigen vinkjes terug.
+- **Het gaat vanzelf** — een klik op een kalenderdag is meteen opgeslagen; er is geen opslaan-knop en geen enkel bevestigingsvenster. Een uur erbij zetten is optioneel.
+- **Iedereen is gelijk** — wie de link heeft kan dagen aanklikken, de titel aanpassen, het uur wijzigen en de knoop doorhakken. Er is niets dat alleen "de maker" kan.
+- **Je naam is je identiteit** — dezelfde naam op een ander toestel geeft je je eigen vinkjes terug. En via "wisselen" vul je zo ook de dagen in van iemand die je die al doorgaf.
 - **Nooit iets kapot** — je kunt alleen weghalen wat van jezelf is of wat niemand anders gebruikt.
 - **Drie talen** — Nederlands, Engels en Frans, wisselbaar met het vlaggetje, zonder herladen.
 - **Licht en gratis** — één HTML-bestand, één Worker, één SQLite-database (Cloudflare D1). Geen frameworks, geen build-stap, geen externe scripts of fonts. Past ruim binnen het gratis plan van Cloudflare.
@@ -27,7 +27,7 @@ Geen accounts. Geen wachtwoorden. Geen beheerder. Geen opslaan-knop. Iedereen me
 | Opslag | Cloudflare D1 (SQLite) |
 | Frontend | Eén `public/index.html`, inline CSS + JS, systeemfont |
 | Backend | Eén `src/worker.js` (ES-module Worker), alleen `/api/*` |
-| Testen | Playwright: 15 API-testen + 12 browserscenario's, ook op 360 px |
+| Testen | Playwright: 17 API-testen + 12 browserscenario's, ook op 360 px |
 
 ## Testen draaien
 

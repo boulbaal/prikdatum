@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS options (
   time        TEXT,                      -- 'HH:MM' of NULL (= hele dag / nog geen uur)
   added_by    TEXT NOT NULL,             -- participants.id
   created_at  TEXT NOT NULL,
-  UNIQUE (poll_id, date, time)
+  UNIQUE (poll_id, date)                 -- één rij per dag; het uur hangt aan de dag
 );
 
 CREATE TABLE IF NOT EXISTS participants (

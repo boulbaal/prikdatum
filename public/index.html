@@ -30,7 +30,8 @@
   h1 {
     font-size: 26px;
     font-weight: 600;
-    margin: 16px 0 8px;
+    margin: 16px 0 2px;
+    overflow-wrap: anywhere;
   }
   .label {
     font-size: 14px;
@@ -38,7 +39,7 @@
     display: block;
     margin: 20px 0 6px;
   }
-  input[type="text"], input[type="date"], input[type="time"] {
+  input[type="text"], input[type="time"] {
     font: inherit;
     color: inherit;
     border: 1px solid var(--lijn);
@@ -120,21 +121,6 @@
     white-space: nowrap;
   }
 
-  /* datumrijen (maken + toevoegen) */
-  .drow { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
-  .drow input[type="date"] { flex: 1 1 55%; min-width: 0; }
-  .drow input[type="time"] { flex: 1 1 30%; min-width: 0; }
-  .x {
-    background: none;
-    color: var(--gedempt);
-    font-size: 20px;
-    font-weight: 400;
-    padding: 0;
-    width: 32px;
-    min-height: 44px;
-    flex: 0 0 32px;
-  }
-
   /* deelbalk */
   .deel {
     background: var(--lichtgroen);
@@ -144,6 +130,10 @@
     font-size: 15px;
   }
   .deel .url { user-select: all; word-break: break-all; display: block; margin: 4px 0 8px; }
+
+  /* titel aanpassen */
+  .titelrij button.sec { font-size: 13px; color: var(--gedempt); padding: 4px 0; min-height: 44px; text-decoration: underline; font-weight: 400; }
+  .titeleditor { display: flex; gap: 8px; margin: 12px 0 4px; }
 
   /* statusblok */
   .status { margin: 12px 0 4px; }
@@ -159,47 +149,71 @@
   .status .rijtje { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 6px; }
   .status .knopzone { margin-top: 8px; }
 
-  /* optielijst */
+  /* wie ben je / wisselen */
+  .wie { font-size: 15px; margin: 16px 0 0; }
+  .wie b { font-weight: 600; }
+  .wie button.sec { padding: 4px 6px; min-height: 44px; font-size: 14px; }
+  .wissel { border: 1px solid var(--lijn); border-radius: 8px; padding: 10px; margin-top: 8px; }
+  .wissel .namen { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .wissel .namen button {
+    background: none;
+    border: 1px solid var(--lijn);
+    color: var(--tekst);
+    font-weight: 400;
+    padding: 8px 14px;
+    min-height: 44px;
+  }
+  .wissel .namen button.ik { border-color: var(--groen); background: var(--lichtgroen); font-weight: 600; }
+  .wissel .nieuw { display: flex; gap: 8px; }
+
+  /* kalender */
+  .kal { margin: 6px 0 4px; }
+  .kal.inactief .dag { opacity: .5; }
+  .kalkop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+  .kalkop .mnd { font-weight: 600; }
+  .kalkop button { background: none; color: var(--groen); font-size: 22px; padding: 4px 16px; }
+  .kalgrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .kalwd { font-size: 12px; color: var(--gedempt); text-align: center; padding: 2px 0; }
+  .dag {
+    min-height: 48px;
+    border: 1px solid var(--lijn);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--tekst);
+    font-weight: 400;
+    padding: 4px 0 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    line-height: 1.2;
+  }
+  .dag.leeg { border: none; background: none; cursor: default; }
+  .dag.vandaag { border-color: var(--gedempt); }
+  .dag.optie { border-color: var(--groen); }
+  .dag.mijn { background: var(--lichtgroen); border-color: var(--groen); font-weight: 600; }
+  .dag.definitief { box-shadow: inset 3px 0 0 var(--groen); }
+  .dag .dtel { font-size: 11px; color: var(--groen); font-weight: 600; min-height: 14px; }
+
+  /* gekozen dagen */
   .kopje { font-size: 14px; color: var(--gedempt); margin: 20px 0 6px; }
   .opt {
     display: flex;
     align-items: center;
-    gap: 12px;
-    min-height: 44px;
-    padding: 8px 6px;
+    gap: 10px;
+    min-height: 48px;
+    padding: 6px;
     border-radius: 8px;
-    cursor: pointer;
   }
   .opt.aan { background: var(--lichtgroen); }
   .opt.definitief { border-left: 3px solid var(--groen); }
-  .opt input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    accent-color: var(--groen);
-    flex: 0 0 20px;
-    margin: 0;
-  }
   .opt .mid { flex: 1 1 auto; min-width: 0; }
   .opt .namen { font-size: 14px; color: var(--gedempt); }
   .opt .tel { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; flex: 0 0 auto; }
   .opt .tel.nul { color: var(--gedempt); font-weight: 400; }
-  .opt .del {
-    background: none;
-    color: var(--gedempt);
-    font-size: 20px;
-    font-weight: 400;
-    padding: 0;
-    width: 32px;
-    min-height: 44px;
-    flex: 0 0 32px;
-  }
-  .lijst.inactief .opt { opacity: .5; }
-  @media (hover: hover) and (pointer: fine) {
-    .opt .del { opacity: 0; }
-    .opt:hover .del, .opt:focus-within .del { opacity: 1; }
-  }
-
-  .leeg { color: var(--gedempt); margin: 12px 0; }
+  .opt input[type="time"] { width: 96px; flex: 0 0 96px; padding: 8px; min-height: 44px; font-size: 15px; }
+  .leeg { color: var(--gedempt); margin: 10px 0; font-size: 15px; }
 
   /* weggaan */
   .weg { margin-top: 40px; font-size: 13px; }
@@ -239,25 +253,29 @@ const STRINGS = {
   'make.title':        { nl: 'Wanneer spreken we af?', en: 'When shall we meet?', fr: 'Quand se voit-on ?' },
   'make.what':         { nl: 'Waarover gaat het?', en: 'What is it about?', fr: "De quoi s'agit-il ?" },
   'make.what.ph':      { nl: 'bv. Etentje, padel, weekend aan zee', en: 'e.g. Dinner, padel, weekend at the coast', fr: 'p.ex. Dîner, padel, week-end à la mer' },
-  'make.dates':        { nl: 'Welke datums lukken voor jou?', en: 'Which dates work for you?', fr: 'Quelles dates te conviennent ?' },
-  'make.addDate':      { nl: '+ Nog een datum', en: '+ Another date', fr: '+ Une autre date' },
   'make.name':         { nl: 'Je naam', en: 'Your name', fr: 'Ton prénom' },
   'make.name.ph':      { nl: 'bv. Ali', en: 'e.g. Ali', fr: 'p.ex. Ali' },
   'make.submit':       { nl: 'Maak de afspraak', en: 'Create the poll', fr: 'Créer le rendez-vous' },
   'share.ready':       { nl: 'Klaar. Deel deze link:', en: 'Done. Share this link:', fr: "C'est prêt. Partage ce lien :" },
   'share.copy':        { nl: 'Kopieer', en: 'Copy', fr: 'Copier' },
   'share.copied':      { nl: 'Gekopieerd', en: 'Copied', fr: 'Copié' },
-  'poll.nameFirst':    { nl: 'Vul eerst je naam in om aan te vinken.', en: 'Enter your name first to tick dates.', fr: "Indique d'abord ton prénom pour cocher." },
+  'title.edit':        { nl: 'titel aanpassen', en: 'edit title', fr: 'modifier le titre' },
+  'title.save':        { nl: 'Bewaar', en: 'Save', fr: 'Enregistrer' },
+  'poll.nameFirst':    { nl: 'Vul eerst je naam in om aan te klikken.', en: 'Enter your name first to start ticking.', fr: "Indique d'abord ton prénom pour cocher." },
   'poll.next':         { nl: 'Verder', en: 'Continue', fr: 'Continuer' },
-  'poll.tick':         { nl: 'Vink aan wat voor jou lukt', en: 'Tick what works for you', fr: 'Coche ce qui te convient' },
+  'cal.hint':          { nl: 'Klik de dagen aan die voor jou lukken', en: 'Click the days that work for you', fr: 'Clique sur les jours qui te conviennent' },
+  'cal.prev':          { nl: 'Vorige maand', en: 'Previous month', fr: 'Mois précédent' },
+  'cal.next':          { nl: 'Volgende maand', en: 'Next month', fr: 'Mois suivant' },
+  'cal.actAs':         { nl: 'Jij klikt aan als', en: 'You are ticking as', fr: 'Tu coches en tant que' },
+  'cal.switch':        { nl: 'wisselen', en: 'switch', fr: 'changer' },
+  'cal.newName.ph':    { nl: 'of typ een nieuwe naam', en: 'or type a new name', fr: 'ou tape un nouveau prénom' },
+  'list.title':        { nl: 'Gekozen dagen', en: 'Chosen days', fr: 'Jours choisis' },
+  'list.empty':        { nl: 'Nog geen dagen aangeklikt.', en: 'No days ticked yet.', fr: 'Aucun jour coché pour l’instant.' },
+  'time.label':        { nl: 'Uur (optioneel, iedereen mag dit aanpassen)', en: 'Time (optional, anyone can change it)', fr: "Heure (optionnelle, modifiable par tous)" },
   'poll.nobody':       { nl: 'nog niemand', en: 'nobody yet', fr: "personne pour l'instant" },
   'poll.you':          { nl: 'jij', en: 'you', fr: 'toi' },
   'poll.others':       { nl: '+{n} anderen', en: '+{n} others', fr: '+{n} autres' },
   'poll.at':           { nl: 'om {time}', en: 'at {time}', fr: 'à {time}' },
-  'poll.addDate':      { nl: '+ Datum toevoegen', en: '+ Add a date', fr: '+ Ajouter une date' },
-  'poll.add':          { nl: 'Toevoegen', en: 'Add', fr: 'Ajouter' },
-  'poll.remove':       { nl: 'Datum weghalen', en: 'Remove date', fr: 'Retirer la date' },
-  'poll.empty':        { nl: 'Nog geen datums. Voeg er een toe.', en: 'No dates yet. Add one.', fr: "Pas encore de dates. Ajoutes-en une." },
   'poll.leave':        { nl: 'Ik doe niet mee', en: 'Remove me', fr: 'Je ne participe pas' },
   'poll.leaveYes':     { nl: 'Ja, haal me weg', en: 'Yes, remove me', fr: 'Oui, retire-moi' },
   'poll.leaveNo':      { nl: 'Toch niet', en: 'Never mind', fr: 'Finalement non' },
@@ -273,7 +291,7 @@ const STRINGS = {
   'status.unfix':      { nl: 'Toch niet', en: 'Undo', fr: 'Annuler' },
   'err.save':          { nl: 'Kon niet opslaan. Probeer opnieuw.', en: "Couldn't save. Try again.", fr: "Impossible d'enregistrer. Réessaie." },
   'err.duplicate_option': { nl: 'Die datum staat er al.', en: 'That date is already listed.', fr: 'Cette date existe déjà.' },
-  'err.option_in_use': { nl: 'Iemand anders heeft deze datum aangevinkt.', en: 'Someone else ticked this date.', fr: "Quelqu'un d'autre a coché cette date." },
+  'err.option_in_use': { nl: 'Iemand anders heeft deze datum aangeklikt.', en: 'Someone else ticked this date.', fr: "Quelqu'un d'autre a coché cette date." },
   'err.title_required': { nl: 'Vul in waarover het gaat.', en: "Say what it's about.", fr: "Indique de quoi il s'agit." },
   'err.name_required': { nl: 'Vul je naam in.', en: 'Enter your name.', fr: 'Indique ton prénom.' },
   'err.invalid_date':  { nl: 'Kies minstens één datum.', en: 'Pick at least one date.', fr: 'Choisis au moins une date.' },
@@ -309,6 +327,9 @@ const state = {
   lastJson: '',
   me: null,
   inflight: 0,
+  kalMaand: null,      // Date: eerste dag van de getoonde maand
+  titelEdit: false,
+  wisselOpen: false,
 };
 
 function t(sleutel, vars) {
@@ -324,6 +345,12 @@ function fmtDatum(datum, tijd) {
   let s = new Intl.DateTimeFormat(LOCALES[state.lang], opties).format(d);
   if (tijd) s += ' ' + t('poll.at', { time: tijd });
   return s;
+}
+
+function isoDag(d) {
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const dag = String(d.getDate()).padStart(2, '0');
+  return d.getFullYear() + '-' + m + '-' + dag;
 }
 
 function el(tag, cls, tekst) {
@@ -381,7 +408,7 @@ document.getElementById('voet').textContent = t('footer');
 const scherm = document.getElementById('scherm');
 
 /* ================================================================
-   Scherm 1: Maken (/)
+   Scherm 1: Nieuwe afspraak (/) — titel + naam, daarna meteen door
    ================================================================ */
 function schermMaken() {
   scherm.textContent = '';
@@ -392,10 +419,6 @@ function schermMaken() {
   const titelIn = el('input');
   titelIn.type = 'text'; titelIn.id = 'titel'; titelIn.maxLength = 80; titelIn.autofocus = true;
 
-  const datumsLabel = el('label', 'label');
-  const rijen = el('div');
-  const nogEen = el('button', 'sec'); nogEen.type = 'button';
-
   const naamLabel = el('label', 'label');
   naamLabel.htmlFor = 'naam';
   const naamIn = el('input');
@@ -404,57 +427,20 @@ function schermMaken() {
 
   const maakBtn = el('button');
   maakBtn.type = 'button';
+  maakBtn.style.marginTop = '20px';
   const foutRegel = el('p', 'fout verborgen');
 
-  function rijToevoegen() {
-    const rij = el('div', 'drow');
-    const d = el('input'); d.type = 'date';
-    const u = el('input'); u.type = 'time';
-    const x = el('button', 'x', '×'); x.type = 'button';
-    x.addEventListener('click', () => { rij.remove(); toonKruisjes(); checkKnop(); });
-    d.addEventListener('change', () => {
-      if (d.value && rij === rijen.lastElementChild) { rijToevoegen(); }
-      checkKnop();
-    });
-    u.addEventListener('change', checkKnop);
-    rij.append(d, u, x);
-    rijen.appendChild(rij);
-    toonKruisjes();
-  }
-
-  function toonKruisjes() {
-    const alle = rijen.querySelectorAll('.drow');
-    alle.forEach((r) => {
-      r.querySelector('.x').classList.toggle('verborgen', alle.length === 1);
-    });
-  }
-
-  function geldigeOpties() {
-    const uit = [];
-    rijen.querySelectorAll('.drow').forEach((r) => {
-      const d = r.querySelector('input[type="date"]').value;
-      const u = r.querySelector('input[type="time"]').value;
-      if (d) uit.push({ date: d, time: u || null });
-    });
-    return uit;
-  }
-
   function checkKnop() {
-    maakBtn.disabled = !(titelIn.value.trim() && naamIn.value.trim() && geldigeOpties().length);
+    maakBtn.disabled = !(titelIn.value.trim() && naamIn.value.trim());
   }
-
   titelIn.addEventListener('input', checkKnop);
   naamIn.addEventListener('input', checkKnop);
-  nogEen.addEventListener('click', rijToevoegen);
+  naamIn.addEventListener('keydown', (e) => { if (e.key === 'Enter' && !maakBtn.disabled) maakBtn.click(); });
 
   maakBtn.addEventListener('click', async () => {
     foutRegel.classList.add('verborgen');
     maakBtn.disabled = true;
-    const r = await api('/polls', 'POST', {
-      title: titelIn.value,
-      name: naamIn.value,
-      options: geldigeOpties(),
-    });
+    const r = await api('/polls', 'POST', { title: titelIn.value, name: naamIn.value });
     if (r.ok && r.data && r.data.id) {
       try {
         localStorage.setItem(LS.name, naamIn.value.trim());
@@ -474,22 +460,19 @@ function schermMaken() {
     titelKop.textContent = t('make.title');
     watLabel.textContent = t('make.what');
     titelIn.placeholder = t('make.what.ph');
-    datumsLabel.textContent = t('make.dates');
-    nogEen.textContent = t('make.addDate');
     naamLabel.textContent = t('make.name');
     naamIn.placeholder = t('make.name.ph');
     maakBtn.textContent = t('make.submit');
   };
 
-  scherm.append(titelKop, watLabel, titelIn, datumsLabel, rijen, nogEen, naamLabel, naamIn, el('div'), maakBtn, foutRegel);
-  rijToevoegen();
+  scherm.append(titelKop, watLabel, titelIn, naamLabel, naamIn, el('div'), maakBtn, foutRegel);
   hertaal();
   checkKnop();
   titelIn.focus();
 }
 
 /* ================================================================
-   Scherm 2: Afspraak (/p/<id>)
+   Scherm 2: Afspraak (/p/<id>) — naam eerst, dan de klikkalender
    ================================================================ */
 function schermAfspraak(pollId) {
   state.pollId = pollId;
@@ -497,14 +480,22 @@ function schermAfspraak(pollId) {
 
   scherm.textContent = '';
 
-  /* --- vaste elementen die nooit mee her-renderen (invoer blijft staan) --- */
+  /* --- vaste elementen die nooit mee her-renderen --- */
   const deel = el('div', 'deel verborgen');
   const deelTekst = el('span');
   const deelUrl = el('span', 'url', location.origin + '/p/' + pollId);
   const kopieKnop = el('button', 'klein'); kopieKnop.type = 'button';
   deel.append(deelTekst, deelUrl, kopieKnop);
 
+  const titelRij = el('div', 'titelrij');
   const titelKop = el('h1');
+  const titelEditBtn = el('button', 'sec'); titelEditBtn.type = 'button';
+  const titelEditor = el('div', 'titeleditor verborgen');
+  const titelIn = el('input'); titelIn.type = 'text'; titelIn.maxLength = 80;
+  const titelOk = el('button', 'klein'); titelOk.type = 'button';
+  titelEditor.append(titelIn, titelOk);
+  titelRij.append(titelKop, titelEditBtn, titelEditor);
+
   const statusBlok = el('div', 'status');
 
   const naamZone = el('div');
@@ -519,20 +510,26 @@ function schermAfspraak(pollId) {
   naamKnopRij.append(verderBtn);
   naamZone.append(naamLabel, naamIn, naamKnopRij, naamFout);
 
-  const lijstKop = el('p', 'kopje');
-  const lijst = el('div', 'lijst');
+  const wieBar = el('p', 'wie verborgen');
+  const wieTekst = el('span');
+  const wieNaam = el('b');
+  const wieWissel = el('button', 'sec'); wieWissel.type = 'button';
+  wieBar.append(wieTekst, wieNaam, document.createTextNode(' · '), wieWissel);
+  const wissel = el('div', 'wissel verborgen');
+  const wisselNamen = el('div', 'namen');
+  const wisselNieuw = el('div', 'nieuw');
+  const wisselIn = el('input'); wisselIn.type = 'text'; wisselIn.maxLength = 40;
+  const wisselOk = el('button', 'klein'); wisselOk.type = 'button';
+  wisselNieuw.append(wisselIn, wisselOk);
+  wissel.append(wisselNamen, wisselNieuw);
+
+  const kalHint = el('p', 'kopje');
+  const kal = el('div', 'kal');
   const lijstFout = el('p', 'fout verborgen');
 
+  const lijstKop = el('p', 'kopje');
+  const lijst = el('div', 'lijst');
   const leegRegel = el('p', 'leeg verborgen');
-
-  const voegZone = el('div');
-  const voegToggle = el('button', 'sec'); voegToggle.type = 'button';
-  const voegRij = el('div', 'drow verborgen');
-  const voegDatum = el('input'); voegDatum.type = 'date';
-  const voegTijd = el('input'); voegTijd.type = 'time';
-  const voegBtn = el('button', 'klein'); voegBtn.type = 'button';
-  voegRij.append(voegDatum, voegTijd, voegBtn);
-  voegZone.append(voegToggle, voegRij);
 
   const wegZone = el('div', 'weg');
   const wegBtn = el('button'); wegBtn.type = 'button';
@@ -542,9 +539,12 @@ function schermAfspraak(pollId) {
   wegBevestig.append(wegJa, wegNee);
   wegZone.append(wegBtn, wegBevestig);
 
-  scherm.append(deel, titelKop, statusBlok, naamZone, lijstKop, leegRegel, lijst, lijstFout, voegZone, wegZone);
+  scherm.append(deel, titelRij, statusBlok, naamZone, wieBar, wissel, kalHint, kal, lijstFout, lijstKop, leegRegel, lijst, wegZone);
 
-  /* --- deelbalk: alleen direct na aanmaken --- */
+  const nu = new Date();
+  state.kalMaand = new Date(nu.getFullYear(), nu.getMonth(), 1);
+
+  /* --- deelbalk --- */
   try {
     if (sessionStorage.getItem(LS.just) === pollId) {
       sessionStorage.removeItem(LS.just);
@@ -567,52 +567,63 @@ function schermAfspraak(pollId) {
     }
   });
 
-  /* --- naam opgeven --- */
-  async function doeMee() {
-    naamFout.classList.add('verborgen');
-    const r = await api('/polls/' + pollId + '/participants', 'POST', { name: naamIn.value });
+  /* --- titel aanpassen (iedereen mag) --- */
+  titelEditBtn.addEventListener('click', () => {
+    state.titelEdit = true;
+    titelIn.value = state.data ? state.data.title : '';
+    titelKop.classList.add('verborgen');
+    titelEditBtn.classList.add('verborgen');
+    titelEditor.classList.remove('verborgen');
+    titelIn.focus();
+  });
+  async function bewaarTitel() {
+    const r = await api('/polls/' + pollId + '/title', 'PUT', { title: titelIn.value });
+    state.titelEdit = false;
+    titelEditor.classList.add('verborgen');
+    titelKop.classList.remove('verborgen');
+    titelEditBtn.classList.remove('verborgen');
+    if (r.ok) { state.lastJson = ''; await haalOp(true); }
+  }
+  titelOk.addEventListener('click', bewaarTitel);
+  titelIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') bewaarTitel(); });
+
+  /* --- naam opgeven / wisselen --- */
+  async function wordIemand(naam) {
+    const r = await api('/polls/' + pollId + '/participants', 'POST', { name: naam });
     if (r.ok && r.data && r.data.participantId) {
       state.me = r.data.participantId;
       try {
         localStorage.setItem(LS.p(pollId), state.me);
-        localStorage.setItem(LS.name, naamIn.value.trim() || r.data.name);
+        localStorage.setItem(LS.name, r.data.name);
       } catch {}
+      state.wisselOpen = false;
+      state.lastJson = '';
       await haalOp(true);
-      render();
-    } else {
-      naamFout.textContent = foutTekst(r.data);
+      return true;
+    }
+    return r;
+  }
+  verderBtn.addEventListener('click', async () => {
+    naamFout.classList.add('verborgen');
+    const r = await wordIemand(naamIn.value);
+    if (r !== true) {
+      naamFout.textContent = foutTekst(r && r.data);
       naamFout.classList.remove('verborgen');
     }
-  }
-  verderBtn.addEventListener('click', doeMee);
-  naamIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') doeMee(); });
+  });
+  naamIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') verderBtn.click(); });
 
-  /* --- datum toevoegen --- */
-  voegToggle.addEventListener('click', () => {
-    voegRij.classList.remove('verborgen');
-    voegToggle.classList.add('verborgen');
-    voegDatum.focus();
+  wieWissel.addEventListener('click', () => {
+    state.wisselOpen = !state.wisselOpen;
+    render();
+    if (state.wisselOpen) wisselIn.focus();
   });
-  voegBtn.addEventListener('click', async () => {
-    if (!state.me) { naamIn.focus(); return; }
-    if (!voegDatum.value) { voegDatum.focus(); return; }
-    lijstFout.classList.add('verborgen');
-    const r = await api('/polls/' + pollId + '/options', 'POST', {
-      participantId: state.me,
-      date: voegDatum.value,
-      time: voegTijd.value || null,
-    });
-    if (r.ok) {
-      voegDatum.value = ''; voegTijd.value = '';
-      voegRij.classList.add('verborgen');
-      voegToggle.classList.remove('verborgen');
-      await haalOp(true);
-      render();
-    } else {
-      lijstFout.textContent = foutTekst(r.data);
-      lijstFout.classList.remove('verborgen');
-    }
+  wisselOk.addEventListener('click', async () => {
+    if (!wisselIn.value.trim()) { wisselIn.focus(); return; }
+    const r = await wordIemand(wisselIn.value);
+    if (r === true) wisselIn.value = '';
   });
+  wisselIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') wisselOk.click(); });
 
   /* --- mezelf weghalen --- */
   wegBtn.addEventListener('click', () => {
@@ -630,75 +641,92 @@ function schermAfspraak(pollId) {
     if (r.ok) {
       state.me = null;
       try { localStorage.removeItem(LS.p(pollId)); } catch {}
+      state.lastJson = '';
       await haalOp(true);
-      render();
     }
   });
 
-  /* --- vinkjes ---*/
-  async function zetVotes(nieuweSet) {
-    const vorige = structuredClone(state.data);
-    // optimistisch: lokale data aanpassen en meteen renderen
-    for (const o of state.data.options) {
-      const heeft = o.votes.includes(state.me);
-      const wil = nieuweSet.has(o.id);
-      if (wil && !heeft) o.votes.push(state.me);
-      if (!wil && heeft) o.votes = o.votes.filter((v) => v !== state.me);
-    }
+  /* --- kalenderklik: dag aan/uit --- */
+  async function klikDag(datum) {
+    if (!state.me) { naamIn.focus(); return; }
     lijstFout.classList.add('verborgen');
-    render();
+    const d = state.data;
+    const opt = d.options.find((o) => o.date === datum);
+    const vorige = structuredClone(d);
     state.inflight++;
     try {
-      const r = await api('/polls/' + pollId + '/participants/' + state.me + '/votes', 'PUT', {
-        optionIds: [...nieuweSet],
-      });
-      if (!r.ok) throw new Error();
-      state.lastJson = ''; // volgende poll rendert sowieso opnieuw
-    } catch {
-      state.lastJson = '';
-      state.data = vorige;
-      render();
-      lijstFout.textContent = t('err.save');
-      lijstFout.classList.remove('verborgen');
-    } finally {
-      state.inflight--;
-    }
-  }
-
-  async function haalOptieWeg(optie) {
-    const vorige = structuredClone(state.data);
-    state.data.options = state.data.options.filter((o) => o.id !== optie.id);
-    if (state.data.finalOptionId === optie.id) state.data.finalOptionId = null;
-    lijstFout.classList.add('verborgen');
-    render();
-    state.inflight++;
-    try {
-      const r = await api('/polls/' + pollId + '/options/' + optie.id + '?participantId=' + encodeURIComponent(state.me || ''), 'DELETE');
-      if (!r.ok) throw r;
+      if (!opt) {
+        // nieuwe dag: meteen optimistisch tonen
+        d.options.push({ id: '_tmp', date: datum, time: null, addedBy: state.me, votes: [state.me] });
+        d.options.sort((a, b) => a.date < b.date ? -1 : 1);
+        render();
+        const r = await api('/polls/' + pollId + '/options', 'POST', {
+          participantId: state.me, date: datum, time: null,
+        });
+        if (!r.ok && (!r.data || r.data.error !== 'duplicate_option')) throw r;
+      } else if (opt.votes.includes(state.me)) {
+        if (opt.votes.length === 1) {
+          // enkel mijn vinkje: dag verdwijnt
+          d.options = d.options.filter((o) => o.id !== opt.id);
+          if (d.finalOptionId === opt.id) d.finalOptionId = null;
+          render();
+          const r = await api('/polls/' + pollId + '/options/' + opt.id + '?participantId=' + encodeURIComponent(state.me), 'DELETE');
+          if (!r.ok) throw r;
+        } else {
+          opt.votes = opt.votes.filter((v) => v !== state.me);
+          render();
+          const set = d.options.filter((o) => o.votes.includes(state.me)).map((o) => o.id);
+          const r = await api('/polls/' + pollId + '/participants/' + state.me + '/votes', 'PUT', { optionIds: set });
+          if (!r.ok) throw r;
+        }
+      } else {
+        opt.votes.push(state.me);
+        render();
+        const set = d.options.filter((o) => o.votes.includes(state.me)).map((o) => o.id);
+        const r = await api('/polls/' + pollId + '/participants/' + state.me + '/votes', 'PUT', { optionIds: set });
+        if (!r.ok) throw r;
+      }
       state.lastJson = '';
     } catch (r) {
-      state.lastJson = '';
       state.data = vorige;
+      state.lastJson = '';
       render();
       lijstFout.textContent = foutTekst(r && r.data);
       lijstFout.classList.remove('verborgen');
     } finally {
       state.inflight--;
     }
+    await haalOp(true);
+  }
+
+  async function zetTijd(opt, tijd) {
+    state.inflight++;
+    try {
+      const r = await api('/polls/' + pollId + '/options/' + opt.id + '/time', 'PUT', { time: tijd || null });
+      if (!r.ok) throw r;
+      opt.time = tijd || null;
+      state.lastJson = '';
+    } catch {
+      lijstFout.textContent = t('err.save');
+      lijstFout.classList.remove('verborgen');
+    } finally {
+      state.inflight--;
+    }
+    await haalOp(true);
   }
 
   async function zetFinal(optionId) {
     state.inflight++;
     try {
       await api('/polls/' + pollId + '/final', 'PUT', { optionId });
+      state.lastJson = '';
     } finally {
       state.inflight--;
     }
     await haalOp(true);
-    render();
   }
 
-  /* --- statusblok (hoofdstuk 7) --- */
+  /* --- statusblok --- */
   function bouwStatus() {
     statusBlok.textContent = '';
     const d = state.data;
@@ -752,7 +780,59 @@ function schermAfspraak(pollId) {
     statusBlok.append(blok);
   }
 
-  /* --- optielijst --- */
+  /* --- kalender --- */
+  function bouwKal() {
+    kal.textContent = '';
+    kal.classList.toggle('inactief', !state.me);
+    const d = state.data;
+    const perDag = new Map(d.options.map((o) => [o.date, o]));
+    const m = state.kalMaand;
+    const locale = LOCALES[state.lang];
+
+    const kop = el('div', 'kalkop');
+    const terug = el('button', null, '‹'); terug.type = 'button';
+    terug.setAttribute('aria-label', t('cal.prev'));
+    const mnd = el('span', 'mnd', new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(m));
+    mnd.id = 'kalmaand';
+    mnd.dataset.maand = m.getFullYear() + '-' + String(m.getMonth() + 1).padStart(2, '0');
+    const verder = el('button', null, '›'); verder.type = 'button';
+    verder.setAttribute('aria-label', t('cal.next'));
+    terug.addEventListener('click', () => { state.kalMaand = new Date(m.getFullYear(), m.getMonth() - 1, 1); bouwKal(); });
+    verder.addEventListener('click', () => { state.kalMaand = new Date(m.getFullYear(), m.getMonth() + 1, 1); bouwKal(); });
+    kop.append(terug, mnd, verder);
+    kal.append(kop);
+
+    const grid = el('div', 'kalgrid');
+    // weekdagkoppen, maandag eerst
+    const maandag = new Date(2024, 0, 1); // een maandag
+    for (let i = 0; i < 7; i++) {
+      const wd = new Date(maandag); wd.setDate(maandag.getDate() + i);
+      grid.append(el('div', 'kalwd', new Intl.DateTimeFormat(locale, { weekday: 'short' }).format(wd)));
+    }
+    const eerste = new Date(m.getFullYear(), m.getMonth(), 1);
+    const start = (eerste.getDay() + 6) % 7; // ma=0
+    const dagen = new Date(m.getFullYear(), m.getMonth() + 1, 0).getDate();
+    const vandaag = isoDag(new Date());
+    for (let i = 0; i < start; i++) grid.append(el('div', 'dag leeg'));
+    for (let dag = 1; dag <= dagen; dag++) {
+      const datum = m.getFullYear() + '-' + String(m.getMonth() + 1).padStart(2, '0') + '-' + String(dag).padStart(2, '0');
+      const opt = perDag.get(datum);
+      const mijn = !!(opt && state.me && opt.votes.includes(state.me));
+      const b = el('button', 'dag'); b.type = 'button';
+      if (datum === vandaag) b.classList.add('vandaag');
+      if (opt) b.classList.add('optie');
+      if (mijn) b.classList.add('mijn');
+      if (opt && d.finalOptionId === opt.id) b.classList.add('definitief');
+      b.dataset.date = datum;
+      b.append(el('span', null, String(dag)));
+      b.append(el('span', 'dtel', opt && opt.votes.length ? String(opt.votes.length) : ' '));
+      b.addEventListener('click', () => klikDag(datum));
+      grid.append(b);
+    }
+    kal.append(grid);
+  }
+
+  /* --- gekozen dagen --- */
   function namenRegel(o) {
     const naamVan = new Map(state.data.participants.map((p) => [p.id, p.name]));
     const ikKan = state.me && o.votes.includes(state.me);
@@ -770,63 +850,38 @@ function schermAfspraak(pollId) {
   }
 
   function bouwLijst() {
-    const focusOid = document.activeElement && document.activeElement.dataset
-      ? document.activeElement.dataset.oid : null;
+    const actief = document.activeElement;
+    const focusOid = actief && actief.dataset ? actief.dataset.oid : null;
     lijst.textContent = '';
     const d = state.data;
-    lijst.classList.toggle('inactief', !state.me);
 
     if (!d.options.length) {
-      leegRegel.textContent = t('poll.empty');
+      leegRegel.textContent = t('list.empty');
       leegRegel.classList.remove('verborgen');
-      // toevoegrij open (6.5)
-      voegRij.classList.remove('verborgen');
-      voegToggle.classList.add('verborgen');
       return;
     }
     leegRegel.classList.add('verborgen');
 
     for (const o of d.options) {
+      if (o.id === '_tmp') continue;
       const ikKan = !!(state.me && o.votes.includes(state.me));
-      const rij = el('label', 'opt' + (ikKan ? ' aan' : '') + (d.finalOptionId === o.id ? ' definitief' : ''));
-      const vink = el('input');
-      vink.type = 'checkbox';
-      vink.checked = ikKan;
-      vink.dataset.oid = o.id;
-      vink.addEventListener('change', () => {
-        const set = new Set(d.options.filter((x) => x.votes.includes(state.me)).map((x) => x.id));
-        if (vink.checked) set.add(o.id); else set.delete(o.id);
-        zetVotes(set);
-      });
+      const rij = el('div', 'opt' + (ikKan ? ' aan' : '') + (d.finalOptionId === o.id ? ' definitief' : ''));
 
       const mid = el('div', 'mid');
-      mid.append(el('div', null, fmtDatum(o.date, o.time)));
+      mid.append(el('div', null, fmtDatum(o.date, null)));
       mid.append(el('div', 'namen', namenRegel(o)));
+
+      const tijd = el('input');
+      tijd.type = 'time';
+      tijd.value = o.time || '';
+      tijd.dataset.oid = o.id;
+      tijd.title = t('time.label');
+      tijd.setAttribute('aria-label', t('time.label'));
+      tijd.addEventListener('change', () => zetTijd(o, tijd.value));
 
       const tel = el('span', 'tel' + (o.votes.length === 0 ? ' nul' : ''), String(o.votes.length));
 
-      rij.append(vink, mid, tel);
-
-      const magWeg = state.me && o.votes.every((v) => v === state.me);
-      if (magWeg) {
-        const weg = el('button', 'del', '×');
-        weg.type = 'button';
-        weg.title = t('poll.remove');
-        weg.setAttribute('aria-label', t('poll.remove'));
-        weg.addEventListener('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          haalOptieWeg(o);
-        });
-        rij.append(weg);
-      }
-
-      if (!state.me) {
-        rij.addEventListener('click', (e) => {
-          e.preventDefault();
-          naamIn.focus();
-        });
-      }
+      rij.append(mid, tijd, tel);
       lijst.appendChild(rij);
     }
 
@@ -840,23 +895,50 @@ function schermAfspraak(pollId) {
     const d = state.data;
     if (!d) return;
     document.title = d.title + ' · ' + BRAND;
-    titelKop.textContent = d.title;
+    if (!state.titelEdit) titelKop.textContent = d.title;
+    titelEditBtn.textContent = t('title.edit');
+    titelOk.textContent = t('title.save');
+    titelIn.placeholder = t('make.what.ph');
     deelTekst.textContent = t('share.ready') + ' ';
-    if (!kopieKnop.textContent || kopieKnop.textContent !== t('share.copied')) {
+    if (kopieKnop.textContent !== t('share.copied')) {
       kopieKnop.textContent = t('share.copy');
     }
     naamZone.classList.toggle('verborgen', !!state.me);
     naamLabel.textContent = t('make.name');
     naamIn.placeholder = t('make.name.ph');
     verderBtn.textContent = t('poll.next');
-    lijstKop.textContent = state.me ? t('poll.tick') : t('poll.nameFirst');
-    voegToggle.textContent = t('poll.addDate');
-    voegBtn.textContent = t('poll.add');
+
+    const ik = d.participants.find((p) => p.id === state.me);
+    wieBar.classList.toggle('verborgen', !state.me);
+    wieTekst.textContent = t('cal.actAs') + ' ';
+    wieNaam.textContent = ik ? ik.name : '';
+    wieWissel.textContent = t('cal.switch');
+    wissel.classList.toggle('verborgen', !(state.me && state.wisselOpen));
+    wisselNamen.textContent = '';
+    for (const p of d.participants) {
+      const b = el('button', p.id === state.me ? 'ik' : null, p.name);
+      b.type = 'button';
+      b.addEventListener('click', async () => {
+        state.me = p.id;
+        try { localStorage.setItem(LS.p(pollId), p.id); } catch {}
+        state.wisselOpen = false;
+        state.lastJson = '';
+        await haalOp(true);
+      });
+      wisselNamen.append(b);
+    }
+    wisselIn.placeholder = t('cal.newName.ph');
+    wisselOk.textContent = t('poll.next');
+
+    kalHint.textContent = state.me ? t('cal.hint') : t('poll.nameFirst');
+    lijstKop.textContent = t('list.title');
     wegBtn.textContent = t('poll.leave');
     wegJa.textContent = t('poll.leaveYes');
     wegNee.textContent = t('poll.leaveNo');
     wegZone.classList.toggle('verborgen', !state.me);
+
     bouwStatus();
+    bouwKal();
     bouwLijst();
   }
 

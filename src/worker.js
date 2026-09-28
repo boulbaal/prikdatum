@@ -84,7 +84,7 @@ async function readBody(request) {
 }
 
 // Zet ruwe opties om naar een gededupliceerde lijst [{date, time}].
-// Ongeldige items worden stil overgeslagen; dubbels (date+time) samengevoegd.
+// Ongeldige items worden stil overgeslagen; dubbels (zelfde dag) samengevoegd.
 function cleanOptions(raw) {
   if (!Array.isArray(raw)) return [];
   const seen = new Set();
@@ -93,9 +93,8 @@ function cleanOptions(raw) {
     if (!o || typeof o !== 'object') continue;
     if (!validDate(o.date) || !validTime(o.time)) continue;
     const time = o.time ? o.time : null;
-    const key = o.date + '|' + (time ?? '');
-    if (seen.has(key)) continue;
-    seen.add(key);
+    if (seen.has(o.date)) continue;
+    seen.add(o.date);
     out.push({ date: o.date, time });
   }
   return out;
@@ -141,14 +140,14 @@ async function getFullPoll(env, id) {
   };
 }
 
-// 5.1 POST /api/polls
+// POST /api/polls — afspraak maken (opties zijn optioneel; die komen via de kalender)
 async function createPoll(env, body) {
   const title = cleanTitle(body.title);
   if (!title) return fail('title_required');
   const name = cleanName(body.name);
   if (!name) return fail('name_required');
   const options = cleanOptions(body.options);
-  if (options.length < 1 || options.length > 30) return fail('invalid_date');
+  if (options.length > 30) return fail('invalid_date');
 
   const pollId = newId();
   const participantId = newId();
@@ -229,7 +228,7 @@ async function putVotes(env, pollId, pid, body) {
   return json({});
 }
 
-// 5.5 POST /api/polls/:id/options
+// POST /api/polls/:id/options — dag toevoegen (uniek per dag)
 async function addOption(env, pollId, body) {
   const poll = await getPoll(env, pollId);
   if (!poll) return fail('not_found', 404);
@@ -240,8 +239,8 @@ async function addOption(env, pollId, body) {
   if (!validDate(body.date) || !validTime(body.time)) return fail('invalid_date');
   const time = body.time ? body.time : null;
   const existing = await env.DB.prepare(
-    'SELECT id FROM options WHERE poll_id = ? AND date = ? AND time IS ?'
-  ).bind(pollId, body.date, time).first();
+    'SELECT id FROM options WHERE poll_id = ? AND date = ?'
+  ).bind(pollId, body.date).first();
   if (existing) return fail('duplicate_option');
   const optionId = newId();
   try {
@@ -288,6 +287,28 @@ async function deleteParticipant(env, pollId, pid) {
   if (!participant) return fail('not_found', 404);
   await env.DB.prepare('DELETE FROM participants WHERE id = ?').bind(pid).run();
   // votes verdwijnen via ON DELETE CASCADE; opties die hij toevoegde blijven
+  return json({});
+}
+
+// PUT /api/polls/:id/title — titel aanpassen (iedereen mag)
+async function putTitle(env, pollId, body) {
+  const poll = await getPoll(env, pollId);
+  if (!poll) return fail('not_found', 404);
+  const title = cleanTitle(body.title);
+  if (!title) return fail('title_required');
+  await env.DB.prepare('UPDATE polls SET title = ? WHERE id = ?').bind(title, pollId).run();
+  return json({});
+}
+
+// PUT /api/polls/:id/options/:oid/time — uur van een dag aanpassen (iedereen mag)
+async function putOptionTime(env, pollId, oid, body) {
+  const option = await env.DB.prepare(
+    'SELECT id FROM options WHERE id = ? AND poll_id = ?'
+  ).bind(oid, pollId).first();
+  if (!option) return fail('not_found', 404);
+  if (!validTime(body.time)) return fail('invalid_date');
+  const time = body.time ? body.time : null;
+  await env.DB.prepare('UPDATE options SET time = ? WHERE id = ?').bind(time, oid).run();
   return json({});
 }
 
@@ -363,6 +384,20 @@ export default {
       // DELETE /api/polls/:id/options/:oid?participantId=…
       if (p.length === 5 && p[3] === 'options' && method === 'DELETE') {
         return await deleteOption(env, pollId, p[4], url.searchParams.get('participantId') || '');
+      }
+
+      // PUT /api/polls/:id/title
+      if (p.length === 4 && p[3] === 'title' && method === 'PUT') {
+        const body = await readBody(request);
+        if (!body) return fail('generic');
+        return await putTitle(env, pollId, body);
+      }
+
+      // PUT /api/polls/:id/options/:oid/time
+      if (p.length === 6 && p[3] === 'options' && p[5] === 'time' && method === 'PUT') {
+        const body = await readBody(request);
+        if (!body) return fail('generic');
+        return await putOptionTime(env, pollId, p[4], body);
       }
 
       // PUT /api/polls/:id/final
