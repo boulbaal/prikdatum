@@ -421,8 +421,8 @@ const BRAND = 'Whenly';
 // Wordt bij het deployen vervangen door het korte git-commitnummer.
 const VERSION = '__VERSION__';
 const VERSIE = VERSION.startsWith('__') ? 'dev' : VERSION;
-// PayPal.me-gebruikersnaam voor de donatieknop. Leeg/placeholder = knop verborgen.
-const PAYPAL = 'PAYPAL_HANDLE';
+// PayPal voor de donatieknop: e-mailadres (donatielink) of PayPal.me-naam. Leeg = verborgen.
+const PAYPAL = 'aboulbahaiem@gmail.com';
 const LOCALES = { nl: 'nl-BE', en: 'en-GB', fr: 'fr-BE' };
 const FLAGS = { nl: '\u{1F1E7}\u{1F1EA}', en: '\u{1F1EC}\u{1F1E7}', fr: '\u{1F1EB}\u{1F1F7}' };
 // Eén vaste kleur per persoon (volgorde van binnenkomst), goed leesbaar op wit.
@@ -545,9 +545,19 @@ let doneerHertaal = () => {};
   doos.classList.toggle('verborgen', !actief);
   if (!actief) return;
 
-  const link = (bedrag) => bedrag
-    ? 'https://www.paypal.com/paypalme/' + PAYPAL + '/' + bedrag + 'EUR'
-    : 'https://www.paypal.com/paypalme/' + PAYPAL;
+  // PAYPAL mag een e-mailadres zijn (dan een PayPal-donatielink) of een
+  // PayPal.me-gebruikersnaam (dan een paypal.me-link).
+  const perMail = PAYPAL.includes('@');
+  const link = (bedrag) => {
+    if (perMail) {
+      const p = new URLSearchParams({ business: PAYPAL, currency_code: 'EUR', item_name: 'Whenly', no_recurring: '1' });
+      if (bedrag) p.set('amount', String(bedrag));
+      return 'https://www.paypal.com/donate/?' + p.toString();
+    }
+    return bedrag
+      ? 'https://www.paypal.com/paypalme/' + PAYPAL + '/' + bedrag + 'EUR'
+      : 'https://www.paypal.com/paypalme/' + PAYPAL;
+  };
   const knop = (bedrag) => {
     const a = el('a', 'doneer-bedrag', '\u20AC' + bedrag);
     a.href = link(bedrag); a.target = '_blank'; a.rel = 'noopener';
@@ -1359,42 +1369,49 @@ if (pad.startsWith('/p/') && pad.length > 3) {
     if (document.visibilityState === 'visible') checkUpdate();
   });
 
-  // --- installeren als app ---
+  // --- installeren als app: ALLEEN op een smartphone/tablet ---
   const installBar = document.getElementById('installBar');
   const installTekst = document.getElementById('installTekst');
   const installBtn = document.getElementById('installBtn');
   const installSluit = document.getElementById('installSluit');
-  const alGesloten = () => { try { return localStorage.getItem('whenly.install.dismiss') === '1'; } catch { return false; } };
+  const mobiel = /android|iphone|ipad|ipod|mobile|silk|kindle/i.test(navigator.userAgent);
   const staat = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+  const alGesloten = () => { try { return localStorage.getItem('whenly.install.dismiss') === '1'; } catch { return false; } };
   let deferred = null;
-  installSluit.addEventListener('click', () => {
+  let verbergTimer = null;
+
+  // toon het popupje: 10 seconden zichtbaar, of weg met de x
+  function toonInstall(metKnop) {
+    if (!mobiel || staat || alGesloten()) return;
+    installTekst.textContent = metKnop ? t('install.text') : t('install.ios');
+    installBtn.classList.toggle('verborgen', !metKnop);
+    if (metKnop) installBtn.textContent = t('install.button');
+    installBar.classList.remove('verborgen');
+    clearTimeout(verbergTimer);
+    verbergTimer = setTimeout(() => installBar.classList.add('verborgen'), 10000);
+  }
+  function verbergInstall(onthoud) {
+    clearTimeout(verbergTimer);
     installBar.classList.add('verborgen');
-    try { localStorage.setItem('whenly.install.dismiss', '1'); } catch {}
-  });
+    if (onthoud) { try { localStorage.setItem('whenly.install.dismiss', '1'); } catch {} }
+  }
+  installSluit.addEventListener('click', () => verbergInstall(true)); // x = niet meer tonen
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferred = e;
-    if (staat || alGesloten()) return;
-    installTekst.textContent = t('install.text');
-    installBtn.textContent = t('install.button');
-    installBtn.classList.remove('verborgen');
-    installBar.classList.remove('verborgen');
+    toonInstall(true);
   });
   installBtn.addEventListener('click', async () => {
     if (!deferred) return;
-    deferred.prompt();
+    deferred.prompt();                 // meteen het installeer-venster van het toestel
     try { await deferred.userChoice; } catch {}
     deferred = null;
-    installBar.classList.add('verborgen');
+    verbergInstall(false);
   });
-  // iOS Safari kent geen beforeinstallprompt -> korte hint tonen
+  // iOS Safari kent geen beforeinstallprompt -> korte hint tonen (zelfde 10s + x)
   const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
   const isSafari = /^((?!chrome|crios|fxios|android).)*safari/i.test(navigator.userAgent);
-  if (isIOS && isSafari && !staat && !alGesloten()) {
-    installTekst.textContent = t('install.ios');
-    installBtn.classList.add('verborgen');
-    installBar.classList.remove('verborgen');
-  }
+  if (isIOS && isSafari) toonInstall(false);
 })();
 </script>
 </body>

@@ -499,6 +499,29 @@ test.describe("Scenario's", () => {
     await ctx.close();
   });
 
+  test('S15 donatieknop toont bedragen en PayPal-links', async ({ browser }, testInfo) => {
+    const ctx = await browser.newContext(ctxOpties(testInfo));
+    const page = await ctx.newPage();
+    await page.goto('/');
+    const doneer = page.locator('#doneerBtn');
+    await expect(doneer).toBeVisible();
+    await expect(doneer).toHaveText('Doneer');
+    await expect(page.locator('#doneerPaneel')).toBeHidden();
+    await doneer.click();
+    await expect(page.locator('#doneerPaneel')).toBeVisible();
+    // gewone bedragen en de grap-bedragen (exacte tekst, zodat €5 niet ook €50 pakt)
+    for (const b of [1, 2, 5, 20, 50]) {
+      await expect(page.locator('.doneer-bedrag', { hasText: new RegExp('^\\u20AC' + b + '$') })).toBeVisible();
+    }
+    // link wijst naar PayPal met het juiste bedrag
+    const vijf = page.locator('.doneer-bedrag', { hasText: /^€5$/ });
+    const href = await vijf.getAttribute('href');
+    expect(href).toContain('paypal.com/donate');
+    expect(href).toContain('amount=5');
+    expect(href).toContain('currency_code=EUR');
+    await ctx.close();
+  });
+
   test('S10 onbekende link', async ({ browser }, testInfo) => {
     const ctx = await browser.newContext(ctxOpties(testInfo));
     const page = await ctx.newPage();
