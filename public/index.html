@@ -26,6 +26,9 @@
 <meta name="twitter:title" content="Whenly · pick a date together">
 <meta name="twitter:description" content="No account, no fuss. Tap the days that work and share the link. Free forever.">
 <meta name="twitter:image" content="https://whenly.vanali.workers.dev/og.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"Whenly","url":"https://whenly.vanali.workers.dev/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript","description":"Pick a date together with friends, family or colleagues. No account, no ads, free forever.","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"inLanguage":["en","nl","fr","de","es","pt","pl","uk","ru","tr","ar","ur","hi","bn","id","vi","zh","ja","ko","sw"],"isAccessibleForFree":true}
+</script>
 <style>
   :root {
     --tekst: #1F2933;
@@ -290,6 +293,8 @@
     font-size: 13px;
     color: var(--gedempt);
   }
+  .voet a { color: var(--gedempt); font-weight: 600; text-decoration: none; }
+  .status .nog { display: inline-block; margin-top: 10px; font-size: 14px; color: var(--groen); }
   .verborgen { display: none !important; }
 
   /* lettertypen per schrift (systeemfonts, niets extern) */
@@ -486,6 +491,8 @@ en: {
   'donate.thanks': 'Thanks! 🙏',
   'close': 'Close',
   'lang.pick': 'Choose language',
+  'share.text': 'Let\'s find a date (no account needed). Just tap the days you can make:',
+  'poll.another': 'Plan another date?',
 },
 nl: {
   'make.title': 'Wanneer spreken we af?',
@@ -555,6 +562,8 @@ nl: {
   'donate.thanks': 'Merci! 🙏',
   'close': 'Sluiten',
   'lang.pick': 'Taal kiezen',
+  'share.text': 'Laten we een datum prikken (geen account nodig). Klik gewoon de dagen die je kan:',
+  'poll.another': 'Nog een datum prikken?',
 },
 fr: {
   'make.title': 'Quand se voit-on ?',
@@ -624,6 +633,8 @@ fr: {
   'donate.thanks': 'Merci ! 🙏',
   'close': 'Fermer',
   'lang.pick': 'Choisir la langue',
+  'share.text': 'Trouvons une date (sans compte). Clique sur les jours où tu peux :',
+  'poll.another': 'Une autre date à trouver ?',
 },
 de: {
   'make.title': 'Wann treffen wir uns?',
@@ -693,6 +704,8 @@ de: {
   'donate.thanks': 'Danke! 🙏',
   'close': 'Schließen',
   'lang.pick': 'Sprache wählen',
+  'share.text': 'Lass uns einen Termin finden (kein Konto nötig). Klick einfach die Tage an, die dir passen:',
+  'poll.another': 'Noch einen Termin finden?',
 },
 es: {
   'make.title': '¿Cuándo quedamos?',
@@ -762,6 +775,8 @@ es: {
   'donate.thanks': '¡Gracias! 🙏',
   'close': 'Cerrar',
   'lang.pick': 'Elegir idioma',
+  'share.text': 'Busquemos una fecha (sin cuenta). Marca los días que puedas:',
+  'poll.another': '¿Otra fecha que elegir?',
 },
 pt: {
   'make.title': 'Quando nos encontramos?',
@@ -831,6 +846,8 @@ pt: {
   'donate.thanks': 'Obrigado! 🙏',
   'close': 'Fechar',
   'lang.pick': 'Escolher idioma',
+  'share.text': 'Vamos marcar uma data (sem conta). Marca os dias em que podes:',
+  'poll.another': 'Marcar outra data?',
 },
 pl: {
   'make.title': 'Kiedy się spotykamy?',
@@ -900,6 +917,8 @@ pl: {
   'donate.thanks': 'Dzięki! 🙏',
   'close': 'Zamknij',
   'lang.pick': 'Wybierz język',
+  'share.text': 'Ustalmy datę (bez konta). Kliknij dni, w które możesz:',
+  'poll.another': 'Ustalić kolejną datę?',
 },
 uk: {
   'make.title': 'Коли зустрічаємось?',
@@ -969,6 +988,8 @@ uk: {
   'donate.thanks': 'Дякую! 🙏',
   'close': 'Закрити',
   'lang.pick': 'Обрати мову',
+  'share.text': 'Оберімо дату (без акаунта). Просто позначте дні, коли можете:',
+  'poll.another': 'Обрати ще одну дату?',
 },
 ru: {
   'make.title': 'Когда встречаемся?',
@@ -1038,6 +1059,8 @@ ru: {
   'donate.thanks': 'Спасибо! 🙏',
   'close': 'Закрыть',
   'lang.pick': 'Выбрать язык',
+  'share.text': 'Давайте выберем дату (без аккаунта). Просто отметьте дни, когда можете:',
+  'poll.another': 'Выбрать ещё одну дату?',
 },
 tr: {
   'make.title': 'Ne zaman buluşuyoruz?',
@@ -1107,6 +1130,8 @@ tr: {
   'donate.thanks': 'Teşekkürler! 🙏',
   'close': 'Kapat',
   'lang.pick': 'Dil seç',
+  'share.text': 'Bir tarih belirleyelim (hesap gerekmez). Müsait olduğun günlere dokun:',
+  'poll.another': 'Başka bir tarih belirlemek ister misin?',
 },
 ar: {
   'make.title': 'متى نلتقي؟',
@@ -1176,6 +1201,8 @@ ar: {
   'donate.thanks': 'شكراً! 🙏',
   'close': 'إغلاق',
   'lang.pick': 'اختر اللغة',
+  'share.text': 'لنحدد موعداً (بدون حساب). اضغط على الأيام المناسبة لك:',
+  'poll.another': 'تحديد موعد آخر؟',
 },
 ur: {
   'make.title': 'ہم کب ملیں؟',
@@ -1245,6 +1272,8 @@ ur: {
   'donate.thanks': 'شکریہ! 🙏',
   'close': 'بند کریں',
   'lang.pick': 'زبان چنیں',
+  'share.text': 'آئیں ایک تاریخ طے کریں (اکاؤنٹ کی ضرورت نہیں)۔ بس وہ دن دبائیں جن میں آپ آ سکتے ہیں:',
+  'poll.another': 'ایک اور تاریخ طے کریں؟',
 },
 hi: {
   'make.title': 'हम कब मिलें?',
@@ -1314,6 +1343,8 @@ hi: {
   'donate.thanks': 'धन्यवाद! 🙏',
   'close': 'बंद करें',
   'lang.pick': 'भाषा चुनें',
+  'share.text': 'चलो एक तारीख़ तय करें (अकाउंट की ज़रूरत नहीं)। जिन दिनों आप आ सकते हैं उन्हें चुनें:',
+  'poll.another': 'एक और तारीख़ तय करें?',
 },
 bn: {
   'make.title': 'আমরা কবে দেখা করব?',
@@ -1383,6 +1414,8 @@ bn: {
   'donate.thanks': 'ধন্যবাদ! 🙏',
   'close': 'বন্ধ করুন',
   'lang.pick': 'ভাষা বেছে নিন',
+  'share.text': 'চলুন একটি তারিখ ঠিক করি (অ্যাকাউন্ট লাগবে না)। যে দিনগুলো পারবেন সেগুলো ট্যাপ করুন:',
+  'poll.another': 'আরেকটি তারিখ ঠিক করবেন?',
 },
 id: {
   'make.title': 'Kapan kita bertemu?',
@@ -1452,6 +1485,8 @@ id: {
   'donate.thanks': 'Terima kasih! 🙏',
   'close': 'Tutup',
   'lang.pick': 'Pilih bahasa',
+  'share.text': 'Ayo tentukan tanggal (tanpa akun). Ketuk saja hari yang kamu bisa:',
+  'poll.another': 'Tentukan tanggal lain?',
 },
 vi: {
   'make.title': 'Khi nào chúng ta gặp nhau?',
@@ -1521,6 +1556,8 @@ vi: {
   'donate.thanks': 'Cảm ơn! 🙏',
   'close': 'Đóng',
   'lang.pick': 'Chọn ngôn ngữ',
+  'share.text': 'Cùng chọn ngày nhé (không cần tài khoản). Bấm vào những ngày bạn rảnh:',
+  'poll.another': 'Chọn thêm một ngày khác?',
 },
 zh: {
   'make.title': '我们什么时候见面？',
@@ -1590,6 +1627,8 @@ zh: {
   'donate.thanks': '谢谢！🙏',
   'close': '关闭',
   'lang.pick': '选择语言',
+  'share.text': '一起选个日期吧（无需账号）。点选你方便的日子：',
+  'poll.another': '再选一个日期？',
 },
 ja: {
   'make.title': 'いつ会いましょう？',
@@ -1659,6 +1698,8 @@ ja: {
   'donate.thanks': 'ありがとう！🙏',
   'close': '閉じる',
   'lang.pick': '言語を選択',
+  'share.text': '日程を決めよう（アカウント不要）。都合のよい日をタップしてね：',
+  'poll.another': '別の日程も決める？',
 },
 ko: {
   'make.title': '언제 만날까요?',
@@ -1728,6 +1769,8 @@ ko: {
   'donate.thanks': '고마워요! 🙏',
   'close': '닫기',
   'lang.pick': '언어 선택',
+  'share.text': '날짜를 정해요 (계정 불필요). 가능한 날을 눌러 주세요:',
+  'poll.another': '다른 날짜도 정할까요?',
 },
 sw: {
   'make.title': 'Tukutane lini?',
@@ -1797,6 +1840,8 @@ sw: {
   'donate.thanks': 'Asante! 🙏',
   'close': 'Funga',
   'lang.pick': 'Chagua lugha',
+  'share.text': 'Tupange tarehe (bila akaunti). Bofya tu siku unazoweza:',
+  'poll.another': 'Kupanga tarehe nyingine?',
 },
 };
 const BRAND = 'Whenly';
@@ -1827,6 +1872,12 @@ function basisTaal(tag) {
 }
 // Eerst de bewaarde keuze, dan de talen van de browser op volgorde van voorkeur, anders Engels.
 function bepaalTaal() {
+  // /nl/, /ar/ ... : de taal in de link wint (en wordt onthouden)
+  const uitPad = /^\/([a-z]{2})\/?$/.exec(location.pathname);
+  if (uitPad && TALEN[uitPad[1]]) {
+    try { localStorage.setItem(LS.lang, uitPad[1]); } catch {}
+    return uitPad[1];
+  }
   try {
     const opgeslagen = localStorage.getItem(LS.lang);
     if (opgeslagen && TALEN[opgeslagen]) return opgeslagen;
@@ -1991,7 +2042,10 @@ function pasTaalToe() {
   vlagBtn.setAttribute('aria-label', t('lang.pick'));
   vlagBtn.title = t('lang.pick');
   document.getElementById('installSluit').setAttribute('aria-label', t('close'));
-  document.getElementById('voet').textContent = t('footer') + ' · v' + VERSIE;
+  const voet = document.getElementById('voet');
+  voet.textContent = '';
+  const merk = el('a', null, BRAND); merk.href = '/';
+  voet.append(merk, document.createTextNode(t('footer').replace(/^Whenly/, '') + ' · v' + VERSIE));
 }
 
 function sluitTalen() {
@@ -2274,7 +2328,7 @@ function schermAfspraak(pollId) {
     const url = location.origin + '/p/' + pollId;
     const titel = (state.data && state.data.title) || 'Whenly';
     if (navigator.share) {
-      try { await navigator.share({ title: titel, url }); return; } catch { /* geannuleerd */ }
+      try { await navigator.share({ title: titel, text: t('share.text'), url }); return; } catch { /* geannuleerd */ }
     }
     try {
       await navigator.clipboard.writeText(url);
@@ -2526,6 +2580,8 @@ function schermAfspraak(pollId) {
       los.addEventListener('click', () => zetFinal(null));
       zone.append(tijdVeld(definitief), los);
       balk.append(zone);
+      const nog = el('a', 'nog', t('poll.another')); nog.href = '/';
+      balk.append(nog);
       blok.append(balk);
     } else {
       const max = d.options.reduce((m, o) => Math.max(m, o.votes.length), 0);
@@ -2829,7 +2885,7 @@ function schermAfspraak(pollId) {
   }
 
   haalOp(true).then(telBezoek);
-  setInterval(() => haalOp(false), 10000);
+  setInterval(() => { if (!document.hidden) haalOp(false); }, 10000);
   document.addEventListener('visibilitychange', () => {
     if (document.visibilityState === 'visible') haalOp(false);
   });

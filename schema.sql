@@ -37,3 +37,5 @@ CREATE INDEX IF NOT EXISTS idx_participants_poll ON participants(poll_id);
 -- Voor databases die nog met het oude schema (uniek per dag+uur) zijn aangemaakt:
 -- deze index dwingt "één rij per dag" ook daar af, zonder iets te verwijderen.
 CREATE UNIQUE INDEX IF NOT EXISTS idx_options_dag ON options(poll_id, date);
+-- elke GET van een afspraak joint votes op option_id; zonder index is dat een volledige scan
+CREATE INDEX IF NOT EXISTS idx_votes_option ON votes(option_id);

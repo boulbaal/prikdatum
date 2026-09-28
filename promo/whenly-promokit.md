@@ -19,6 +19,7 @@ Whenly bekend maken. Gratis, en gratis voor altijd. Focus: Azie, Afrika en Oost-
 - **[KLAAR]** tekst staat klaar om te plakken.
 - **[JIJ]** vraagt een account of actie die alleen jij doet. Ik lever de tekst.
 - **[LATER]** zinvol zodra er wat gebruikers/cijfers zijn.
+- **[GEDAAN]** staat in de code/site (na de volgende deploy live).
 
 ---
 
@@ -65,10 +66,10 @@ Turkije: 75. Turkse snippet [KLAAR] 76. Eksi Sozluk / FB-groepen [JIJ]
 Breed: 77. Telegram is overal in de regio het sterkste kanaal, deel-sjablonen [KLAAR] 78. Studentengroepen [KLAAR] 79. Lokale IT-Telegram/Slack [JIJ] 80. Diaspora-groepen [KLAAR]
 
 ### E. Ingebouwde groei, werkt overal (81-90)
-81. Deel-knop met WhatsApp/Telegram-tekst in de app [KLAAR] 82. "Gemaakt met Whenly, gratis" voetnoot met link op elke poll [KLAAR, aanwezig] 83. QR-code voor flyers en schermen [KLAAR] 84. Open Graph-kaart voor mooie gedeelde links [KLAAR] 85. PWA-installatie als retentie-haak [KLAAR, aanwezig] 86. Meertalige app-UI zodat mensen in de doelregio's het in hun taal gebruiken [JIJ-beslissing, zie onder] 87. "Nog een datum prikken?" CTA na afloop [JIJ, code] 88. E-mailhandtekening-banner met QR (jouw neutrale alias) [KLAAR] 89. Deelbare link zonder login is zelf de groeimotor [KLAAR] 90. Mond-tot-mond: vraag 10 mensen het 1x te gebruiken en door te sturen [KLAAR]
+81. Deel-knop met WhatsApp/Telegram-tekst in de app, in de taal van de gebruiker [GEDAAN] 82. Voetnoot "Whenly · gratis, zonder account" met link naar de startpagina op elke poll [GEDAAN] 83. QR-code voor flyers en schermen [KLAAR] 84. Open Graph-kaart voor mooie gedeelde links, per taal op /xx/ [GEDAAN] 85. PWA-installatie als retentie-haak [KLAAR, aanwezig] 86. Meertalige app-UI: 20 talen, automatisch op basis van de browser, RTL voor Arabisch en Urdu [GEDAAN] 87. "Nog een datum prikken?" onder een vastgelegde datum [GEDAAN] 88. E-mailhandtekening-banner met QR (jouw neutrale alias) [KLAAR] 89. Deelbare link zonder login is zelf de groeimotor [KLAAR] 90. Mond-tot-mond: vraag 10 mensen het 1x te gebruiken en door te sturen [KLAAR]
 
 ### F. SEO en content, meertalig (91-100)
-91. Blog: gratis Doodle-alternatieven [KLAAR] 92. Blog: datum prikken met een grote groep [KLAAR] 93. Vergelijkingspagina Whenly vs Doodle vs When2meet [KLAAR] 94. FAQ-pagina met schema [KLAAR] 95. Meta-titels/beschrijvingen per taal [KLAAR-NL, rest JIJ] 96. JSON-LD FAQ-schema [KLAAR] 97. Vertaalde landingsteksten per doeltaal [KLAAR-kernzinnen] 98. Quora/Reddit-antwoorden op "Doodle alternative" [JIJ+KLAAR] 99. Gastblog op regionale tech-site [JIJ] 100. Sitemap en interne links [KLAAR]
+91. Blog: gratis Doodle-alternatieven, live op /blog/gratis-doodle-alternatieven [GEDAAN] 92. Blog: datum prikken met een grote groep, live op /blog/datum-prikken-met-een-grote-groep [GEDAAN] 93. Vergelijkingspagina, live op /vergelijking [GEDAAN] 94. FAQ-pagina NL+EN met FAQ-schema, live op /faq [GEDAAN] 95. Meta-titels/beschrijvingen per taal op /nl/, /ar/ ... (20 taalpagina's met hreflang) [GEDAAN] 96. JSON-LD: WebApplication op de startpagina, FAQPage op /faq [GEDAAN] 97. Vertaalde landingspagina's per taal (/nl/ ... /sw/) [GEDAAN] 98. Quora/Reddit-antwoorden op "Doodle alternative" [JIJ+KLAAR] 99. Gastblog op regionale tech-site [JIJ] 100. robots.txt en sitemap.xml met alle taal- en contentpagina's [GEDAAN]
 
 ---
 
@@ -171,7 +172,7 @@ Whenly is te vinden op https://whenly.vanali.workers.dev. Contact: [contact].
 - Is Whenly gratis? Ja, volledig en blijvend. Geen betaalmuur, geen reclame.
 - Moet ik een account maken? Nee, niemand, ook niet de aanmaker.
 - Werkt het op mijn telefoon? Ja, in elke browser, installeerbaar als app.
-- Talen? Nu NL, FR, EN (meer in voorbereiding).
+- Talen? 20, automatisch op basis van je browser.
 - Verschil met Doodle? Geen registratie, geen reclame, gratis, je klikt dagen op een kalender.
 
 ## SEO-meta (NL, vertaal per doeltaal)
@@ -186,9 +187,9 @@ qr-whenly.png, shot-desktop-home.png, shot-desktop-poll.png, shot-mobiel-poll.pn
 
 ---
 
-## Over "vertalen naar meer talen": de app zelf
+## De app zelf in 20 talen: gedaan
 
-De app-UI staat nu in NL, FR en EN. Om mensen in Azie, Afrika en Oost-Europa het in hun eigen taal te laten gebruiken, kan ik extra talen aan de app toevoegen (de teksten zitten netjes in een STRINGS-blok, met automatische taalkeuze op basis van de browser). Dat is een aparte code-stap met testen en een nieuwe deploy.
+De app-UI staat nu in 20 talen (zie hieronder de oorspronkelijke afweging). Om mensen in Azie, Afrika en Oost-Europa het in hun eigen taal te laten gebruiken, kan ik extra talen aan de app toevoegen (de teksten zitten netjes in een STRINGS-blok, met automatische taalkeuze op basis van de browser). Dat is een aparte code-stap met testen en een nieuwe deploy.
 
 Welke talen ik zou voorstellen voor die regio's, in volgorde van bereik: Arabisch, Russisch, Hindi, Portugees, Indonesisch, Swahili, Turks, Pools, Oekraiens, Vietnamees, Filipino, Roemeens. Arabisch en Urdu vragen rechts-naar-links (RTL), wat ik dan meteen goed zet.
 

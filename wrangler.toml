@@ -5,9 +5,28 @@ compatibility_date = "2026-09-01"
 [assets]
 directory = "./public"
 not_found_handling = "single-page-application"
-run_worker_first = ["/api/*"]
+binding = "ASSETS"
+# alleen deze paden gaan door de worker (taalpagina's, noindex op /p/*); de rest is puur statisch
+run_worker_first = ["/api/*", "/", "/p/*", "/en", "/nl", "/fr", "/de", "/es", "/pt", "/pl", "/uk", "/ru", "/tr", "/ar", "/ur", "/hi", "/bn", "/id", "/vi", "/zh", "/ja", "/ko", "/sw", "/en/", "/nl/", "/fr/", "/de/", "/es/", "/pt/", "/pl/", "/uk/", "/ru/", "/tr/", "/ar/", "/ur/", "/hi/", "/bn/", "/id/", "/vi/", "/zh/", "/ja/", "/ko/", "/sw/"]
 
 [[d1_databases]]
 binding = "DB"
 database_name = "prikdatum"
 database_id = "d0b5a782-3bf8-4fdb-9581-b3bb92399520"   # zie README
+
+# Rate limiting per IP (Workers Rate Limiting). Aanmaken: 20 per minuut; andere
+# schrijfacties: 120 per minuut. Zonder CF-Connecting-IP (lokale dev) staat het uit.
+[[unsafe.bindings]]
+name = "RL_CREATE"
+type = "ratelimit"
+namespace_id = "1001"
+simple = { limit = 20, period = 60 }
+
+[[unsafe.bindings]]
+name = "RL_WRITE"
+type = "ratelimit"
+namespace_id = "1002"
+simple = { limit = 120, period = 60 }
+
+[observability]
+enabled = true

@@ -5,7 +5,110 @@
 const HEADERS = {
   'Content-Type': 'application/json; charset=utf-8',
   'Cache-Control': 'no-store',
+  'X-Content-Type-Options': 'nosniff',
 };
+
+const SITE = 'https://whenly.vanali.workers.dev';
+
+// Titel en omschrijving per taal voor de taalpagina's (/nl/, /ar/ ...). Moeten
+// gelijk zijn aan make.title en make.tagline in public/index.html (test bewaakt dit).
+const META = {
+  en: { rtl: false, title: 'When shall we meet?', desc: 'Pick a date together. No account, no fuss.' },
+  nl: { rtl: false, title: 'Wanneer spreken we af?', desc: 'Prik samen een datum. Zonder account, zonder gedoe.' },
+  fr: { rtl: false, title: 'Quand se voit-on ?', desc: 'Trouvez une date ensemble. Sans compte, sans tracas.' },
+  de: { rtl: false, title: 'Wann treffen wir uns?', desc: 'Findet gemeinsam einen Termin. Ohne Konto, ohne Aufwand.' },
+  es: { rtl: false, title: '¿Cuándo quedamos?', desc: 'Elegid una fecha juntos. Sin cuenta, sin complicaciones.' },
+  pt: { rtl: false, title: 'Quando nos encontramos?', desc: 'Escolham uma data juntos. Sem conta, sem complicações.' },
+  pl: { rtl: false, title: 'Kiedy się spotykamy?', desc: 'Wybierzcie datę razem. Bez konta, bez zachodu.' },
+  uk: { rtl: false, title: 'Коли зустрічаємось?', desc: 'Оберіть дату разом. Без акаунта, без клопоту.' },
+  ru: { rtl: false, title: 'Когда встречаемся?', desc: 'Выберите дату вместе. Без аккаунта, без хлопот.' },
+  tr: { rtl: false, title: 'Ne zaman buluşuyoruz?', desc: 'Birlikte bir tarih seçin. Hesap yok, uğraş yok.' },
+  ar: { rtl: true,  title: 'متى نلتقي؟', desc: 'اختاروا موعداً معاً. بدون حساب، بدون تعقيد.' },
+  ur: { rtl: true,  title: 'ہم کب ملیں؟', desc: 'مل کر ایک تاریخ چنیں۔ کوئی اکاؤنٹ نہیں، کوئی جھنجھٹ نہیں۔' },
+  hi: { rtl: false, title: 'हम कब मिलें?', desc: 'साथ मिलकर एक तारीख़ चुनें। कोई अकाउंट नहीं, कोई झंझट नहीं।' },
+  bn: { rtl: false, title: 'আমরা কবে দেখা করব?', desc: 'একসাথে একটি তারিখ বেছে নিন। কোনো অ্যাকাউন্ট নেই, কোনো ঝামেলা নেই।' },
+  id: { rtl: false, title: 'Kapan kita bertemu?', desc: 'Pilih tanggal bersama. Tanpa akun, tanpa ribet.' },
+  vi: { rtl: false, title: 'Khi nào chúng ta gặp nhau?', desc: 'Cùng chọn một ngày. Không cần tài khoản, không rắc rối.' },
+  zh: { rtl: false, title: '我们什么时候见面？', desc: '一起选个日期。无需账号，轻松搞定。' },
+  ja: { rtl: false, title: 'いつ会いましょう？', desc: 'みんなで日程を決めよう。アカウント不要、手間なし。' },
+  ko: { rtl: false, title: '언제 만날까요?', desc: '함께 날짜를 정하세요. 계정 없이, 번거로움 없이.' },
+  sw: { rtl: false, title: 'Tukutane lini?', desc: 'Pangeni tarehe pamoja. Bila akaunti, bila usumbufu.' },
+};
+const OG_LOCALE = { en: 'en_GB', nl: 'nl_BE', fr: 'fr_BE', de: 'de_DE', es: 'es_ES', pt: 'pt_PT', pl: 'pl_PL', uk: 'uk_UA', ru: 'ru_RU', tr: 'tr_TR', ar: 'ar_EG', ur: 'ur_PK', hi: 'hi_IN', bn: 'bn_BD', id: 'id_ID', vi: 'vi_VN', zh: 'zh_CN', ja: 'ja_JP', ko: 'ko_KR', sw: 'sw_KE' };
+
+function escHtml(s) {
+  return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+// hreflang-links voor alle talen plus x-default (de startpagina in het Engels).
+function hreflangLinks() {
+  const out = [`<link rel="alternate" hreflang="x-default" href="${SITE}/">`];
+  for (const l of Object.keys(META)) out.push(`<link rel="alternate" hreflang="${l}" href="${SITE}/${l}/">`);
+  return out.join('\n');
+}
+
+// Startpagina in één taal: dezelfde app, met vertaalde <title>, omschrijving en
+// OG-tags, zodat zoekmachines en deel-previews per taal iets zinnigs tonen.
+async function taalPagina(env, request, lang) {
+  const asset = await env.ASSETS.fetch(new Request(new URL('/', request.url), { headers: request.headers }));
+  if (!asset.ok) return asset;
+  let html = await asset.text();
+  const m = META[lang];
+  const canon = `${SITE}/${lang}/`;
+  const title = escHtml(m.title + ' · Whenly');
+  const desc = escHtml(m.desc + ' ' + (lang === 'en' ? 'Free forever.' : ''));
+  html = html
+    .replace('<html lang="en">', `<html lang="${lang}"${m.rtl ? ' dir="rtl"' : ''}>`)
+    .replace('<title>Whenly</title>', `<title>${title}</title>`)
+    .replace(/<meta name="description" content="[^"]*">/, `<meta name="description" content="${desc.trim()}">`)
+    .replace(/<meta property="og:title" content="[^"]*">/, `<meta property="og:title" content="${title}">`)
+    .replace(/<meta property="og:description" content="[^"]*">/, `<meta property="og:description" content="${desc.trim()}">`)
+    .replace(/<meta property="og:url" content="[^"]*">/, `<meta property="og:url" content="${canon}">\n<meta property="og:locale" content="${OG_LOCALE[lang]}">`)
+    .replace(/<meta name="twitter:title" content="[^"]*">/, `<meta name="twitter:title" content="${title}">`)
+    .replace(/<meta name="twitter:description" content="[^"]*">/, `<meta name="twitter:description" content="${desc.trim()}">`)
+    .replace('</head>', `<link rel="canonical" href="${canon}">\n${hreflangLinks()}\n</head>`);
+  return htmlResponse(html, asset);
+}
+
+// Startpagina zelf: alleen hreflang + canonical toevoegen.
+async function startPagina(env, request) {
+  const asset = await env.ASSETS.fetch(request);
+  if (!asset.ok) return asset;
+  let html = await asset.text();
+  html = html.replace('</head>', `<link rel="canonical" href="${SITE}/">\n${hreflangLinks()}\n</head>`);
+  return htmlResponse(html, asset);
+}
+
+function htmlResponse(html, van) {
+  const h = new Headers(van.headers);
+  h.set('Content-Type', 'text/html; charset=utf-8');
+  h.delete('Content-Length');
+  h.delete('ETag');
+  return new Response(html, { status: 200, headers: h });
+}
+
+// Afspraakpagina: de app zelf, maar niet indexeerbaar (titels en namen zijn privé).
+async function afspraakPagina(env, request) {
+  const asset = await env.ASSETS.fetch(request);
+  const h = new Headers(asset.headers);
+  h.set('X-Robots-Tag', 'noindex, nofollow');
+  return new Response(asset.body, { status: asset.status, headers: h });
+}
+
+// Rate limiting per IP (Cloudflare Rate Limiting binding). Zonder binding of
+// zonder CF-Connecting-IP (lokale dev) wordt niets beperkt.
+async function teVeel(env, request, binding) {
+  const rl = env[binding];
+  const ip = request.headers.get('CF-Connecting-IP');
+  if (!rl || !ip) return false;
+  try {
+    const { success } = await rl.limit({ key: ip });
+    return !success;
+  } catch (e) {
+    console.error('ratelimit', binding, e);
+    return false;
+  }
+}
 
 // Wordt bij het deployen vervangen door het korte git-commitnummer.
 const RAW_VERSION = '__VERSION__';
@@ -359,14 +462,38 @@ export default {
     const p = url.pathname.split('/').filter(Boolean);
     const method = request.method;
 
+    // --- pagina's (alleen de paden uit run_worker_first komen hier) ---
+    if (p[0] !== 'api' && (method === 'GET' || method === 'HEAD')) {
+      if (p.length === 0) return startPagina(env, request);
+      if (p.length === 1 && META[p[0]]) return taalPagina(env, request, p[0]);
+      if (p[0] === 'p') return afspraakPagina(env, request);
+      return env.ASSETS.fetch(request);
+    }
+
     // GET /api/version — huidige serverversie (voor de update-check in de app)
     if (p[0] === 'api' && p[1] === 'version' && p.length === 2 && method === 'GET') {
       return json({ version: APP_VERSION });
+    }
+    // GET /api/health — werkt de database?
+    if (p[0] === 'api' && p[1] === 'health' && p.length === 2 && method === 'GET') {
+      try {
+        await env.DB.prepare('SELECT 1').first();
+        return json({ ok: true, version: APP_VERSION });
+      } catch (e) {
+        console.error('health', e);
+        return json({ ok: false }, 503);
+      }
     }
 
     if (p[0] !== 'api' || p[1] !== 'polls') return fail('not_found', 404);
 
     try {
+      // te veel verzoeken van één IP: 429 (aanmaken strenger dan de rest)
+      if (method !== 'GET') {
+        const binding = (p.length === 2 && method === 'POST') ? 'RL_CREATE' : 'RL_WRITE';
+        if (await teVeel(env, request, binding)) return fail('too_many_requests', 429);
+      }
+
       // POST /api/polls
       if (p.length === 2 && method === 'POST') {
         const body = await readBody(request);
@@ -442,7 +569,9 @@ export default {
 
       return fail('not_found', 404);
     } catch (e) {
-      return fail('generic', 400);
+      // serverfout (D1, quotum ...): loggen en als 500 melden, niet als clientfout
+      console.error(method, url.pathname, e && e.message ? e.message : e);
+      return fail('generic', 500);
     }
   },
 };

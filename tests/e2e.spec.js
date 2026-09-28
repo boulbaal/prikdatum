@@ -233,6 +233,72 @@ test.describe('API', () => {
     res = await request.put(`/api/polls/${id}/options/${oid}/time`, { data: { time: '25:99' } });
     expect(res.status()).toBe(400);
   });
+
+  test('A20 rate limit: 21e afspraak per minuut van één IP -> 429', async ({ request }) => {
+    const ip = '203.0.113.' + Math.floor(Math.random() * 200 + 1);
+    const codes = [];
+    for (let i = 0; i < 22; i++) {
+      const res = await request.post('/api/polls', {
+        data: { title: 'Limiet', name: 'Ali' },
+        headers: { 'CF-Connecting-IP': ip },
+      });
+      codes.push(res.status());
+    }
+    expect(codes.slice(0, 20).every((c) => c === 201)).toBe(true);
+    expect(codes[20]).toBe(429);
+    expect(codes[21]).toBe(429);
+    // een ander IP mag gewoon door
+    const ander = await request.post('/api/polls', {
+      data: { title: 'Limiet', name: 'Ali' }, headers: { 'CF-Connecting-IP': '198.51.100.7' },
+    });
+    expect(ander.status()).toBe(201);
+  });
+
+  test('A21 health en versie', async ({ request }) => {
+    const h = await request.get('/api/health');
+    expect(h.status()).toBe(200);
+    expect((await h.json()).ok).toBe(true);
+  });
+
+  test('A22 taalpagina\'s: vertaalde titel, lang/dir, hreflang en canonical', async ({ request }) => {
+    const de = await (await request.get('/de/')).text();
+    expect(de).toContain('<html lang="de">');
+    expect(de).toContain('<title>Wann treffen wir uns? · Whenly</title>');
+    expect(de).toContain('<link rel="canonical" href="https://whenly.vanali.workers.dev/de/">');
+    expect((de.match(/hreflang="/g) || []).length).toBe(21); // 20 talen + x-default
+    const ar = await (await request.get('/ar')).text();
+    expect(ar).toContain('<html lang="ar" dir="rtl">');
+    expect(ar).toContain('<meta property="og:locale" content="ar_EG">');
+    const home = await (await request.get('/')).text();
+    expect(home).toContain('<html lang="en">');
+    expect((home.match(/hreflang="/g) || []).length).toBe(21);
+    expect(home).toContain('"@type":"WebApplication"');
+    // een onbekende taalcode is gewoon de app (SPA-fallback), geen 500
+    expect((await request.get('/xx/')).status()).toBe(200);
+  });
+
+  test('A23 afspraakpagina niet indexeerbaar, statische pagina\'s en headers', async ({ request }) => {
+    const p = await request.get('/p/abcdefghij');
+    expect(p.status()).toBe(200);
+    expect(p.headers()['x-robots-tag']).toBe('noindex, nofollow');
+    const faq = await request.get('/faq');
+    expect(faq.status()).toBe(200);
+    expect(faq.headers()['content-type']).toContain('text/html');
+    expect(faq.headers()['x-content-type-options']).toBe('nosniff');
+    expect(faq.headers()['content-security-policy']).toContain("frame-ancestors 'none'");
+    expect(await faq.text()).toContain('"@type": "FAQPage"');
+    const robots = await request.get('/robots.txt');
+    expect(robots.headers()['content-type']).toContain('text/plain');
+    expect(await robots.text()).toContain('Sitemap: https://whenly.vanali.workers.dev/sitemap.xml');
+    const sm = await request.get('/sitemap.xml');
+    expect(sm.headers()['content-type']).toContain('xml');
+    const smt = await sm.text();
+    expect(smt).toContain('<loc>https://whenly.vanali.workers.dev/sw/</loc>');
+    expect(smt).toContain('<loc>https://whenly.vanali.workers.dev/blog/gratis-doodle-alternatieven</loc>');
+    for (const pad of ['/vergelijking', '/blog/gratis-doodle-alternatieven', '/blog/datum-prikken-met-een-grote-groep']) {
+      expect((await request.get(pad)).status(), pad).toBe(200);
+    }
+  });
 });
 
 /* ================================================================
@@ -641,6 +707,28 @@ test.describe("Scenario's", () => {
     await ctx.close();
   });
 
+  test('S20 /ja/ zet de taal ook met een Nederlandse browser; voetnoot linkt naar de start; na vastleggen "nog een datum"', async ({ browser, request }, testInfo) => {
+    const ctx = await browser.newContext(ctxOpties(testInfo)); // nl-BE
+    const page = await ctx.newPage();
+    await page.goto('/ja/');
+    await expect(page.locator('h1')).toHaveText('いつ会いましょう？');
+    await expect(page.locator('#voet a')).toHaveAttribute('href', '/');
+    // keuze blijft bewaard op de gewone startpagina
+    await page.goto('/');
+    await expect(page.locator('h1')).toHaveText('いつ会いましょう？');
+    // terug naar Nederlands via het menu, dan een vastgelegde afspraak
+    await page.locator('#vlag').click();
+    await page.locator('#talen button', { hasText: 'Nederlands' }).click();
+    const { id } = await apiMaakPoll(request, { title: 'Etentje', name: 'Ali', options: [{ date: D1, time: T1 }] });
+    const full = await (await request.get('/api/polls/' + id)).json();
+    await request.put('/api/polls/' + id + '/final', { data: { optionId: full.options[0].id } });
+    await page.goto('/p/' + id);
+    await expect(page.locator('.status .balk')).toHaveClass(/definitief/);
+    await expect(page.locator('.status .nog')).toHaveText('Nog een datum prikken?');
+    await expect(page.locator('.status .nog')).toHaveAttribute('href', '/');
+    await ctx.close();
+  });
+
   test('S12 mobiel 360x740: geen horizontale scroll, knoppen >= 44px', async ({ browser, request }, testInfo) => {
     test.skip(!testInfo.project.use.viewport || testInfo.project.use.viewport.width !== 360,
       'alleen op het mobiele project');
@@ -701,6 +789,19 @@ test.describe('Statisch', () => {
     // RTL-talen gemarkeerd
     expect(T.ar.rtl).toBe(true);
     expect(T.ur.rtl).toBe(true);
+  });
+
+  test('META in de worker is gelijk aan make.title/make.tagline in de app', () => {
+    const worker = fs.readFileSync(path.join(__dirname, '..', 'src', 'worker.js'), 'utf8');
+    const META = new Function('return ' + /const META = (\{[\s\S]*?\n\});/.exec(worker)[1])();
+    const V = new Function('return ' + /const VERTALINGEN = (\{[\s\S]*?\n\});/.exec(html)[1])();
+    expect(Object.keys(META).sort()).toEqual(Object.keys(V).sort());
+    for (const l of Object.keys(V)) {
+      expect(META[l].title, l).toBe(V[l]['make.title']);
+      expect(META[l].desc, l).toBe(V[l]['make.tagline']);
+    }
+    expect(META.ar.rtl).toBe(true);
+    expect(META.ur.rtl).toBe(true);
   });
 
   test('wrangler deploy --dry-run slaagt', ({}, testInfo) => {
