@@ -16,15 +16,13 @@ database_id = "d0b5a782-3bf8-4fdb-9581-b3bb92399520"   # zie README
 
 # Rate limiting per IP (Workers Rate Limiting). Aanmaken: 20 per minuut; andere
 # schrijfacties: 120 per minuut. Zonder CF-Connecting-IP (lokale dev) staat het uit.
-[[unsafe.bindings]]
+[[ratelimits]]
 name = "RL_CREATE"
-type = "ratelimit"
 namespace_id = "1001"
 simple = { limit = 20, period = 60 }
 
-[[unsafe.bindings]]
+[[ratelimits]]
 name = "RL_WRITE"
-type = "ratelimit"
 namespace_id = "1002"
 simple = { limit = 120, period = 60 }
 
