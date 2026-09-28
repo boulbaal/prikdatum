@@ -32,3 +32,7 @@ CREATE TABLE IF NOT EXISTS votes (
 
 CREATE INDEX IF NOT EXISTS idx_options_poll ON options(poll_id);
 CREATE INDEX IF NOT EXISTS idx_participants_poll ON participants(poll_id);
+
+-- Voor databases die nog met het oude schema (uniek per dag+uur) zijn aangemaakt:
+-- deze index dwingt "één rij per dag" ook daar af, zonder iets te verwijderen.
+CREATE UNIQUE INDEX IF NOT EXISTS idx_options_dag ON options(poll_id, date);
