@@ -12,9 +12,10 @@ Geen accounts. Geen wachtwoorden. Geen beheerder. Geen opslaan-knop. Iedereen me
 
 ## Waarom dit fijn werkt
 
-- **Het gaat vanzelf** — een klik op een kalenderdag is meteen opgeslagen; er is geen opslaan-knop en geen enkel bevestigingsvenster. Een uur erbij zetten is optioneel.
+- **Het gaat vanzelf** — een klik op een kalenderdag is meteen opgeslagen; er is geen opslaan-knop en geen enkel bevestigingsvenster. Een uur erbij zetten is optioneel en verschijnt pas bij de datum die eruit springt.
+- **Iedereen ziet zijn naam, in kleur** — elke deelnemer krijgt een vaste kleur. Op de kalender staat een vinkje in jouw kleur bij je eigen dagen en een gekleurd stipje per andere persoon die kan.
 - **Iedereen is gelijk** — wie de link heeft kan dagen aanklikken, de titel aanpassen, het uur wijzigen en de knoop doorhakken. Er is niets dat alleen "de maker" kan.
-- **Je naam is je identiteit** — dezelfde naam op een ander toestel geeft je je eigen vinkjes terug. En via "wisselen" vul je zo ook de dagen in van iemand die je die al doorgaf.
+- **Je naam is je identiteit** — dezelfde naam op een ander toestel geeft je je eigen vinkjes terug. En via "iemand anders invullen" zet je tijdelijk de dagen van iemand die je die al doorgaf, zonder je eigen naam te verliezen.
 - **Nooit iets kapot** — je kunt alleen weghalen wat van jezelf is of wat niemand anders gebruikt.
 - **Drie talen** — Nederlands, Engels en Frans, wisselbaar met het vlaggetje, zonder herladen.
 - **Licht en gratis** — één HTML-bestand, één Worker, één SQLite-database (Cloudflare D1). Geen frameworks, geen build-stap, geen externe scripts of fonts. Past ruim binnen het gratis plan van Cloudflare.

@@ -147,24 +147,34 @@
   .status .sub { font-size: 14px; color: var(--gedempt); margin-top: 2px; }
   .status .stil { color: var(--gedempt); }
   .status .rijtje { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 6px; }
-  .status .knopzone { margin-top: 8px; }
+  .status .knopzone { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+  .status input[type="time"] { width: 96px; padding: 8px; min-height: 44px; font-size: 15px; }
+  .namenlijn { font-size: 14px; color: var(--gedempt); margin-top: 2px; }
 
-  /* wie ben je / wisselen */
+  /* stipjes en vinkjes per persoon */
+  .stip { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; vertical-align: baseline; }
+  .naampje { display: inline-flex; align-items: center; margin-right: 10px; white-space: nowrap; }
+
+  /* wie ben je + gekleurde naamchips */
   .wie { font-size: 15px; margin: 16px 0 0; }
   .wie b { font-weight: 600; }
   .wie button.sec { padding: 4px 6px; min-height: 44px; font-size: 14px; }
-  .wissel { border: 1px solid var(--lijn); border-radius: 8px; padding: 10px; margin-top: 8px; }
-  .wissel .namen { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
-  .wissel .namen button {
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 0; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     background: none;
     border: 1px solid var(--lijn);
+    border-radius: 22px;
     color: var(--tekst);
     font-weight: 400;
     padding: 8px 14px;
     min-height: 44px;
   }
-  .wissel .namen button.ik { border-color: var(--groen); background: var(--lichtgroen); font-weight: 600; }
-  .wissel .nieuw { display: flex; gap: 8px; }
+  .chip .stip { margin-right: 0; }
+  .chip.ik { border-color: var(--groen); background: var(--lichtgroen); font-weight: 600; }
+  .nieuw { display: flex; gap: 8px; margin-top: 8px; }
 
   /* kalender */
   .kal { margin: 6px 0 4px; }
@@ -175,18 +185,18 @@
   .kalgrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
   .kalwd { font-size: 12px; color: var(--gedempt); text-align: center; padding: 2px 0; }
   .dag {
-    min-height: 48px;
+    min-height: 50px;
     border: 1px solid var(--lijn);
     border-radius: 8px;
     background: #fff;
     color: var(--tekst);
     font-weight: 400;
-    padding: 4px 0 2px;
+    padding: 4px 2px 3px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    gap: 0;
+    gap: 1px;
     line-height: 1.2;
   }
   .dag.leeg { border: none; background: none; cursor: default; }
@@ -194,26 +204,13 @@
   .dag.optie { border-color: var(--groen); }
   .dag.mijn { background: var(--lichtgroen); border-color: var(--groen); font-weight: 600; }
   .dag.definitief { box-shadow: inset 3px 0 0 var(--groen); }
-  .dag .dtel { font-size: 11px; color: var(--groen); font-weight: 600; min-height: 14px; }
+  .ddots { display: flex; align-items: center; justify-content: center; gap: 3px; min-height: 12px; flex-wrap: wrap; }
+  .ddot { width: 7px; height: 7px; border-radius: 50%; }
+  .dvink { font-size: 11px; font-weight: 700; line-height: 1; }
+  .dmeer { font-size: 10px; color: var(--gedempt); line-height: 1; }
 
-  /* gekozen dagen */
-  .kopje { font-size: 14px; color: var(--gedempt); margin: 20px 0 6px; }
-  .opt {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    min-height: 48px;
-    padding: 6px;
-    border-radius: 8px;
-  }
-  .opt.aan { background: var(--lichtgroen); }
-  .opt.definitief { border-left: 3px solid var(--groen); }
-  .opt .mid { flex: 1 1 auto; min-width: 0; }
-  .opt .namen { font-size: 14px; color: var(--gedempt); }
-  .opt .tel { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; flex: 0 0 auto; }
-  .opt .tel.nul { color: var(--gedempt); font-weight: 400; }
-  .opt input[type="time"] { width: 96px; flex: 0 0 96px; padding: 8px; min-height: 44px; font-size: 15px; }
-  .leeg { color: var(--gedempt); margin: 10px 0; font-size: 15px; }
+  .taplijn { font-size: 14px; color: var(--gedempt); margin: 8px 0 0; min-height: 21px; }
+  .taplijn .wanneer { color: var(--tekst); font-weight: 600; }
 
   /* weggaan */
   .weg { margin-top: 40px; font-size: 13px; }
@@ -267,17 +264,14 @@ const STRINGS = {
   'cal.prev':          { nl: 'Vorige maand', en: 'Previous month', fr: 'Mois précédent' },
   'cal.next':          { nl: 'Volgende maand', en: 'Next month', fr: 'Mois suivant' },
   'cal.actAs':         { nl: 'Jij klikt aan als', en: 'You are ticking as', fr: 'Tu coches en tant que' },
-  'cal.switch':        { nl: 'wisselen', en: 'switch', fr: 'changer' },
+  'cal.switch':        { nl: 'iemand anders invullen', en: 'fill in for someone else', fr: "remplir pour quelqu'un d'autre" },
   'cal.newName.ph':    { nl: 'of typ een nieuwe naam', en: 'or type a new name', fr: 'ou tape un nouveau prénom' },
-  'list.title':        { nl: 'Gekozen dagen', en: 'Chosen days', fr: 'Jours choisis' },
-  'list.empty':        { nl: 'Nog geen dagen aangeklikt.', en: 'No days ticked yet.', fr: 'Aucun jour coché pour l’instant.' },
   'time.label':        { nl: 'Uur (optioneel, iedereen mag dit aanpassen)', en: 'Time (optional, anyone can change it)', fr: "Heure (optionnelle, modifiable par tous)" },
   'poll.nobody':       { nl: 'nog niemand', en: 'nobody yet', fr: "personne pour l'instant" },
   'poll.you':          { nl: 'jij', en: 'you', fr: 'toi' },
-  'poll.others':       { nl: '+{n} anderen', en: '+{n} others', fr: '+{n} autres' },
   'poll.at':           { nl: 'om {time}', en: 'at {time}', fr: 'à {time}' },
-  'poll.leave':        { nl: 'Ik doe niet mee', en: 'Remove me', fr: 'Je ne participe pas' },
-  'poll.leaveYes':     { nl: 'Ja, haal me weg', en: 'Yes, remove me', fr: 'Oui, retire-moi' },
+  'poll.leave':        { nl: 'Haal {name} weg uit deze afspraak', en: 'Remove {name} from this poll', fr: 'Retirer {name} de ce rendez-vous' },
+  'poll.leaveYes':     { nl: 'Ja, haal {name} weg', en: 'Yes, remove {name}', fr: 'Oui, retirer {name}' },
   'poll.leaveNo':      { nl: 'Toch niet', en: 'Never mind', fr: 'Finalement non' },
   'status.none':       { nl: 'Nog niemand heeft geantwoord.', en: 'Nobody has answered yet.', fr: "Personne n'a encore répondu." },
   'status.one':        { nl: 'We hebben een datum: {date}', en: 'We have a date: {date}', fr: 'On a une date : {date}' },
@@ -307,7 +301,15 @@ const STRINGS = {
 const BRAND = 'Prikdatum';
 const LOCALES = { nl: 'nl-BE', en: 'en-GB', fr: 'fr-BE' };
 const FLAGS = { nl: '\u{1F1E7}\u{1F1EA}', en: '\u{1F1EC}\u{1F1E7}', fr: '\u{1F1EB}\u{1F1F7}' };
-const LS = { name: 'prikdatum.name', lang: 'prikdatum.lang', p: (id) => 'prikdatum.p.' + id, just: 'prikdatum.justCreated' };
+// Eén vaste kleur per persoon (volgorde van binnenkomst), goed leesbaar op wit.
+const KLEUREN = ['#0072B2', '#E69F00', '#009E73', '#CC79A7', '#D55E00', '#56B4E9', '#8E63C6', '#6B7580'];
+const LS = {
+  name: 'prikdatum.name',
+  lang: 'prikdatum.lang',
+  p: (id) => 'prikdatum.p.' + id,          // je eigen deelnemer (blijft bewaard)
+  act: (id) => 'prikdatum.act.' + id,      // tijdelijk: aanklikken namens iemand anders
+  just: 'prikdatum.justCreated',
+};
 
 function bepaalTaal() {
   try {
@@ -325,11 +327,13 @@ const state = {
   pollId: null,
   data: null,
   lastJson: '',
-  me: null,
+  own: null,           // je eigen deelnemer-id in deze browser
+  me: null,            // namens wie je nu aanklikt (meestal = own)
   inflight: 0,
-  kalMaand: null,      // Date: eerste dag van de getoonde maand
+  kalMaand: null,
   titelEdit: false,
-  wisselOpen: false,
+  nieuwOpen: false,
+  tapDag: null,
 };
 
 function t(sleutel, vars) {
@@ -408,7 +412,7 @@ document.getElementById('voet').textContent = t('footer');
 const scherm = document.getElementById('scherm');
 
 /* ================================================================
-   Scherm 1: Nieuwe afspraak (/) — titel + naam, daarna meteen door
+   Scherm 1: Nieuwe afspraak (/)
    ================================================================ */
 function schermMaken() {
   scherm.textContent = '';
@@ -472,11 +476,14 @@ function schermMaken() {
 }
 
 /* ================================================================
-   Scherm 2: Afspraak (/p/<id>) — naam eerst, dan de klikkalender
+   Scherm 2: Afspraak (/p/<id>)
    ================================================================ */
 function schermAfspraak(pollId) {
   state.pollId = pollId;
-  try { state.me = localStorage.getItem(LS.p(pollId)); } catch {}
+  try {
+    state.own = localStorage.getItem(LS.p(pollId));
+    state.me = sessionStorage.getItem(LS.act(pollId)) || state.own;
+  } catch {}
 
   scherm.textContent = '';
 
@@ -515,21 +522,17 @@ function schermAfspraak(pollId) {
   const wieNaam = el('b');
   const wieWissel = el('button', 'sec'); wieWissel.type = 'button';
   wieBar.append(wieTekst, wieNaam, document.createTextNode(' · '), wieWissel);
-  const wissel = el('div', 'wissel verborgen');
-  const wisselNamen = el('div', 'namen');
-  const wisselNieuw = el('div', 'nieuw');
-  const wisselIn = el('input'); wisselIn.type = 'text'; wisselIn.maxLength = 40;
-  const wisselOk = el('button', 'klein'); wisselOk.type = 'button';
-  wisselNieuw.append(wisselIn, wisselOk);
-  wissel.append(wisselNamen, wisselNieuw);
+
+  const chips = el('div', 'chips verborgen');
+  const nieuwRij = el('div', 'nieuw verborgen');
+  const nieuwIn = el('input'); nieuwIn.type = 'text'; nieuwIn.maxLength = 40;
+  const nieuwOk = el('button', 'klein'); nieuwOk.type = 'button';
+  nieuwRij.append(nieuwIn, nieuwOk);
 
   const kalHint = el('p', 'kopje');
   const kal = el('div', 'kal');
+  const tapLijn = el('p', 'taplijn');
   const lijstFout = el('p', 'fout verborgen');
-
-  const lijstKop = el('p', 'kopje');
-  const lijst = el('div', 'lijst');
-  const leegRegel = el('p', 'leeg verborgen');
 
   const wegZone = el('div', 'weg');
   const wegBtn = el('button'); wegBtn.type = 'button';
@@ -539,10 +542,15 @@ function schermAfspraak(pollId) {
   wegBevestig.append(wegJa, wegNee);
   wegZone.append(wegBtn, wegBevestig);
 
-  scherm.append(deel, titelRij, statusBlok, naamZone, wieBar, wissel, kalHint, kal, lijstFout, lijstKop, leegRegel, lijst, wegZone);
+  scherm.append(deel, titelRij, statusBlok, naamZone, wieBar, chips, nieuwRij, kalHint, kal, tapLijn, lijstFout, wegZone);
 
   const nu = new Date();
   state.kalMaand = new Date(nu.getFullYear(), nu.getMonth(), 1);
+
+  function kleurVan(pid) {
+    const i = state.data.participants.findIndex((p) => p.id === pid);
+    return KLEUREN[(i >= 0 ? i : 0) % KLEUREN.length];
+  }
 
   /* --- deelbalk --- */
   try {
@@ -587,25 +595,48 @@ function schermAfspraak(pollId) {
   titelOk.addEventListener('click', bewaarTitel);
   titelIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') bewaarTitel(); });
 
-  /* --- naam opgeven / wisselen --- */
-  async function wordIemand(naam) {
+  /* --- identiteit: jezelf, of tijdelijk iemand anders --- */
+  function zetActing(pid) {
+    state.me = pid;
+    try {
+      if (pid && pid !== state.own) sessionStorage.setItem(LS.act(pollId), pid);
+      else sessionStorage.removeItem(LS.act(pollId));
+    } catch {}
+  }
+
+  // Eerste keer je eigen naam opgeven (of jezelf terugvinden op een ander toestel).
+  async function wordZelf(naam) {
     const r = await api('/polls/' + pollId + '/participants', 'POST', { name: naam });
     if (r.ok && r.data && r.data.participantId) {
-      state.me = r.data.participantId;
+      state.own = r.data.participantId;
       try {
-        localStorage.setItem(LS.p(pollId), state.me);
+        localStorage.setItem(LS.p(pollId), state.own);
         localStorage.setItem(LS.name, r.data.name);
       } catch {}
-      state.wisselOpen = false;
+      zetActing(state.own);
       state.lastJson = '';
       await haalOp(true);
       return true;
     }
     return r;
   }
+
+  // Tijdelijk namens iemand anders (nieuwe of bestaande naam): raakt je eigen naam niet.
+  async function wordAnder(naam) {
+    const r = await api('/polls/' + pollId + '/participants', 'POST', { name: naam });
+    if (r.ok && r.data && r.data.participantId) {
+      zetActing(r.data.participantId);
+      state.nieuwOpen = false;
+      state.lastJson = '';
+      await haalOp(true);
+      return true;
+    }
+    return r;
+  }
+
   verderBtn.addEventListener('click', async () => {
     naamFout.classList.add('verborgen');
-    const r = await wordIemand(naamIn.value);
+    const r = await wordZelf(naamIn.value);
     if (r !== true) {
       naamFout.textContent = foutTekst(r && r.data);
       naamFout.classList.remove('verborgen');
@@ -614,18 +645,18 @@ function schermAfspraak(pollId) {
   naamIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') verderBtn.click(); });
 
   wieWissel.addEventListener('click', () => {
-    state.wisselOpen = !state.wisselOpen;
+    state.nieuwOpen = !state.nieuwOpen;
     render();
-    if (state.wisselOpen) wisselIn.focus();
+    if (state.nieuwOpen) nieuwIn.focus();
   });
-  wisselOk.addEventListener('click', async () => {
-    if (!wisselIn.value.trim()) { wisselIn.focus(); return; }
-    const r = await wordIemand(wisselIn.value);
-    if (r === true) wisselIn.value = '';
+  nieuwOk.addEventListener('click', async () => {
+    if (!nieuwIn.value.trim()) { nieuwIn.focus(); return; }
+    const r = await wordAnder(nieuwIn.value);
+    if (r === true) nieuwIn.value = '';
   });
-  wisselIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') wisselOk.click(); });
+  nieuwIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') nieuwOk.click(); });
 
-  /* --- mezelf weghalen --- */
+  /* --- deelnemer weghalen (wie je nu bent) --- */
   wegBtn.addEventListener('click', () => {
     wegBtn.classList.add('verborgen');
     wegBevestig.classList.remove('verborgen');
@@ -635,12 +666,16 @@ function schermAfspraak(pollId) {
     wegBtn.classList.remove('verborgen');
   });
   wegJa.addEventListener('click', async () => {
-    const r = await api('/polls/' + pollId + '/participants/' + state.me, 'DELETE');
+    const weg = state.me;
+    const r = await api('/polls/' + pollId + '/participants/' + weg, 'DELETE');
     wegBevestig.classList.add('verborgen');
     wegBtn.classList.remove('verborgen');
     if (r.ok) {
-      state.me = null;
-      try { localStorage.removeItem(LS.p(pollId)); } catch {}
+      if (weg === state.own) {
+        state.own = null;
+        try { localStorage.removeItem(LS.p(pollId)); } catch {}
+      }
+      zetActing(state.own);
       state.lastJson = '';
       await haalOp(true);
     }
@@ -649,6 +684,7 @@ function schermAfspraak(pollId) {
   /* --- kalenderklik: dag aan/uit --- */
   async function klikDag(datum) {
     if (!state.me) { naamIn.focus(); return; }
+    state.tapDag = datum;
     lijstFout.classList.add('verborgen');
     const d = state.data;
     const opt = d.options.find((o) => o.date === datum);
@@ -656,7 +692,6 @@ function schermAfspraak(pollId) {
     state.inflight++;
     try {
       if (!opt) {
-        // nieuwe dag: meteen optimistisch tonen
         d.options.push({ id: '_tmp', date: datum, time: null, addedBy: state.me, votes: [state.me] });
         d.options.sort((a, b) => a.date < b.date ? -1 : 1);
         render();
@@ -666,7 +701,6 @@ function schermAfspraak(pollId) {
         if (!r.ok && (!r.data || r.data.error !== 'duplicate_option')) throw r;
       } else if (opt.votes.includes(state.me)) {
         if (opt.votes.length === 1) {
-          // enkel mijn vinkje: dag verdwijnt
           d.options = d.options.filter((o) => o.id !== opt.id);
           if (d.finalOptionId === opt.id) d.finalOptionId = null;
           render();
@@ -699,12 +733,11 @@ function schermAfspraak(pollId) {
     await haalOp(true);
   }
 
-  async function zetTijd(opt, tijd) {
+  async function zetTijd(optionId, tijd) {
     state.inflight++;
     try {
-      const r = await api('/polls/' + pollId + '/options/' + opt.id + '/time', 'PUT', { time: tijd || null });
+      const r = await api('/polls/' + pollId + '/options/' + optionId + '/time', 'PUT', { time: tijd || null });
       if (!r.ok) throw r;
-      opt.time = tijd || null;
       state.lastJson = '';
     } catch {
       lijstFout.textContent = t('err.save');
@@ -726,8 +759,44 @@ function schermAfspraak(pollId) {
     await haalOp(true);
   }
 
+  /* --- namen met kleurstip, "jij" eerst --- */
+  function namenMetKleur(o) {
+    const houder = el('span');
+    const volgorde = [];
+    if (state.me && o.votes.includes(state.me)) volgorde.push(state.me);
+    for (const p of state.data.participants) {
+      if (p.id !== state.me && o.votes.includes(p.id)) volgorde.push(p.id);
+    }
+    if (!volgorde.length) {
+      houder.append(el('span', null, t('poll.nobody')));
+      return houder;
+    }
+    const naamVan = new Map(state.data.participants.map((p) => [p.id, p.name]));
+    for (const pid of volgorde) {
+      const stukje = el('span', 'naampje');
+      const stip = el('span', 'stip');
+      stip.style.background = kleurVan(pid);
+      stukje.append(stip, el('span', null, pid === state.me ? t('poll.you') : naamVan.get(pid)));
+      houder.append(stukje);
+    }
+    return houder;
+  }
+
+  function tijdVeld(o) {
+    const tijd = el('input');
+    tijd.type = 'time';
+    tijd.value = o.time || '';
+    tijd.dataset.oid = o.id;
+    tijd.title = t('time.label');
+    tijd.setAttribute('aria-label', t('time.label'));
+    tijd.addEventListener('change', () => zetTijd(o.id, tijd.value));
+    return tijd;
+  }
+
   /* --- statusblok --- */
   function bouwStatus() {
+    const actief = document.activeElement;
+    const focusOid = actief && actief.dataset ? actief.dataset.oid : null;
     statusBlok.textContent = '';
     const d = state.data;
     const n = d.participants.length;
@@ -737,12 +806,15 @@ function schermAfspraak(pollId) {
     const definitief = d.finalOptionId && perId.get(d.finalOptionId);
     if (definitief) {
       const balk = el('div', 'balk definitief');
-      balk.append(el('div', 'groot', t('status.final', { date: fmtDatum(definitief.date, definitief.time) })));
+      balk.append(el('div', 'groot', '✓ ' + t('status.final', { date: fmtDatum(definitief.date, definitief.time) })));
       balk.append(el('div', 'sub', t('status.count', { n: definitief.votes.length, total: n })));
+      const namen = el('div', 'namenlijn');
+      namen.append(namenMetKleur(definitief));
+      balk.append(namen);
       const zone = el('div', 'knopzone');
       const los = el('button', 'sec klein', t('status.unfix')); los.type = 'button';
       los.addEventListener('click', () => zetFinal(null));
-      zone.append(los);
+      zone.append(tijdVeld(definitief), los);
       balk.append(zone);
       blok.append(balk);
     } else {
@@ -757,20 +829,28 @@ function schermAfspraak(pollId) {
           const iedereen = max === n && n >= 2;
           balk.append(el('div', 'groot', t(iedereen ? 'status.everyone' : 'status.one', { date: fmtDatum(o.date, o.time) })));
           balk.append(el('div', 'sub', t('status.count', { n: max, total: n })));
+          const namen = el('div', 'namenlijn');
+          namen.append(namenMetKleur(o));
+          balk.append(namen);
           const zone = el('div', 'knopzone');
           const vast = el('button', 'sec klein', t('status.fix')); vast.type = 'button';
           vast.addEventListener('click', () => zetFinal(o.id));
-          zone.append(vast);
+          zone.append(tijdVeld(o), vast);
           balk.append(zone);
         } else {
           balk.append(el('div', 'groot', t('status.tie')));
           balk.append(el('div', 'sub', t('status.tieCount', { n: max, total: n })));
           for (const o of top) {
             const rij = el('div', 'rijtje');
-            rij.append(el('span', null, fmtDatum(o.date, o.time)));
+            const links = el('span');
+            links.append(el('span', null, fmtDatum(o.date, o.time)));
+            const namen = el('span', 'namenlijn');
+            namen.style.display = 'block';
+            namen.append(namenMetKleur(o));
+            links.append(namen);
             const neem = el('button', 'sec klein', t('status.pick')); neem.type = 'button';
             neem.addEventListener('click', () => zetFinal(o.id));
-            rij.append(neem);
+            rij.append(links, neem);
             balk.append(rij);
           }
         }
@@ -778,6 +858,10 @@ function schermAfspraak(pollId) {
       }
     }
     statusBlok.append(blok);
+    if (focusOid) {
+      const terug = statusBlok.querySelector('input[data-oid="' + focusOid + '"]');
+      if (terug) terug.focus({ preventScroll: true });
+    }
   }
 
   /* --- kalender --- */
@@ -803,7 +887,6 @@ function schermAfspraak(pollId) {
     kal.append(kop);
 
     const grid = el('div', 'kalgrid');
-    // weekdagkoppen, maandag eerst
     const maandag = new Date(2024, 0, 1); // een maandag
     for (let i = 0; i < 7; i++) {
       const wd = new Date(maandag); wd.setDate(maandag.getDate() + i);
@@ -825,70 +908,43 @@ function schermAfspraak(pollId) {
       if (opt && d.finalOptionId === opt.id) b.classList.add('definitief');
       b.dataset.date = datum;
       b.append(el('span', null, String(dag)));
-      b.append(el('span', 'dtel', opt && opt.votes.length ? String(opt.votes.length) : ' '));
+      // stipjes: wie kan er die dag (jij als vinkje in jouw kleur)
+      const dots = el('span', 'ddots');
+      if (opt) {
+        const volgorde = [];
+        if (mijn) volgorde.push(state.me);
+        for (const p of d.participants) {
+          if (p.id !== state.me && opt.votes.includes(p.id)) volgorde.push(p.id);
+        }
+        const toon = volgorde.slice(0, 4);
+        for (const pid of toon) {
+          if (pid === state.me) {
+            const v = el('span', 'dvink', '✓');
+            v.style.color = kleurVan(pid);
+            dots.append(v);
+          } else {
+            const s = el('span', 'ddot');
+            s.style.background = kleurVan(pid);
+            dots.append(s);
+          }
+        }
+        if (volgorde.length > 4) dots.append(el('span', 'dmeer', '+' + (volgorde.length - 4)));
+      }
+      b.append(dots);
       b.addEventListener('click', () => klikDag(datum));
       grid.append(b);
     }
     kal.append(grid);
   }
 
-  /* --- gekozen dagen --- */
-  function namenRegel(o) {
-    const naamVan = new Map(state.data.participants.map((p) => [p.id, p.name]));
-    const ikKan = state.me && o.votes.includes(state.me);
-    const namen = [];
-    if (ikKan) namen.push(t('poll.you'));
-    for (const p of state.data.participants) {
-      if (p.id === state.me) continue;
-      if (o.votes.includes(p.id)) namen.push(naamVan.get(p.id));
-    }
-    if (!namen.length) return t('poll.nobody');
-    if (namen.length > 6) {
-      return namen.slice(0, 5).join(', ') + ' ' + t('poll.others', { n: namen.length - 5 });
-    }
-    return namen.join(', ');
-  }
-
-  function bouwLijst() {
-    const actief = document.activeElement;
-    const focusOid = actief && actief.dataset ? actief.dataset.oid : null;
-    lijst.textContent = '';
-    const d = state.data;
-
-    if (!d.options.length) {
-      leegRegel.textContent = t('list.empty');
-      leegRegel.classList.remove('verborgen');
-      return;
-    }
-    leegRegel.classList.add('verborgen');
-
-    for (const o of d.options) {
-      if (o.id === '_tmp') continue;
-      const ikKan = !!(state.me && o.votes.includes(state.me));
-      const rij = el('div', 'opt' + (ikKan ? ' aan' : '') + (d.finalOptionId === o.id ? ' definitief' : ''));
-
-      const mid = el('div', 'mid');
-      mid.append(el('div', null, fmtDatum(o.date, null)));
-      mid.append(el('div', 'namen', namenRegel(o)));
-
-      const tijd = el('input');
-      tijd.type = 'time';
-      tijd.value = o.time || '';
-      tijd.dataset.oid = o.id;
-      tijd.title = t('time.label');
-      tijd.setAttribute('aria-label', t('time.label'));
-      tijd.addEventListener('change', () => zetTijd(o, tijd.value));
-
-      const tel = el('span', 'tel' + (o.votes.length === 0 ? ' nul' : ''), String(o.votes.length));
-
-      rij.append(mid, tijd, tel);
-      lijst.appendChild(rij);
-    }
-
-    if (focusOid) {
-      const terug = lijst.querySelector('input[data-oid="' + focusOid + '"]');
-      if (terug) terug.focus({ preventScroll: true });
-    }
+  function bouwTapLijn() {
+    tapLijn.textContent = '';
+    if (!state.tapDag || !state.data) return;
+    const opt = state.data.options.find((o) => o.date === state.tapDag);
+    const wanneer = el('span', 'wanneer', fmtDatum(state.tapDag, opt ? opt.time : null));
+    tapLijn.append(wanneer, document.createTextNode(': '));
+    if (opt) tapLijn.append(namenMetKleur(opt));
+    else tapLijn.append(el('span', null, t('poll.nobody')));
   }
 
   function render() {
@@ -912,34 +968,39 @@ function schermAfspraak(pollId) {
     wieBar.classList.toggle('verborgen', !state.me);
     wieTekst.textContent = t('cal.actAs') + ' ';
     wieNaam.textContent = ik ? ik.name : '';
+    wieNaam.style.color = ik ? kleurVan(ik.id) : '';
     wieWissel.textContent = t('cal.switch');
-    wissel.classList.toggle('verborgen', !(state.me && state.wisselOpen));
-    wisselNamen.textContent = '';
+
+    // gekleurde naamchips: klik = namens die persoon aanklikken
+    chips.classList.toggle('verborgen', !state.me);
+    chips.textContent = '';
     for (const p of d.participants) {
-      const b = el('button', p.id === state.me ? 'ik' : null, p.name);
+      const b = el('button', 'chip' + (p.id === state.me ? ' ik' : ''));
       b.type = 'button';
+      const stip = el('span', 'stip');
+      stip.style.background = kleurVan(p.id);
+      b.append(stip, el('span', null, p.name + (p.id === state.own ? ' (' + t('poll.you') + ')' : '')));
       b.addEventListener('click', async () => {
-        state.me = p.id;
-        try { localStorage.setItem(LS.p(pollId), p.id); } catch {}
-        state.wisselOpen = false;
+        zetActing(p.id);
         state.lastJson = '';
         await haalOp(true);
       });
-      wisselNamen.append(b);
+      chips.append(b);
     }
-    wisselIn.placeholder = t('cal.newName.ph');
-    wisselOk.textContent = t('poll.next');
+    nieuwRij.classList.toggle('verborgen', !(state.me && state.nieuwOpen));
+    nieuwIn.placeholder = t('cal.newName.ph');
+    nieuwOk.textContent = t('poll.next');
 
     kalHint.textContent = state.me ? t('cal.hint') : t('poll.nameFirst');
-    lijstKop.textContent = t('list.title');
-    wegBtn.textContent = t('poll.leave');
-    wegJa.textContent = t('poll.leaveYes');
+    const wegNaam = ik ? ik.name : '';
+    wegBtn.textContent = t('poll.leave', { name: wegNaam });
+    wegJa.textContent = t('poll.leaveYes', { name: wegNaam });
     wegNee.textContent = t('poll.leaveNo');
     wegZone.classList.toggle('verborgen', !state.me);
 
     bouwStatus();
     bouwKal();
-    bouwLijst();
+    bouwTapLijn();
   }
 
   function schermOnbekend() {
@@ -974,9 +1035,13 @@ function schermAfspraak(pollId) {
     if (tekst === state.lastJson) return;
     state.lastJson = tekst;
     state.data = JSON.parse(tekst);
-    if (state.me && !state.data.participants.some((p) => p.id === state.me)) {
-      state.me = null;
+    const bestaat = (pid) => state.data.participants.some((p) => p.id === pid);
+    if (state.own && !bestaat(state.own)) {
+      state.own = null;
       try { localStorage.removeItem(LS.p(pollId)); } catch {}
+    }
+    if (state.me && !bestaat(state.me)) {
+      zetActing(state.own);
     }
     render();
   }
