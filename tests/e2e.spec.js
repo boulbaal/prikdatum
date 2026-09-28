@@ -196,6 +196,18 @@ test.describe('API', () => {
     expect((await res.json()).error).toBe('title_required');
   });
 
+  test('A18 bezoekteller telt op', async ({ request }) => {
+    const { id } = await apiMaakPoll(request, { title: 'Etentje', name: 'Ali' });
+    let poll = await (await request.get('/api/polls/' + id)).json();
+    expect(poll.visits).toBe(0);
+    for (let i = 0; i < 3; i++) {
+      const res = await request.post(`/api/polls/${id}/visit`);
+      expect(res.status()).toBe(200);
+    }
+    poll = await (await request.get('/api/polls/' + id)).json();
+    expect(poll.visits).toBe(3);
+  });
+
   test('A17 uur van een dag aanpassen (iedereen mag)', async ({ request }) => {
     const { id } = await apiMaakPoll(request, {
       title: 'Etentje', name: 'Ali', options: [{ date: D1, time: null }],
@@ -242,6 +254,7 @@ test.describe("Scenario's", () => {
     await ali.locator('.deel button').click();
     await expect(ali.locator('.deel button')).toHaveText('Gekopieerd');
     await expect(ali.locator('h1')).toHaveText('Etentje');
+    await expect(ali.locator('#voet')).toContainText('vdev'); // versie-label (dev in de testomgeving)
     await expect(ali.locator('.wie')).toContainText('Jij klikt aan als');
     await expect(ali.locator('.wie b')).toHaveText('Ali');
     await expect(ali.locator('.chip', { hasText: 'Ali (jij)' })).toHaveClass(/ik/);
@@ -259,14 +272,17 @@ test.describe("Scenario's", () => {
     await expect(ali.locator('.status .groot')).toHaveText('Meerdere datums lukken');
     await expect(ali.locator('.status .sub')).toHaveText('1 van 1 kunnen op elk van deze:');
 
-    /* ---------- S2: Sofie komt binnen, naam eerst ---------- */
+    /* ---------- S2: Sofie komt binnen, ziet de namen en typt haar eigen ---------- */
     const sofieCtx = await browser.newContext(ctxOpties(testInfo));
     const sofie = await sofieCtx.newPage();
     await sofie.goto(pollUrl);
     await expect(sofie.locator('.deel')).toBeHidden();
     await expect(sofie.locator('#joinnaam')).toBeVisible();
     await expect(sofie.locator('.kal')).toHaveClass(/inactief/);
-    await expect(sofie.locator('.kopje').first()).toHaveText('Vul eerst je naam in om aan te klikken.');
+    await expect(sofie.locator('#kalhint')).toHaveText('Vul eerst je naam in om aan te klikken.');
+    // een nieuwe bezoeker ziet de bestaande namen al staan (Ali)
+    await expect(sofie.locator('.chips .chip')).toHaveCount(1);
+    await expect(sofie.locator('.chip', { hasText: 'Ali' })).toBeVisible();
     await toonMaand(sofie, MAAND);
     await dag(sofie, D1).click();
     await expect(sofie.locator('#joinnaam')).toBeFocused();
@@ -383,6 +399,30 @@ test.describe("Scenario's", () => {
     await toestel2.close();
   });
 
+  test('S9b nieuwe bezoeker kiest een bestaande naam via een chip', async ({ browser, request }, testInfo) => {
+    const { id } = await apiMaakPoll(request, {
+      title: 'Padel', name: 'Ali', options: [{ date: D1, time: null }],
+    });
+    await request.post(`/api/polls/${id}/participants`, { data: { name: 'Sofie' } });
+    const ctx = await browser.newContext(ctxOpties(testInfo));
+    const page = await ctx.newPage();
+    await page.goto('/p/' + id);
+    // fris toestel: naamveld zichtbaar én de twee namen staan er al
+    await expect(page.locator('#joinnaam')).toBeVisible();
+    await expect(page.locator('.chips .chip')).toHaveCount(2);
+    await expect(page.locator('.kopje', { hasText: 'Ben je een van hen' })).toBeVisible();
+    await page.locator('.chip', { hasText: 'Sofie' }).click();
+    // nu ben je Sofie: kalender actief, naamveld weg, jouw chip gemarkeerd
+    await expect(page.locator('#joinnaam')).toBeHidden();
+    await expect(page.locator('.wie b')).toHaveText('Sofie');
+    await expect(page.locator('.chip', { hasText: 'Sofie (jij)' })).toHaveClass(/ik/);
+    await expect(page.locator('.kal')).not.toHaveClass(/inactief/);
+    await toonMaand(page, MAAND);
+    await dag(page, D1).click();
+    await expect(dag(page, D1)).toHaveClass(/mijn/);
+    await ctx.close();
+  });
+
   test('S10 onbekende link', async ({ browser }, testInfo) => {
     const ctx = await browser.newContext(ctxOpties(testInfo));
     const page = await ctx.newPage();
@@ -404,10 +444,10 @@ test.describe("Scenario's", () => {
     await expect(page.locator('.status .groot')).toHaveText(/vr 9 okt om 18:00/);
     await page.locator('#vlag').click();
     await page.locator('#talen button', { hasText: 'English' }).click();
-    await expect(page.locator('.kopje').first()).toHaveText('Enter your name first to start ticking.');
+    await expect(page.locator('#kalhint')).toHaveText('Enter your name first to start ticking.');
     await expect(page.locator('.status .groot')).toHaveText(/Fri,? 9 Oct at 18:00/);
     await page.reload();
-    await expect(page.locator('.kopje').first()).toHaveText('Enter your name first to start ticking.');
+    await expect(page.locator('#kalhint')).toHaveText('Enter your name first to start ticking.');
     await page.locator('#vlag').click();
     await page.locator('#talen button', { hasText: 'Français' }).click();
     await expect(page.locator('.status .groot')).toHaveText(/ven\.?.*9 oct\.?.*à 18:00/);

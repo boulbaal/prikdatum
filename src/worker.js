@@ -129,6 +129,7 @@ async function getFullPoll(env, id) {
     id: poll.id,
     title: poll.title,
     finalOptionId: poll.final_option_id,
+    visits: poll.visits ?? 0,
     options: optRes.results.map((o) => ({
       id: o.id,
       date: o.date,
@@ -290,6 +291,14 @@ async function deleteParticipant(env, pollId, pid) {
   return json({});
 }
 
+// POST /api/polls/:id/visit — bezoekteller +1 (frontend telt 1x per browser)
+async function bumpVisit(env, pollId) {
+  const poll = await getPoll(env, pollId);
+  if (!poll) return fail('not_found', 404);
+  await env.DB.prepare('UPDATE polls SET visits = visits + 1 WHERE id = ?').bind(pollId).run();
+  return json({});
+}
+
 // PUT /api/polls/:id/title — titel aanpassen (iedereen mag)
 async function putTitle(env, pollId, body) {
   const poll = await getPoll(env, pollId);
@@ -384,6 +393,11 @@ export default {
       // DELETE /api/polls/:id/options/:oid?participantId=…
       if (p.length === 5 && p[3] === 'options' && method === 'DELETE') {
         return await deleteOption(env, pollId, p[4], url.searchParams.get('participantId') || '');
+      }
+
+      // POST /api/polls/:id/visit
+      if (p.length === 4 && p[3] === 'visit' && method === 'POST') {
+        return await bumpVisit(env, pollId);
       }
 
       // PUT /api/polls/:id/title

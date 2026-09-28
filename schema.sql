@@ -2,6 +2,7 @@ CREATE TABLE IF NOT EXISTS polls (
   id          TEXT PRIMARY KEY,          -- 10 tekens, [a-z0-9], willekeurig
   title       TEXT NOT NULL,             -- max 80 tekens, getrimd
   final_option_id TEXT,                  -- NULL of id van de definitieve optie
+  visits      INTEGER NOT NULL DEFAULT 0,-- aantal keren dat de pagina bezocht is
   created_at  TEXT NOT NULL              -- ISO-8601 UTC
 );
 
