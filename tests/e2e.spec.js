@@ -513,12 +513,11 @@ test.describe("Scenario's", () => {
     for (const b of [1, 2, 5, 20, 50]) {
       await expect(page.locator('.doneer-bedrag', { hasText: new RegExp('^\\u20AC' + b + '$') })).toBeVisible();
     }
-    // link wijst naar PayPal met het juiste bedrag
+    // link wijst naar PayPal.me met het juiste bedrag
     const vijf = page.locator('.doneer-bedrag', { hasText: /^€5$/ });
     const href = await vijf.getAttribute('href');
-    expect(href).toContain('paypal.com/donate');
-    expect(href).toContain('amount=5');
-    expect(href).toContain('currency_code=EUR');
+    expect(href).toContain('paypal.com/paypalme/');
+    expect(href).toContain('/5EUR');
     await ctx.close();
   });
 
