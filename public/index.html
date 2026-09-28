@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prikdatum</title>
+<style>
+  :root {
+    --tekst: #1F2933;
+    --gedempt: #6B7580;
+    --lijn: #E3E7EB;
+    --groen: #2F8F5B;
+    --lichtgroen: #E8F5EE;
+    --rood: #B23A3A;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: #FFFFFF;
+    color: var(--tekst);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 17px;
+    line-height: 1.5;
+  }
+  .col {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 24px 16px 80px;
+  }
+  h1 {
+    font-size: 26px;
+    font-weight: 600;
+    margin: 16px 0 8px;
+  }
+  .label {
+    font-size: 14px;
+    color: var(--gedempt);
+    display: block;
+    margin: 20px 0 6px;
+  }
+  input[type="text"], input[type="date"], input[type="time"] {
+    font: inherit;
+    color: inherit;
+    border: 1px solid var(--lijn);
+    border-radius: 8px;
+    padding: 12px;
+    min-height: 44px;
+    background: #fff;
+    width: 100%;
+  }
+  input:focus {
+    outline: none;
+    border-color: var(--groen);
+    box-shadow: 0 0 0 1px var(--groen);
+  }
+  button {
+    font: inherit;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    min-height: 44px;
+    cursor: pointer;
+    background: var(--groen);
+    color: #fff;
+  }
+  button:disabled {
+    background: var(--lijn);
+    color: var(--gedempt);
+    cursor: default;
+  }
+  button.sec {
+    background: none;
+    color: var(--groen);
+    padding: 12px 8px;
+  }
+  button.klein {
+    padding: 8px 14px;
+    min-height: 44px;
+    font-size: 15px;
+  }
+  .fout {
+    color: var(--rood);
+    font-size: 15px;
+    margin: 10px 0 0;
+  }
+  .fade { animation: fade .15s ease-out; }
+  @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
+
+  /* vlaggetje */
+  .kop { display: flex; align-items: flex-start; position: relative; min-height: 44px; }
+  #vlag {
+    background: none;
+    padding: 0;
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    font-size: 24px;
+    line-height: 44px;
+    text-align: left;
+  }
+  #talen {
+    position: absolute;
+    top: 46px;
+    left: 0;
+    background: #fff;
+    border: 1px solid var(--lijn);
+    border-radius: 8px;
+    padding: 4px;
+    z-index: 5;
+  }
+  #talen button {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    color: var(--tekst);
+    font-weight: 400;
+    padding: 10px 14px;
+    white-space: nowrap;
+  }
+
+  /* datumrijen (maken + toevoegen) */
+  .drow { display: flex; gap: 8px; margin-bottom: 8px; align-items: center; }
+  .drow input[type="date"] { flex: 1 1 55%; min-width: 0; }
+  .drow input[type="time"] { flex: 1 1 30%; min-width: 0; }
+  .x {
+    background: none;
+    color: var(--gedempt);
+    font-size: 20px;
+    font-weight: 400;
+    padding: 0;
+    width: 32px;
+    min-height: 44px;
+    flex: 0 0 32px;
+  }
+
+  /* deelbalk */
+  .deel {
+    background: var(--lichtgroen);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 16px 0 0;
+    font-size: 15px;
+  }
+  .deel .url { user-select: all; word-break: break-all; display: block; margin: 4px 0 8px; }
+
+  /* statusblok */
+  .status { margin: 12px 0 4px; }
+  .status .balk {
+    background: var(--lichtgroen);
+    border-radius: 8px;
+    padding: 14px;
+  }
+  .status .balk.definitief { border-left: 3px solid var(--groen); }
+  .status .groot { font-size: 20px; font-weight: 600; color: var(--groen); }
+  .status .sub { font-size: 14px; color: var(--gedempt); margin-top: 2px; }
+  .status .stil { color: var(--gedempt); }
+  .status .rijtje { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 6px; }
+  .status .knopzone { margin-top: 8px; }
+
+  /* optielijst */
+  .kopje { font-size: 14px; color: var(--gedempt); margin: 20px 0 6px; }
+  .opt {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 44px;
+    padding: 8px 6px;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  .opt.aan { background: var(--lichtgroen); }
+  .opt.definitief { border-left: 3px solid var(--groen); }
+  .opt input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--groen);
+    flex: 0 0 20px;
+    margin: 0;
+  }
+  .opt .mid { flex: 1 1 auto; min-width: 0; }
+  .opt .namen { font-size: 14px; color: var(--gedempt); }
+  .opt .tel { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; flex: 0 0 auto; }
+  .opt .tel.nul { color: var(--gedempt); font-weight: 400; }
+  .opt .del {
+    background: none;
+    color: var(--gedempt);
+    font-size: 20px;
+    font-weight: 400;
+    padding: 0;
+    width: 32px;
+    min-height: 44px;
+    flex: 0 0 32px;
+  }
+  .lijst.inactief .opt { opacity: .5; }
+  @media (hover: hover) and (pointer: fine) {
+    .opt .del { opacity: 0; }
+    .opt:hover .del, .opt:focus-within .del { opacity: 1; }
+  }
+
+  .leeg { color: var(--gedempt); margin: 12px 0; }
+
+  /* weggaan */
+  .weg { margin-top: 40px; font-size: 13px; }
+  .weg button {
+    background: none;
+    color: var(--gedempt);
+    font-size: 13px;
+    font-weight: 400;
+    padding: 8px 0;
+    text-decoration: underline;
+  }
+  .weg .bevestig button { margin-right: 8px; text-decoration: none; }
+  .weg .bevestig button.ja { color: var(--rood); }
+
+  .voet {
+    margin-top: 48px;
+    font-size: 13px;
+    color: var(--gedempt);
+  }
+  .verborgen { display: none !important; }
+</style>
+</head>
+<body>
+<div class="col">
+  <div class="kop">
+    <button id="vlag" type="button"></button>
+    <div id="talen" class="verborgen"></div>
+  </div>
+  <div id="scherm"></div>
+  <p class="voet" id="voet"></p>
+</div>
+<script>
+'use strict';
+
+/* ---------- vertalingen: alle tekst staat hier en nergens anders ---------- */
+const STRINGS = {
+  'make.title':        { nl: 'Wanneer spreken we af?', en: 'When shall we meet?', fr: 'Quand se voit-on ?' },
+  'make.what':         { nl: 'Waarover gaat het?', en: 'What is it about?', fr: "De quoi s'agit-il ?" },
+  'make.what.ph':      { nl: 'bv. Etentje, padel, weekend aan zee', en: 'e.g. Dinner, padel, weekend at the coast', fr: 'p.ex. Dîner, padel, week-end à la mer' },
+  'make.dates':        { nl: 'Welke datums lukken voor jou?', en: 'Which dates work for you?', fr: 'Quelles dates te conviennent ?' },
+  'make.addDate':      { nl: '+ Nog een datum', en: '+ Another date', fr: '+ Une autre date' },
+  'make.name':         { nl: 'Je naam', en: 'Your name', fr: 'Ton prénom' },
+  'make.name.ph':      { nl: 'bv. Ali', en: 'e.g. Ali', fr: 'p.ex. Ali' },
+  'make.submit':       { nl: 'Maak de afspraak', en: 'Create the poll', fr: 'Créer le rendez-vous' },
+  'share.ready':       { nl: 'Klaar. Deel deze link:', en: 'Done. Share this link:', fr: "C'est prêt. Partage ce lien :" },
+  'share.copy':        { nl: 'Kopieer', en: 'Copy', fr: 'Copier' },
+  'share.copied':      { nl: 'Gekopieerd', en: 'Copied', fr: 'Copié' },
+  'poll.nameFirst':    { nl: 'Vul eerst je naam in om aan te vinken.', en: 'Enter your name first to tick dates.', fr: "Indique d'abord ton prénom pour cocher." },
+  'poll.next':         { nl: 'Verder', en: 'Continue', fr: 'Continuer' },
+  'poll.tick':         { nl: 'Vink aan wat voor jou lukt', en: 'Tick what works for you', fr: 'Coche ce qui te convient' },
+  'poll.nobody':       { nl: 'nog niemand', en: 'nobody yet', fr: "personne pour l'instant" },
+  'poll.you':          { nl: 'jij', en: 'you', fr: 'toi' },
+  'poll.others':       { nl: '+{n} anderen', en: '+{n} others', fr: '+{n} autres' },
+  'poll.at':           { nl: 'om {time}', en: 'at {time}', fr: 'à {time}' },
+  'poll.addDate':      { nl: '+ Datum toevoegen', en: '+ Add a date', fr: '+ Ajouter une date' },
+  'poll.add':          { nl: 'Toevoegen', en: 'Add', fr: 'Ajouter' },
+  'poll.remove':       { nl: 'Datum weghalen', en: 'Remove date', fr: 'Retirer la date' },
+  'poll.empty':        { nl: 'Nog geen datums. Voeg er een toe.', en: 'No dates yet. Add one.', fr: "Pas encore de dates. Ajoutes-en une." },
+  'poll.leave':        { nl: 'Ik doe niet mee', en: 'Remove me', fr: 'Je ne participe pas' },
+  'poll.leaveYes':     { nl: 'Ja, haal me weg', en: 'Yes, remove me', fr: 'Oui, retire-moi' },
+  'poll.leaveNo':      { nl: 'Toch niet', en: 'Never mind', fr: 'Finalement non' },
+  'status.none':       { nl: 'Nog niemand heeft geantwoord.', en: 'Nobody has answered yet.', fr: "Personne n'a encore répondu." },
+  'status.one':        { nl: 'We hebben een datum: {date}', en: 'We have a date: {date}', fr: 'On a une date : {date}' },
+  'status.everyone':   { nl: 'Iedereen kan op {date}', en: 'Everyone can make {date}', fr: 'Tout le monde peut le {date}' },
+  'status.count':      { nl: '{n} van {total} kunnen', en: '{n} of {total} can make it', fr: '{n} sur {total} peuvent' },
+  'status.tie':        { nl: 'Meerdere datums lukken', en: 'Several dates work', fr: 'Plusieurs dates conviennent' },
+  'status.tieCount':   { nl: '{n} van {total} kunnen op elk van deze:', en: '{n} of {total} can make each of these:', fr: '{n} sur {total} peuvent à chacune de ces dates :' },
+  'status.pick':       { nl: 'Deze nemen', en: 'Pick this one', fr: 'Choisir celle-ci' },
+  'status.fix':        { nl: 'Vastleggen', en: 'Lock it in', fr: 'Confirmer' },
+  'status.final':      { nl: 'Afgesproken: {date}', en: 'Agreed: {date}', fr: "C'est fixé : {date}" },
+  'status.unfix':      { nl: 'Toch niet', en: 'Undo', fr: 'Annuler' },
+  'err.save':          { nl: 'Kon niet opslaan. Probeer opnieuw.', en: "Couldn't save. Try again.", fr: "Impossible d'enregistrer. Réessaie." },
+  'err.duplicate_option': { nl: 'Die datum staat er al.', en: 'That date is already listed.', fr: 'Cette date existe déjà.' },
+  'err.option_in_use': { nl: 'Iemand anders heeft deze datum aangevinkt.', en: 'Someone else ticked this date.', fr: "Quelqu'un d'autre a coché cette date." },
+  'err.title_required': { nl: 'Vul in waarover het gaat.', en: "Say what it's about.", fr: "Indique de quoi il s'agit." },
+  'err.name_required': { nl: 'Vul je naam in.', en: 'Enter your name.', fr: 'Indique ton prénom.' },
+  'err.invalid_date':  { nl: 'Kies minstens één datum.', en: 'Pick at least one date.', fr: 'Choisis au moins une date.' },
+  'err.generic':       { nl: 'Er ging iets mis. Probeer opnieuw.', en: 'Something went wrong. Try again.', fr: 'Quelque chose a raté. Réessaie.' },
+  'notfound.title':    { nl: 'Deze afspraak bestaat niet', en: "This poll doesn't exist", fr: "Ce rendez-vous n'existe pas" },
+  'notfound.text':     { nl: 'Controleer de link, of maak een nieuwe.', en: 'Check the link, or create a new one.', fr: 'Vérifie le lien, ou crées-en un nouveau.' },
+  'notfound.new':      { nl: 'Nieuwe afspraak', en: 'New poll', fr: 'Nouveau rendez-vous' },
+  'footer':            { nl: 'Prikdatum · gratis, zonder account', en: 'Prikdatum · free, no account', fr: 'Prikdatum · gratuit, sans compte' },
+  'lang.nl':           { nl: 'Nederlands', en: 'Nederlands', fr: 'Nederlands' },
+  'lang.en':           { nl: 'English', en: 'English', fr: 'English' },
+  'lang.fr':           { nl: 'Français', en: 'Français', fr: 'Français' },
+};
+const BRAND = 'Prikdatum';
+const LOCALES = { nl: 'nl-BE', en: 'en-GB', fr: 'fr-BE' };
+const FLAGS = { nl: '\u{1F1E7}\u{1F1EA}', en: '\u{1F1EC}\u{1F1E7}', fr: '\u{1F1EB}\u{1F1F7}' };
+const LS = { name: 'prikdatum.name', lang: 'prikdatum.lang', p: (id) => 'prikdatum.p.' + id, just: 'prikdatum.justCreated' };
+
+function bepaalTaal() {
+  try {
+    const opgeslagen = localStorage.getItem(LS.lang);
+    if (opgeslagen && STRINGS['lang.' + opgeslagen]) return opgeslagen;
+  } catch {}
+  const nav = (navigator.language || '').toLowerCase();
+  if (nav.startsWith('fr')) return 'fr';
+  if (nav.startsWith('en')) return 'en';
+  return 'nl';
+}
+
+const state = {
+  lang: bepaalTaal(),
+  pollId: null,
+  data: null,
+  lastJson: '',
+  me: null,
+  inflight: 0,
+};
+
+function t(sleutel, vars) {
+  let s = (STRINGS[sleutel] || {})[state.lang] || '';
+  if (vars) for (const k of Object.keys(vars)) s = s.replaceAll('{' + k + '}', String(vars[k]));
+  return s;
+}
+
+function fmtDatum(datum, tijd) {
+  const d = new Date(datum + 'T12:00:00');
+  const opties = { weekday: 'short', day: 'numeric', month: 'short' };
+  if (d.getFullYear() !== new Date().getFullYear()) opties.year = 'numeric';
+  let s = new Intl.DateTimeFormat(LOCALES[state.lang], opties).format(d);
+  if (tijd) s += ' ' + t('poll.at', { time: tijd });
+  return s;
+}
+
+function el(tag, cls, tekst) {
+  const n = document.createElement(tag);
+  if (cls) n.className = cls;
+  if (tekst !== undefined) n.textContent = tekst;
+  return n;
+}
+
+async function api(pad, methode, body) {
+  const res = await fetch('/api' + pad, {
+    method: methode || 'GET',
+    headers: body !== undefined ? { 'Content-Type': 'application/json' } : undefined,
+    body: body !== undefined ? JSON.stringify(body) : undefined,
+  });
+  let data = null;
+  try { data = await res.json(); } catch {}
+  return { ok: res.ok, status: res.status, data };
+}
+
+function foutTekst(data) {
+  const code = data && data.error;
+  return STRINGS['err.' + code] ? t('err.' + code) : t('err.generic');
+}
+
+/* ---------- vlaggetje ---------- */
+const vlagBtn = document.getElementById('vlag');
+const talenMenu = document.getElementById('talen');
+let hertaal = () => {};
+
+function bouwTalen() {
+  talenMenu.textContent = '';
+  for (const l of ['nl', 'en', 'fr']) {
+    const b = el('button', null, FLAGS[l] + ' ' + t('lang.' + l));
+    b.type = 'button';
+    b.addEventListener('click', () => {
+      state.lang = l;
+      try { localStorage.setItem(LS.lang, l); } catch {}
+      talenMenu.classList.add('verborgen');
+      document.documentElement.lang = l;
+      vlagBtn.textContent = FLAGS[state.lang];
+      bouwTalen();
+      document.getElementById('voet').textContent = t('footer');
+      hertaal();
+    });
+    talenMenu.appendChild(b);
+  }
+}
+vlagBtn.addEventListener('click', () => talenMenu.classList.toggle('verborgen'));
+vlagBtn.textContent = FLAGS[state.lang];
+document.documentElement.lang = state.lang;
+bouwTalen();
+document.getElementById('voet').textContent = t('footer');
+
+const scherm = document.getElementById('scherm');
+
+/* ================================================================
+   Scherm 1: Maken (/)
+   ================================================================ */
+function schermMaken() {
+  scherm.textContent = '';
+
+  const titelKop = el('h1');
+  const watLabel = el('label', 'label');
+  watLabel.htmlFor = 'titel';
+  const titelIn = el('input');
+  titelIn.type = 'text'; titelIn.id = 'titel'; titelIn.maxLength = 80; titelIn.autofocus = true;
+
+  const datumsLabel = el('label', 'label');
+  const rijen = el('div');
+  const nogEen = el('button', 'sec'); nogEen.type = 'button';
+
+  const naamLabel = el('label', 'label');
+  naamLabel.htmlFor = 'naam';
+  const naamIn = el('input');
+  naamIn.type = 'text'; naamIn.id = 'naam'; naamIn.maxLength = 40;
+  try { naamIn.value = localStorage.getItem(LS.name) || ''; } catch {}
+
+  const maakBtn = el('button');
+  maakBtn.type = 'button';
+  const foutRegel = el('p', 'fout verborgen');
+
+  function rijToevoegen() {
+    const rij = el('div', 'drow');
+    const d = el('input'); d.type = 'date';
+    const u = el('input'); u.type = 'time';
+    const x = el('button', 'x', '×'); x.type = 'button';
+    x.addEventListener('click', () => { rij.remove(); toonKruisjes(); checkKnop(); });
+    d.addEventListener('change', () => {
+      if (d.value && rij === rijen.lastElementChild) { rijToevoegen(); }
+      checkKnop();
+    });
+    u.addEventListener('change', checkKnop);
+    rij.append(d, u, x);
+    rijen.appendChild(rij);
+    toonKruisjes();
+  }
+
+  function toonKruisjes() {
+    const alle = rijen.querySelectorAll('.drow');
+    alle.forEach((r) => {
+      r.querySelector('.x').classList.toggle('verborgen', alle.length === 1);
+    });
+  }
+
+  function geldigeOpties() {
+    const uit = [];
+    rijen.querySelectorAll('.drow').forEach((r) => {
+      const d = r.querySelector('input[type="date"]').value;
+      const u = r.querySelector('input[type="time"]').value;
+      if (d) uit.push({ date: d, time: u || null });
+    });
+    return uit;
+  }
+
+  function checkKnop() {
+    maakBtn.disabled = !(titelIn.value.trim() && naamIn.value.trim() && geldigeOpties().length);
+  }
+
+  titelIn.addEventListener('input', checkKnop);
+  naamIn.addEventListener('input', checkKnop);
+  nogEen.addEventListener('click', rijToevoegen);
+
+  maakBtn.addEventListener('click', async () => {
+    foutRegel.classList.add('verborgen');
+    maakBtn.disabled = true;
+    const r = await api('/polls', 'POST', {
+      title: titelIn.value,
+      name: naamIn.value,
+      options: geldigeOpties(),
+    });
+    if (r.ok && r.data && r.data.id) {
+      try {
+        localStorage.setItem(LS.name, naamIn.value.trim());
+        localStorage.setItem(LS.p(r.data.id), r.data.participantId);
+        sessionStorage.setItem(LS.just, r.data.id);
+      } catch {}
+      location.href = '/p/' + r.data.id;
+      return;
+    }
+    foutRegel.textContent = foutTekst(r.data);
+    foutRegel.classList.remove('verborgen');
+    checkKnop();
+  });
+
+  hertaal = () => {
+    document.title = t('make.title');
+    titelKop.textContent = t('make.title');
+    watLabel.textContent = t('make.what');
+    titelIn.placeholder = t('make.what.ph');
+    datumsLabel.textContent = t('make.dates');
+    nogEen.textContent = t('make.addDate');
+    naamLabel.textContent = t('make.name');
+    naamIn.placeholder = t('make.name.ph');
+    maakBtn.textContent = t('make.submit');
+  };
+
+  scherm.append(titelKop, watLabel, titelIn, datumsLabel, rijen, nogEen, naamLabel, naamIn, el('div'), maakBtn, foutRegel);
+  rijToevoegen();
+  hertaal();
+  checkKnop();
+  titelIn.focus();
+}
+
+/* ================================================================
+   Scherm 2: Afspraak (/p/<id>)
+   ================================================================ */
+function schermAfspraak(pollId) {
+  state.pollId = pollId;
+  try { state.me = localStorage.getItem(LS.p(pollId)); } catch {}
+
+  scherm.textContent = '';
+
+  /* --- vaste elementen die nooit mee her-renderen (invoer blijft staan) --- */
+  const deel = el('div', 'deel verborgen');
+  const deelTekst = el('span');
+  const deelUrl = el('span', 'url', location.origin + '/p/' + pollId);
+  const kopieKnop = el('button', 'klein'); kopieKnop.type = 'button';
+  deel.append(deelTekst, deelUrl, kopieKnop);
+
+  const titelKop = el('h1');
+  const statusBlok = el('div', 'status');
+
+  const naamZone = el('div');
+  const naamLabel = el('label', 'label');
+  naamLabel.htmlFor = 'joinnaam';
+  const naamIn = el('input');
+  naamIn.type = 'text'; naamIn.id = 'joinnaam'; naamIn.maxLength = 40;
+  try { naamIn.value = localStorage.getItem(LS.name) || ''; } catch {}
+  const verderBtn = el('button'); verderBtn.type = 'button';
+  const naamFout = el('p', 'fout verborgen');
+  const naamKnopRij = el('div'); naamKnopRij.style.marginTop = '10px';
+  naamKnopRij.append(verderBtn);
+  naamZone.append(naamLabel, naamIn, naamKnopRij, naamFout);
+
+  const lijstKop = el('p', 'kopje');
+  const lijst = el('div', 'lijst');
+  const lijstFout = el('p', 'fout verborgen');
+
+  const leegRegel = el('p', 'leeg verborgen');
+
+  const voegZone = el('div');
+  const voegToggle = el('button', 'sec'); voegToggle.type = 'button';
+  const voegRij = el('div', 'drow verborgen');
+  const voegDatum = el('input'); voegDatum.type = 'date';
+  const voegTijd = el('input'); voegTijd.type = 'time';
+  const voegBtn = el('button', 'klein'); voegBtn.type = 'button';
+  voegRij.append(voegDatum, voegTijd, voegBtn);
+  voegZone.append(voegToggle, voegRij);
+
+  const wegZone = el('div', 'weg');
+  const wegBtn = el('button'); wegBtn.type = 'button';
+  const wegBevestig = el('span', 'bevestig verborgen');
+  const wegJa = el('button', 'ja'); wegJa.type = 'button';
+  const wegNee = el('button'); wegNee.type = 'button';
+  wegBevestig.append(wegJa, wegNee);
+  wegZone.append(wegBtn, wegBevestig);
+
+  scherm.append(deel, titelKop, statusBlok, naamZone, lijstKop, leegRegel, lijst, lijstFout, voegZone, wegZone);
+
+  /* --- deelbalk: alleen direct na aanmaken --- */
+  try {
+    if (sessionStorage.getItem(LS.just) === pollId) {
+      sessionStorage.removeItem(LS.just);
+      deel.classList.remove('verborgen');
+    }
+  } catch {}
+  let kopieTimer = null;
+  kopieKnop.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(deelUrl.textContent);
+      kopieKnop.textContent = t('share.copied');
+      clearTimeout(kopieTimer);
+      kopieTimer = setTimeout(() => { kopieKnop.textContent = t('share.copy'); }, 2000);
+    } catch {
+      const sel = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(deelUrl);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  });
+
+  /* --- naam opgeven --- */
+  async function doeMee() {
+    naamFout.classList.add('verborgen');
+    const r = await api('/polls/' + pollId + '/participants', 'POST', { name: naamIn.value });
+    if (r.ok && r.data && r.data.participantId) {
+      state.me = r.data.participantId;
+      try {
+        localStorage.setItem(LS.p(pollId), state.me);
+        localStorage.setItem(LS.name, naamIn.value.trim() || r.data.name);
+      } catch {}
+      await haalOp(true);
+      render();
+    } else {
+      naamFout.textContent = foutTekst(r.data);
+      naamFout.classList.remove('verborgen');
+    }
+  }
+  verderBtn.addEventListener('click', doeMee);
+  naamIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') doeMee(); });
+
+  /* --- datum toevoegen --- */
+  voegToggle.addEventListener('click', () => {
+    voegRij.classList.remove('verborgen');
+    voegToggle.classList.add('verborgen');
+    voegDatum.focus();
+  });
+  voegBtn.addEventListener('click', async () => {
+    if (!state.me) { naamIn.focus(); return; }
+    if (!voegDatum.value) { voegDatum.focus(); return; }
+    lijstFout.classList.add('verborgen');
+    const r = await api('/polls/' + pollId + '/options', 'POST', {
+      participantId: state.me,
+      date: voegDatum.value,
+      time: voegTijd.value || null,
+    });
+    if (r.ok) {
+      voegDatum.value = ''; voegTijd.value = '';
+      voegRij.classList.add('verborgen');
+      voegToggle.classList.remove('verborgen');
+      await haalOp(true);
+      render();
+    } else {
+      lijstFout.textContent = foutTekst(r.data);
+      lijstFout.classList.remove('verborgen');
+    }
+  });
+
+  /* --- mezelf weghalen --- */
+  wegBtn.addEventListener('click', () => {
+    wegBtn.classList.add('verborgen');
+    wegBevestig.classList.remove('verborgen');
+  });
+  wegNee.addEventListener('click', () => {
+    wegBevestig.classList.add('verborgen');
+    wegBtn.classList.remove('verborgen');
+  });
+  wegJa.addEventListener('click', async () => {
+    const r = await api('/polls/' + pollId + '/participants/' + state.me, 'DELETE');
+    wegBevestig.classList.add('verborgen');
+    wegBtn.classList.remove('verborgen');
+    if (r.ok) {
+      state.me = null;
+      try { localStorage.removeItem(LS.p(pollId)); } catch {}
+      await haalOp(true);
+      render();
+    }
+  });
+
+  /* --- vinkjes ---*/
+  async function zetVotes(nieuweSet) {
+    const vorige = structuredClone(state.data);
+    // optimistisch: lokale data aanpassen en meteen renderen
+    for (const o of state.data.options) {
+      const heeft = o.votes.includes(state.me);
+      const wil = nieuweSet.has(o.id);
+      if (wil && !heeft) o.votes.push(state.me);
+      if (!wil && heeft) o.votes = o.votes.filter((v) => v !== state.me);
+    }
+    lijstFout.classList.add('verborgen');
+    render();
+    state.inflight++;
+    try {
+      const r = await api('/polls/' + pollId + '/participants/' + state.me + '/votes', 'PUT', {
+        optionIds: [...nieuweSet],
+      });
+      if (!r.ok) throw new Error();
+      state.lastJson = ''; // volgende poll rendert sowieso opnieuw
+    } catch {
+      state.lastJson = '';
+      state.data = vorige;
+      render();
+      lijstFout.textContent = t('err.save');
+      lijstFout.classList.remove('verborgen');
+    } finally {
+      state.inflight--;
+    }
+  }
+
+  async function haalOptieWeg(optie) {
+    const vorige = structuredClone(state.data);
+    state.data.options = state.data.options.filter((o) => o.id !== optie.id);
+    if (state.data.finalOptionId === optie.id) state.data.finalOptionId = null;
+    lijstFout.classList.add('verborgen');
+    render();
+    state.inflight++;
+    try {
+      const r = await api('/polls/' + pollId + '/options/' + optie.id + '?participantId=' + encodeURIComponent(state.me || ''), 'DELETE');
+      if (!r.ok) throw r;
+      state.lastJson = '';
+    } catch (r) {
+      state.lastJson = '';
+      state.data = vorige;
+      render();
+      lijstFout.textContent = foutTekst(r && r.data);
+      lijstFout.classList.remove('verborgen');
+    } finally {
+      state.inflight--;
+    }
+  }
+
+  async function zetFinal(optionId) {
+    state.inflight++;
+    try {
+      await api('/polls/' + pollId + '/final', 'PUT', { optionId });
+    } finally {
+      state.inflight--;
+    }
+    await haalOp(true);
+    render();
+  }
+
+  /* --- statusblok (hoofdstuk 7) --- */
+  function bouwStatus() {
+    statusBlok.textContent = '';
+    const d = state.data;
+    const n = d.participants.length;
+    const perId = new Map(d.options.map((o) => [o.id, o]));
+    const blok = el('div', 'fade');
+
+    const definitief = d.finalOptionId && perId.get(d.finalOptionId);
+    if (definitief) {
+      const balk = el('div', 'balk definitief');
+      balk.append(el('div', 'groot', t('status.final', { date: fmtDatum(definitief.date, definitief.time) })));
+      balk.append(el('div', 'sub', t('status.count', { n: definitief.votes.length, total: n })));
+      const zone = el('div', 'knopzone');
+      const los = el('button', 'sec klein', t('status.unfix')); los.type = 'button';
+      los.addEventListener('click', () => zetFinal(null));
+      zone.append(los);
+      balk.append(zone);
+      blok.append(balk);
+    } else {
+      const max = d.options.reduce((m, o) => Math.max(m, o.votes.length), 0);
+      if (n === 0 || max === 0) {
+        blok.append(el('p', 'stil', t('status.none')));
+      } else {
+        const top = d.options.filter((o) => o.votes.length === max);
+        const balk = el('div', 'balk');
+        if (top.length === 1) {
+          const o = top[0];
+          const iedereen = max === n && n >= 2;
+          balk.append(el('div', 'groot', t(iedereen ? 'status.everyone' : 'status.one', { date: fmtDatum(o.date, o.time) })));
+          balk.append(el('div', 'sub', t('status.count', { n: max, total: n })));
+          const zone = el('div', 'knopzone');
+          const vast = el('button', 'sec klein', t('status.fix')); vast.type = 'button';
+          vast.addEventListener('click', () => zetFinal(o.id));
+          zone.append(vast);
+          balk.append(zone);
+        } else {
+          balk.append(el('div', 'groot', t('status.tie')));
+          balk.append(el('div', 'sub', t('status.tieCount', { n: max, total: n })));
+          for (const o of top) {
+            const rij = el('div', 'rijtje');
+            rij.append(el('span', null, fmtDatum(o.date, o.time)));
+            const neem = el('button', 'sec klein', t('status.pick')); neem.type = 'button';
+            neem.addEventListener('click', () => zetFinal(o.id));
+            rij.append(neem);
+            balk.append(rij);
+          }
+        }
+        blok.append(balk);
+      }
+    }
+    statusBlok.append(blok);
+  }
+
+  /* --- optielijst --- */
+  function namenRegel(o) {
+    const naamVan = new Map(state.data.participants.map((p) => [p.id, p.name]));
+    const ikKan = state.me && o.votes.includes(state.me);
+    const namen = [];
+    if (ikKan) namen.push(t('poll.you'));
+    for (const p of state.data.participants) {
+      if (p.id === state.me) continue;
+      if (o.votes.includes(p.id)) namen.push(naamVan.get(p.id));
+    }
+    if (!namen.length) return t('poll.nobody');
+    if (namen.length > 6) {
+      return namen.slice(0, 5).join(', ') + ' ' + t('poll.others', { n: namen.length - 5 });
+    }
+    return namen.join(', ');
+  }
+
+  function bouwLijst() {
+    const focusOid = document.activeElement && document.activeElement.dataset
+      ? document.activeElement.dataset.oid : null;
+    lijst.textContent = '';
+    const d = state.data;
+    lijst.classList.toggle('inactief', !state.me);
+
+    if (!d.options.length) {
+      leegRegel.textContent = t('poll.empty');
+      leegRegel.classList.remove('verborgen');
+      // toevoegrij open (6.5)
+      voegRij.classList.remove('verborgen');
+      voegToggle.classList.add('verborgen');
+      return;
+    }
+    leegRegel.classList.add('verborgen');
+
+    for (const o of d.options) {
+      const ikKan = !!(state.me && o.votes.includes(state.me));
+      const rij = el('label', 'opt' + (ikKan ? ' aan' : '') + (d.finalOptionId === o.id ? ' definitief' : ''));
+      const vink = el('input');
+      vink.type = 'checkbox';
+      vink.checked = ikKan;
+      vink.dataset.oid = o.id;
+      vink.addEventListener('change', () => {
+        const set = new Set(d.options.filter((x) => x.votes.includes(state.me)).map((x) => x.id));
+        if (vink.checked) set.add(o.id); else set.delete(o.id);
+        zetVotes(set);
+      });
+
+      const mid = el('div', 'mid');
+      mid.append(el('div', null, fmtDatum(o.date, o.time)));
+      mid.append(el('div', 'namen', namenRegel(o)));
+
+      const tel = el('span', 'tel' + (o.votes.length === 0 ? ' nul' : ''), String(o.votes.length));
+
+      rij.append(vink, mid, tel);
+
+      const magWeg = state.me && o.votes.every((v) => v === state.me);
+      if (magWeg) {
+        const weg = el('button', 'del', '×');
+        weg.type = 'button';
+        weg.title = t('poll.remove');
+        weg.setAttribute('aria-label', t('poll.remove'));
+        weg.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          haalOptieWeg(o);
+        });
+        rij.append(weg);
+      }
+
+      if (!state.me) {
+        rij.addEventListener('click', (e) => {
+          e.preventDefault();
+          naamIn.focus();
+        });
+      }
+      lijst.appendChild(rij);
+    }
+
+    if (focusOid) {
+      const terug = lijst.querySelector('input[data-oid="' + focusOid + '"]');
+      if (terug) terug.focus({ preventScroll: true });
+    }
+  }
+
+  function render() {
+    const d = state.data;
+    if (!d) return;
+    document.title = d.title + ' · ' + BRAND;
+    titelKop.textContent = d.title;
+    deelTekst.textContent = t('share.ready') + ' ';
+    if (!kopieKnop.textContent || kopieKnop.textContent !== t('share.copied')) {
+      kopieKnop.textContent = t('share.copy');
+    }
+    naamZone.classList.toggle('verborgen', !!state.me);
+    naamLabel.textContent = t('make.name');
+    naamIn.placeholder = t('make.name.ph');
+    verderBtn.textContent = t('poll.next');
+    lijstKop.textContent = state.me ? t('poll.tick') : t('poll.nameFirst');
+    voegToggle.textContent = t('poll.addDate');
+    voegBtn.textContent = t('poll.add');
+    wegBtn.textContent = t('poll.leave');
+    wegJa.textContent = t('poll.leaveYes');
+    wegNee.textContent = t('poll.leaveNo');
+    wegZone.classList.toggle('verborgen', !state.me);
+    bouwStatus();
+    bouwLijst();
+  }
+
+  function schermOnbekend() {
+    scherm.textContent = '';
+    const kop = el('h1', null, t('notfound.title'));
+    const tekst = el('p', null, t('notfound.text'));
+    const knop = el('button', null, t('notfound.new'));
+    knop.type = 'button';
+    knop.addEventListener('click', () => { location.href = '/'; });
+    scherm.append(kop, tekst, knop);
+    hertaal = () => {
+      kop.textContent = t('notfound.title');
+      tekst.textContent = t('notfound.text');
+      knop.textContent = t('notfound.new');
+    };
+  }
+
+  async function haalOp(forceer) {
+    let res, tekst;
+    try {
+      res = await fetch('/api/polls/' + pollId, { cache: 'no-store' });
+      tekst = await res.text();
+    } catch {
+      return;
+    }
+    if (res.status === 404) {
+      schermOnbekend();
+      return;
+    }
+    if (!res.ok) return;
+    if (!forceer && state.inflight > 0) return; // race: oudere data negeren
+    if (tekst === state.lastJson) return;
+    state.lastJson = tekst;
+    state.data = JSON.parse(tekst);
+    if (state.me && !state.data.participants.some((p) => p.id === state.me)) {
+      state.me = null;
+      try { localStorage.removeItem(LS.p(pollId)); } catch {}
+    }
+    render();
+  }
+
+  hertaal = render;
+
+  haalOp(true);
+  setInterval(() => haalOp(false), 10000);
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') haalOp(false);
+  });
+}
+
+/* ---------- route ---------- */
+const pad = location.pathname.replace(/\/+$/, '');
+if (pad.startsWith('/p/') && pad.length > 3) {
+  schermAfspraak(pad.slice(3));
+} else {
+  schermMaken();
+}
+</script>
+</body>
+</html>
