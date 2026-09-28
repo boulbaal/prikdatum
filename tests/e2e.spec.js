@@ -259,7 +259,8 @@ test.describe("Scenario's", () => {
     await expect(ali.locator('.wie b')).toHaveText('Ali');
     await expect(ali.locator('.chip', { hasText: 'Ali (jij)' })).toHaveClass(/ik/);
     await expect(ali.locator('#joinnaam')).toBeHidden();
-    await expect(ali.locator('.status .stil')).toHaveText('Nog niemand heeft geantwoord.');
+    await expect(ali.locator('.status .balk')).toHaveClass(/rood/); // nog geen datum -> rood
+    await expect(ali.locator('.status .groot')).toHaveText('Nog geen datum. Klik je dagen aan.');
 
     await toonMaand(ali, MAAND);
     await dag(ali, D1).click();
@@ -269,7 +270,9 @@ test.describe("Scenario's", () => {
     await expect(ali.locator('.taplijn')).toContainText('jij');
     await dag(ali, D2).click();
     await expect(dag(ali, D2)).toHaveClass(/mijn/);
-    await expect(ali.locator('.status .groot')).toHaveText('Meerdere datums lukken');
+    // Ali alleen kan op beide -> iedereen (1 van 1) -> GROEN, tie
+    await expect(ali.locator('.status .balk')).toHaveClass(/groen/);
+    await expect(ali.locator('.status .groot')).toHaveText('Meerdere dagen lukken voor iedereen');
     await expect(ali.locator('.status .sub')).toHaveText('1 van 1 kunnen op elk van deze:');
 
     /* ---------- S2: Sofie komt binnen, ziet de namen en typt haar eigen ---------- */
@@ -295,7 +298,8 @@ test.describe("Scenario's", () => {
     await expect(dag(sofie, D1)).toHaveClass(/mijn/);
     await expect(dag(sofie, D1).locator('.dvink')).toHaveCount(1); // haar vinkje
     await expect(dag(sofie, D1).locator('.ddot')).toHaveCount(1);  // stipje van Ali
-    // 9 okt springt eruit -> status 7.3 met namen en uurveld
+    // 9 okt springt eruit, iedereen (2 van 2) kan -> GROEN
+    await expect(sofie.locator('.status .balk')).toHaveClass(/groen/);
     await expect(sofie.locator('.status .groot')).toHaveText(/Iedereen kan op vr 9 okt/);
     await expect(sofie.locator('.status .sub')).toHaveText('2 van 2 kunnen');
     await expect(sofie.locator('.status .namenlijn')).toContainText('jij');
@@ -344,16 +348,19 @@ test.describe("Scenario's", () => {
     await expect(sofie.locator('h1')).toHaveText('Etentje bij Ali', { timeout: 13_000 });
 
     /* ---------- S7: vastleggen en weer loslaten ---------- */
-    // stand: 9 okt = Ali+Sofie (2), 16 okt = Ali (1), 3 deelnemers
-    await expect(ali.locator('.status .groot')).toHaveText(/We hebben een datum: vr 9 okt om 18:00/, { timeout: 13_000 });
+    // stand: 9 okt = Ali+Sofie (2), 16 okt = Ali (1), 3 deelnemers -> nog niet iedereen -> ORANJE
+    await expect(ali.locator('.status .balk')).toHaveClass(/oranje/, { timeout: 13_000 });
+    await expect(ali.locator('.status .groot')).toHaveText(/Beste dag tot nu: vr 9 okt om 18:00/);
     await expect(ali.locator('.status .sub')).toHaveText('2 van 3 kunnen');
     await ali.locator('.status button', { hasText: 'Vastleggen' }).click();
+    // vastgelegd -> GROEN
+    await expect(ali.locator('.status .balk')).toHaveClass(/groen/);
     await expect(ali.locator('.status .groot')).toHaveText(/Afgesproken: vr 9 okt om 18:00/);
     await expect(dag(ali, D1)).toHaveClass(/definitief/);
     await expect(sofie.locator('.status .groot')).toHaveText(/Afgesproken/, { timeout: 13_000 });
     await sofie.locator('.status button', { hasText: 'Toch niet' }).click();
-    await expect(sofie.locator('.status .groot')).toHaveText(/We hebben een datum/);
-    await expect(ali.locator('.status .groot')).toHaveText(/We hebben een datum/, { timeout: 13_000 });
+    await expect(sofie.locator('.status .groot')).toHaveText(/Beste dag tot nu/);
+    await expect(ali.locator('.status .groot')).toHaveText(/Beste dag tot nu/, { timeout: 13_000 });
 
     /* ---------- S8: terugkomen; je eigen naam blijft de jouwe ---------- */
     await sofie.reload();
@@ -420,6 +427,36 @@ test.describe("Scenario's", () => {
     await toonMaand(page, MAAND);
     await dag(page, D1).click();
     await expect(dag(page, D1)).toHaveClass(/mijn/);
+    await ctx.close();
+  });
+
+  test('S9c stoplicht: rood -> oranje -> groen', async ({ browser, request }, testInfo) => {
+    // drie deelnemers, geen stemmen -> ROOD
+    const { id, participantId: ali } = await apiMaakPoll(request, { title: 'Kleuren', name: 'Ali' });
+    const r = await (await request.post(`/api/polls/${id}/participants`, { data: { name: 'Ridwane' } })).json();
+    const i = await (await request.post(`/api/polls/${id}/participants`, { data: { name: 'Ilyas' } })).json();
+
+    const ctx = await browser.newContext(ctxOpties(testInfo));
+    const page = await ctx.newPage();
+    await page.goto('/p/' + id);
+    await page.locator('.chip', { hasText: 'Ali' }).click(); // word Ali
+    await expect(page.locator('.status .balk')).toHaveClass(/rood/);
+    await expect(page.locator('.status .groot')).toHaveText('Nog geen datum. Klik je dagen aan.');
+
+    // Ali klikt een dag -> 1 van 3 kan -> ORANJE
+    await toonMaand(page, MAAND);
+    await dag(page, D1).click();
+    await expect(page.locator('.status .balk')).toHaveClass(/oranje/);
+    await expect(page.locator('.status .groot')).toHaveText(/Beste dag tot nu: vr 9 okt/);
+    await expect(page.locator('.status .sub')).toHaveText('1 van 3 kunnen');
+
+    // Ridwane en Ilyas kunnen ook op 9 okt -> 3 van 3 -> GROEN
+    const o9 = (await (await request.get('/api/polls/' + id)).json()).options.find((x) => x.date === D1).id;
+    await request.put(`/api/polls/${id}/participants/${r.participantId}/votes`, { data: { optionIds: [o9] } });
+    await request.put(`/api/polls/${id}/participants/${i.participantId}/votes`, { data: { optionIds: [o9] } });
+    await expect(page.locator('.status .balk')).toHaveClass(/groen/, { timeout: 13_000 });
+    await expect(page.locator('.status .groot')).toHaveText(/Iedereen kan op vr 9 okt/);
+    await expect(page.locator('.status .sub')).toHaveText('3 van 3 kunnen');
     await ctx.close();
   });
 

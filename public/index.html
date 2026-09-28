@@ -12,6 +12,9 @@
     --groen: #2F8F5B;
     --lichtgroen: #E8F5EE;
     --rood: #B23A3A;
+    --oranje: #A85B00;
+    --lichtoranje: #FBF0E1;
+    --lichtrood: #FBEBEB;
   }
   * { box-sizing: border-box; }
   body {
@@ -142,6 +145,13 @@
     border-radius: 8px;
     padding: 14px;
   }
+  .status .balk .groot { font-size: 20px; font-weight: 600; color: var(--groen); }
+  .status .balk.groen  { background: var(--lichtgroen); }
+  .status .balk.groen  .groot { color: var(--groen); }
+  .status .balk.oranje { background: var(--lichtoranje); }
+  .status .balk.oranje .groot { color: var(--oranje); }
+  .status .balk.rood   { background: var(--lichtrood); }
+  .status .balk.rood   .groot { color: var(--rood); }
   .status .balk.definitief { border-left: 3px solid var(--groen); }
   .status .groot { font-size: 20px; font-weight: 600; color: var(--groen); }
   .status .sub { font-size: 14px; color: var(--gedempt); margin-top: 2px; }
@@ -283,11 +293,12 @@ const STRINGS = {
   'poll.leave':        { nl: 'Haal {name} weg uit deze afspraak', en: 'Remove {name} from this poll', fr: 'Retirer {name} de ce rendez-vous' },
   'poll.leaveYes':     { nl: 'Ja, haal {name} weg', en: 'Yes, remove {name}', fr: 'Oui, retirer {name}' },
   'poll.leaveNo':      { nl: 'Toch niet', en: 'Never mind', fr: 'Finalement non' },
-  'status.none':       { nl: 'Nog niemand heeft geantwoord.', en: 'Nobody has answered yet.', fr: "Personne n'a encore répondu." },
-  'status.one':        { nl: 'We hebben een datum: {date}', en: 'We have a date: {date}', fr: 'On a une date : {date}' },
+  'status.none':       { nl: 'Nog geen datum. Klik je dagen aan.', en: 'No date yet. Click your days.', fr: 'Pas encore de date. Coche tes jours.' },
+  'status.almost':     { nl: 'Beste dag tot nu: {date}', en: 'Best day so far: {date}', fr: "Meilleur jour jusqu'ici : {date}" },
   'status.everyone':   { nl: 'Iedereen kan op {date}', en: 'Everyone can make {date}', fr: 'Tout le monde peut le {date}' },
   'status.count':      { nl: '{n} van {total} kunnen', en: '{n} of {total} can make it', fr: '{n} sur {total} peuvent' },
-  'status.tie':        { nl: 'Meerdere datums lukken', en: 'Several dates work', fr: 'Plusieurs dates conviennent' },
+  'status.tie':        { nl: 'Meerdere dagen lopen voorop', en: 'Several days are leading', fr: 'Plusieurs jours en tête' },
+  'status.tieEveryone':{ nl: 'Meerdere dagen lukken voor iedereen', en: 'Several days work for everyone', fr: 'Plusieurs jours conviennent à tous' },
   'status.tieCount':   { nl: '{n} van {total} kunnen op elk van deze:', en: '{n} of {total} can make each of these:', fr: '{n} sur {total} peuvent à chacune de ces dates :' },
   'status.pick':       { nl: 'Deze nemen', en: 'Pick this one', fr: 'Choisir celle-ci' },
   'status.fix':        { nl: 'Vastleggen', en: 'Lock it in', fr: 'Confirmer' },
@@ -825,7 +836,8 @@ function schermAfspraak(pollId) {
 
     const definitief = d.finalOptionId && perId.get(d.finalOptionId);
     if (definitief) {
-      const balk = el('div', 'balk definitief');
+      // een vastgelegde datum is altijd groen
+      const balk = el('div', 'balk groen definitief');
       balk.append(el('div', 'groot', '✓ ' + t('status.final', { date: fmtDatum(definitief.date, definitief.time) })));
       balk.append(el('div', 'sub', t('status.count', { n: definitief.votes.length, total: n })));
       const namen = el('div', 'namenlijn');
@@ -840,14 +852,18 @@ function schermAfspraak(pollId) {
     } else {
       const max = d.options.reduce((m, o) => Math.max(m, o.votes.length), 0);
       if (n === 0 || max === 0) {
-        blok.append(el('p', 'stil', t('status.none')));
+        // stoplicht ROOD: nog absoluut geen datum
+        const balk = el('div', 'balk rood');
+        balk.append(el('div', 'groot', t('status.none')));
+        blok.append(balk);
       } else {
+        // stoplicht: GROEN als iedereen kan, anders ORANJE
+        const iedereen = max === n; // n >= 1 hier gegarandeerd
         const top = d.options.filter((o) => o.votes.length === max);
-        const balk = el('div', 'balk');
+        const balk = el('div', 'balk ' + (iedereen ? 'groen' : 'oranje'));
         if (top.length === 1) {
           const o = top[0];
-          const iedereen = max === n && n >= 2;
-          balk.append(el('div', 'groot', t(iedereen ? 'status.everyone' : 'status.one', { date: fmtDatum(o.date, o.time) })));
+          balk.append(el('div', 'groot', t(iedereen ? 'status.everyone' : 'status.almost', { date: fmtDatum(o.date, o.time) })));
           balk.append(el('div', 'sub', t('status.count', { n: max, total: n })));
           const namen = el('div', 'namenlijn');
           namen.append(namenMetKleur(o));
@@ -858,7 +874,7 @@ function schermAfspraak(pollId) {
           zone.append(tijdVeld(o), vast);
           balk.append(zone);
         } else {
-          balk.append(el('div', 'groot', t('status.tie')));
+          balk.append(el('div', 'groot', t(iedereen ? 'status.tieEveryone' : 'status.tie')));
           balk.append(el('div', 'sub', t('status.tieCount', { n: max, total: n })));
           for (const o of top) {
             const rij = el('div', 'rijtje');
