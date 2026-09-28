@@ -10,4 +10,4 @@ run_worker_first = ["/api/*"]
 [[d1_databases]]
 binding = "DB"
 database_name = "prikdatum"
-database_id = "VUL-IN-NA-STAP-3"   # zie README
+database_id = "d0b5a782-3bf8-4fdb-9581-b3bb92399520"   # zie README
