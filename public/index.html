@@ -182,6 +182,9 @@
   .kalkop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
   .kalkop .mnd { font-weight: 600; }
   .kalkop button { background: none; color: var(--groen); font-size: 22px; padding: 4px 16px; }
+  .maanden { display: flex; flex-wrap: wrap; gap: 20px; }
+  .maandblok { flex: 1 1 240px; min-width: 0; }
+  .maandnaam { font-weight: 600; text-align: center; margin-bottom: 4px; }
   .kalgrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
   .kalwd { font-size: 12px; color: var(--gedempt); text-align: center; padding: 2px 0; }
   .dag {
@@ -422,11 +425,13 @@ function schermMaken() {
   watLabel.htmlFor = 'titel';
   const titelIn = el('input');
   titelIn.type = 'text'; titelIn.id = 'titel'; titelIn.maxLength = 80; titelIn.autofocus = true;
+  titelIn.autocomplete = 'off';
 
   const naamLabel = el('label', 'label');
   naamLabel.htmlFor = 'naam';
   const naamIn = el('input');
   naamIn.type = 'text'; naamIn.id = 'naam'; naamIn.maxLength = 40;
+  naamIn.autocomplete = 'off';
   try { naamIn.value = localStorage.getItem(LS.name) || ''; } catch {}
 
   const maakBtn = el('button');
@@ -498,7 +503,7 @@ function schermAfspraak(pollId) {
   const titelKop = el('h1');
   const titelEditBtn = el('button', 'sec'); titelEditBtn.type = 'button';
   const titelEditor = el('div', 'titeleditor verborgen');
-  const titelIn = el('input'); titelIn.type = 'text'; titelIn.maxLength = 80;
+  const titelIn = el('input'); titelIn.type = 'text'; titelIn.maxLength = 80; titelIn.autocomplete = 'off';
   const titelOk = el('button', 'klein'); titelOk.type = 'button';
   titelEditor.append(titelIn, titelOk);
   titelRij.append(titelKop, titelEditBtn, titelEditor);
@@ -510,6 +515,7 @@ function schermAfspraak(pollId) {
   naamLabel.htmlFor = 'joinnaam';
   const naamIn = el('input');
   naamIn.type = 'text'; naamIn.id = 'joinnaam'; naamIn.maxLength = 40;
+  naamIn.autocomplete = 'off';
   try { naamIn.value = localStorage.getItem(LS.name) || ''; } catch {}
   const verderBtn = el('button'); verderBtn.type = 'button';
   const naamFout = el('p', 'fout verborgen');
@@ -525,7 +531,7 @@ function schermAfspraak(pollId) {
 
   const chips = el('div', 'chips verborgen');
   const nieuwRij = el('div', 'nieuw verborgen');
-  const nieuwIn = el('input'); nieuwIn.type = 'text'; nieuwIn.maxLength = 40;
+  const nieuwIn = el('input'); nieuwIn.type = 'text'; nieuwIn.maxLength = 40; nieuwIn.autocomplete = 'off';
   const nieuwOk = el('button', 'klein'); nieuwOk.type = 'button';
   nieuwRij.append(nieuwIn, nieuwOk);
 
@@ -864,27 +870,12 @@ function schermAfspraak(pollId) {
     }
   }
 
-  /* --- kalender --- */
-  function bouwKal() {
-    kal.textContent = '';
-    kal.classList.toggle('inactief', !state.me);
+  /* --- kalender: twee maanden tegelijk --- */
+  function maandBlok(m, perDag, vandaag) {
     const d = state.data;
-    const perDag = new Map(d.options.map((o) => [o.date, o]));
-    const m = state.kalMaand;
     const locale = LOCALES[state.lang];
-
-    const kop = el('div', 'kalkop');
-    const terug = el('button', null, '‹'); terug.type = 'button';
-    terug.setAttribute('aria-label', t('cal.prev'));
-    const mnd = el('span', 'mnd', new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(m));
-    mnd.id = 'kalmaand';
-    mnd.dataset.maand = m.getFullYear() + '-' + String(m.getMonth() + 1).padStart(2, '0');
-    const verder = el('button', null, '›'); verder.type = 'button';
-    verder.setAttribute('aria-label', t('cal.next'));
-    terug.addEventListener('click', () => { state.kalMaand = new Date(m.getFullYear(), m.getMonth() - 1, 1); bouwKal(); });
-    verder.addEventListener('click', () => { state.kalMaand = new Date(m.getFullYear(), m.getMonth() + 1, 1); bouwKal(); });
-    kop.append(terug, mnd, verder);
-    kal.append(kop);
+    const blok = el('div', 'maandblok');
+    blok.append(el('div', 'maandnaam', new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(m)));
 
     const grid = el('div', 'kalgrid');
     const maandag = new Date(2024, 0, 1); // een maandag
@@ -895,7 +886,6 @@ function schermAfspraak(pollId) {
     const eerste = new Date(m.getFullYear(), m.getMonth(), 1);
     const start = (eerste.getDay() + 6) % 7; // ma=0
     const dagen = new Date(m.getFullYear(), m.getMonth() + 1, 0).getDate();
-    const vandaag = isoDag(new Date());
     for (let i = 0; i < start; i++) grid.append(el('div', 'dag leeg'));
     for (let dag = 1; dag <= dagen; dag++) {
       const datum = m.getFullYear() + '-' + String(m.getMonth() + 1).padStart(2, '0') + '-' + String(dag).padStart(2, '0');
@@ -934,7 +924,41 @@ function schermAfspraak(pollId) {
       b.addEventListener('click', () => klikDag(datum));
       grid.append(b);
     }
-    kal.append(grid);
+    blok.append(grid);
+    return blok;
+  }
+
+  function bouwKal() {
+    kal.textContent = '';
+    kal.classList.toggle('inactief', !state.me);
+    const d = state.data;
+    const perDag = new Map(d.options.map((o) => [o.date, o]));
+    const locale = LOCALES[state.lang];
+    const m0 = state.kalMaand;
+    const m1 = new Date(m0.getFullYear(), m0.getMonth() + 1, 1);
+    const vandaag = isoDag(new Date());
+
+    const kop = el('div', 'kalkop');
+    const terug = el('button', null, '‹'); terug.type = 'button';
+    terug.setAttribute('aria-label', t('cal.prev'));
+    // in de kop de reeks (bv. "oktober – november 2026"); id/data voor navigatie
+    const mnd = el('span', 'mnd');
+    mnd.id = 'kalmaand';
+    mnd.dataset.maand = m0.getFullYear() + '-' + String(m0.getMonth() + 1).padStart(2, '0');
+    const naam0 = new Intl.DateTimeFormat(locale, { month: 'long' }).format(m0);
+    const jaar1 = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(m1);
+    mnd.textContent = (m0.getFullYear() === m1.getFullYear())
+      ? naam0 + ' – ' + jaar1
+      : new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(m0) + ' – ' + jaar1;
+    const verder = el('button', null, '›'); verder.type = 'button';
+    verder.setAttribute('aria-label', t('cal.next'));
+    terug.addEventListener('click', () => { state.kalMaand = new Date(m0.getFullYear(), m0.getMonth() - 1, 1); bouwKal(); });
+    verder.addEventListener('click', () => { state.kalMaand = new Date(m0.getFullYear(), m0.getMonth() + 1, 1); bouwKal(); });
+    kop.append(terug, mnd, verder);
+
+    const maanden = el('div', 'maanden');
+    maanden.append(maandBlok(m0, perDag, vandaag), maandBlok(m1, perDag, vandaag));
+    kal.append(kop, maanden);
   }
 
   function bouwTapLijn() {
