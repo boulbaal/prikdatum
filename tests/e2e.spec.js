@@ -196,6 +196,14 @@ test.describe('API', () => {
     expect((await res.json()).error).toBe('title_required');
   });
 
+  test('A19 /api/version geeft een versie terug', async ({ request }) => {
+    const res = await request.get('/api/version');
+    expect(res.status()).toBe(200);
+    const d = await res.json();
+    expect(typeof d.version).toBe('string');
+    expect(d.version.length).toBeGreaterThan(0);
+  });
+
   test('A18 bezoekteller telt op', async ({ request }) => {
     const { id } = await apiMaakPoll(request, { title: 'Etentje', name: 'Ali' });
     let poll = await (await request.get('/api/polls/' + id)).json();
@@ -457,6 +465,37 @@ test.describe("Scenario's", () => {
     await expect(page.locator('.status .balk')).toHaveClass(/groen/, { timeout: 13_000 });
     await expect(page.locator('.status .groot')).toHaveText(/Iedereen kan op vr 9 okt/);
     await expect(page.locator('.status .sub')).toHaveText('3 van 3 kunnen');
+    await ctx.close();
+  });
+
+  test('S13 update-melding verschijnt bij een nieuwere serverversie', async ({ browser }, testInfo) => {
+    const ctx = await browser.newContext(ctxOpties(testInfo));
+    const page = await ctx.newPage();
+    await page.route('**/api/version', (route) => route.fulfill({
+      status: 200, contentType: 'application/json', body: JSON.stringify({ version: 'nieuw-999' }),
+    }));
+    await page.goto('/');
+    await expect(page.locator('#updateBar')).toBeVisible();
+    await expect(page.locator('#updateBtn')).toHaveText('Updaten');
+    await expect(page.locator('#updateTekst')).toHaveText('Er is een nieuwe versie van Whenly.');
+    await ctx.close();
+  });
+
+  test('S14 tagline, legenda en voorbije dagen', async ({ browser, request }, testInfo) => {
+    const ctx = await browser.newContext(ctxOpties(testInfo));
+    const page = await ctx.newPage();
+    await page.goto('/');
+    await expect(page.locator('.tagline')).toContainText('Prik samen een datum');
+    const { id } = await apiMaakPoll(request, { title: 'Etentje', name: 'Ali', options: [{ date: D1, time: null }] });
+    await page.goto('/p/' + id);
+    await expect(page.locator('.legenda')).toContainText('jij kan');
+    await expect(page.locator('.legenda')).toContainText('iemand anders kan');
+    // de kalender opent op de huidige maand; een dag vroeg in die maand ligt in het verleden
+    const eersteVanDeMaand = new Date().toISOString().slice(0, 8) + '01';
+    const vandaag = new Date().toISOString().slice(0, 10);
+    if (eersteVanDeMaand !== vandaag) {
+      await expect(dag(page, eersteVanDeMaand)).toHaveClass(/verleden/);
+    }
     await ctx.close();
   });
 

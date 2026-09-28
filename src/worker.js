@@ -7,7 +7,13 @@ const HEADERS = {
   'Cache-Control': 'no-store',
 };
 
+// Wordt bij het deployen vervangen door het korte git-commitnummer.
+const RAW_VERSION = '__VERSION__';
+const APP_VERSION = RAW_VERSION.startsWith('__') ? 'dev' : RAW_VERSION;
+
 const MAX_BODY = 20 * 1024; // 20 KB
+const MAX_PARTICIPANTS = 100; // zachte grens tegen misbruik
+const MAX_OPTIONS = 100;      // max aantal dagen per afspraak
 const ID_ALPHABET = 'abcdefghijklmnopqrstuvwxyz0123456789';
 
 function json(data, status = 200) {
@@ -185,6 +191,10 @@ async function joinPoll(env, pollId, body) {
     'SELECT id, name FROM participants WHERE poll_id = ? AND name_key = ?'
   ).bind(pollId, key).first();
   if (existing) return json({ participantId: existing.id, name: existing.name });
+  const aantal = await env.DB.prepare(
+    'SELECT COUNT(*) AS c FROM participants WHERE poll_id = ?'
+  ).bind(pollId).first();
+  if (aantal && aantal.c >= MAX_PARTICIPANTS) return fail('limit_reached');
   const id = newId();
   try {
     await env.DB.prepare(
@@ -243,6 +253,10 @@ async function addOption(env, pollId, body) {
     'SELECT id FROM options WHERE poll_id = ? AND date = ?'
   ).bind(pollId, body.date).first();
   if (existing) return fail('duplicate_option');
+  const aantal = await env.DB.prepare(
+    'SELECT COUNT(*) AS c FROM options WHERE poll_id = ?'
+  ).bind(pollId).first();
+  if (aantal && aantal.c >= MAX_OPTIONS) return fail('limit_reached');
   const optionId = newId();
   try {
     await env.DB.batch([
@@ -344,6 +358,11 @@ export default {
     // ['api', 'polls', <id>, <sub>, <subid>, ...]
     const p = url.pathname.split('/').filter(Boolean);
     const method = request.method;
+
+    // GET /api/version — huidige serverversie (voor de update-check in de app)
+    if (p[0] === 'api' && p[1] === 'version' && p.length === 2 && method === 'GET') {
+      return json({ version: APP_VERSION });
+    }
 
     if (p[0] !== 'api' || p[1] !== 'polls') return fail('not_found', 404);
 

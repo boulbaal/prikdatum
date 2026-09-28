@@ -2,8 +2,27 @@
 <html lang="nl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Whenly</title>
+<meta name="description" content="Prik samen een datum met vrienden. Zonder account, zonder gedoe.">
+<meta name="theme-color" content="#2F8F5B">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Whenly">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Whenly">
+<meta property="og:title" content="Whenly — prik samen een datum">
+<meta property="og:description" content="Zonder account, zonder gedoe. Klik de dagen aan die lukken en deel de link.">
+<meta property="og:image" content="https://whenly.vanali.workers.dev/og.png">
+<meta property="og:url" content="https://whenly.vanali.workers.dev/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Whenly — prik samen een datum">
+<meta name="twitter:description" content="Zonder account, zonder gedoe. Klik de dagen aan die lukken en deel de link.">
+<meta name="twitter:image" content="https://whenly.vanali.workers.dev/og.png">
 <style>
   :root {
     --tekst: #1F2933;
@@ -249,15 +268,79 @@
     color: var(--gedempt);
   }
   .verborgen { display: none !important; }
+
+  /* boodschapsbalken (update / installeren) bovenaan */
+  .melding {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin: 0 0 12px;
+    font-size: 15px;
+  }
+  .melding .tekst { flex: 1 1 auto; min-width: 140px; }
+  .melding.update { background: var(--lichtoranje); color: var(--oranje); }
+  .melding.install { background: var(--lichtgroen); color: var(--tekst); }
+  .melding button.klein { flex: 0 0 auto; }
+  .melding .sluit {
+    background: none; color: inherit; opacity: .6;
+    font-size: 18px; padding: 0 6px; min-height: 44px; width: 36px; font-weight: 400;
+  }
+
+  /* tagline op de startpagina */
+  .tagline { color: var(--gedempt); font-size: 15px; margin: 0 0 4px; }
+
+  /* legenda onder de kalender */
+  .legenda { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--gedempt); margin: 8px 0 0; }
+  .legenda span { display: inline-flex; align-items: center; gap: 6px; }
+  .legenda .vk { color: var(--groen); font-weight: 700; }
+  .legenda .dt { width: 8px; height: 8px; border-radius: 50%; background: var(--gedempt); display: inline-block; }
+
+  /* voorbije dagen gedimd (nog klikbaar, we blokkeren niets) */
+  .dag.verleden span:first-child { color: var(--gedempt); }
+  .dag.verleden { border-style: dashed; }
+  .dag.verleden.mijn, .dag.verleden.optie { border-style: solid; }
+
+  /* doneren */
+  .doneer { margin-top: 22px; }
+  .doneer-knop {
+    background: none; border: 1px solid var(--lijn); color: var(--groen);
+    border-radius: 22px; padding: 8px 18px; min-height: 44px; font-size: 14px;
+  }
+  .doneer-paneel { margin-top: 12px; border: 1px solid var(--lijn); border-radius: 10px; padding: 14px; max-width: 360px; }
+  .doneer-intro { font-size: 14px; color: var(--tekst); margin: 0 0 10px; }
+  .doneer-rij { display: flex; flex-wrap: wrap; gap: 8px; }
+  .doneer-bedrag {
+    background: var(--lichtgroen); border: 1px solid var(--groen); color: var(--groen);
+    border-radius: 8px; padding: 10px 16px; min-height: 44px; font-weight: 600;
+    text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+  }
+  .doneer-joke { font-size: 13px; color: var(--gedempt); margin: 12px 0 6px; }
+  .doneer-vrij { display: inline-block; margin-top: 10px; color: var(--groen); text-decoration: underline; font-size: 14px; }
 </style>
 </head>
 <body>
 <div class="col">
+  <div class="melding update verborgen" id="updateBar">
+    <span class="tekst" id="updateTekst"></span>
+    <button class="klein" id="updateBtn" type="button"></button>
+  </div>
+  <div class="melding install verborgen" id="installBar">
+    <span class="tekst" id="installTekst"></span>
+    <button class="klein" id="installBtn" type="button"></button>
+    <button class="sluit" id="installSluit" type="button" aria-label="sluiten">×</button>
+  </div>
   <div class="kop">
     <button id="vlag" type="button"></button>
     <div id="talen" class="verborgen"></div>
   </div>
   <div id="scherm"></div>
+  <div id="doneer" class="doneer verborgen">
+    <button id="doneerBtn" class="doneer-knop" type="button"></button>
+    <div id="doneerPaneel" class="doneer-paneel verborgen"></div>
+  </div>
   <p class="voet" id="voet"></p>
 </div>
 <script>
@@ -266,6 +349,7 @@
 /* ---------- vertalingen: alle tekst staat hier en nergens anders ---------- */
 const STRINGS = {
   'make.title':        { nl: 'Wanneer spreken we af?', en: 'When shall we meet?', fr: 'Quand se voit-on ?' },
+  'make.tagline':      { nl: 'Prik samen een datum. Zonder account, zonder gedoe.', en: 'Pick a date together. No account, no fuss.', fr: 'Trouvez une date ensemble. Sans compte, sans tracas.' },
   'make.what':         { nl: 'Waarover gaat het?', en: 'What is it about?', fr: "De quoi s'agit-il ?" },
   'make.what.ph':      { nl: 'bv. Etentje, padel, weekend aan zee', en: 'e.g. Dinner, padel, weekend at the coast', fr: 'p.ex. Dîner, padel, week-end à la mer' },
   'make.name':         { nl: 'Je naam', en: 'Your name', fr: 'Ton prénom' },
@@ -274,6 +358,14 @@ const STRINGS = {
   'share.ready':       { nl: 'Klaar. Deel deze link:', en: 'Done. Share this link:', fr: "C'est prêt. Partage ce lien :" },
   'share.copy':        { nl: 'Kopieer', en: 'Copy', fr: 'Copier' },
   'share.copied':      { nl: 'Gekopieerd', en: 'Copied', fr: 'Copié' },
+  'share.button':      { nl: 'Deel', en: 'Share', fr: 'Partager' },
+  'legend.you':        { nl: 'jij kan', en: 'you can', fr: 'toi' },
+  'legend.other':      { nl: 'iemand anders kan', en: 'someone else can', fr: "quelqu'un d'autre" },
+  'update.text':       { nl: 'Er is een nieuwe versie van Whenly.', en: 'A new version of Whenly is available.', fr: 'Une nouvelle version de Whenly est disponible.' },
+  'update.button':     { nl: 'Updaten', en: 'Update', fr: 'Mettre à jour' },
+  'install.text':      { nl: 'Zet Whenly op je beginscherm, als een app.', en: 'Add Whenly to your home screen, like an app.', fr: "Ajoute Whenly à ton écran d'accueil, comme une appli." },
+  'install.button':    { nl: 'Installeren', en: 'Install', fr: 'Installer' },
+  'install.ios':       { nl: 'Tik op  ⬆  (Deel) en dan “Zet op beginscherm”.', en: 'Tap  ⬆  (Share), then “Add to Home Screen”.', fr: 'Touche  ⬆  (Partager), puis « Sur l’écran d’accueil ».' },
   'title.edit':        { nl: 'titel aanpassen', en: 'edit title', fr: 'modifier le titre' },
   'title.save':        { nl: 'Bewaar', en: 'Save', fr: 'Enregistrer' },
   'poll.nameFirst':    { nl: 'Vul eerst je naam in om aan te klikken.', en: 'Enter your name first to start ticking.', fr: "Indique d'abord ton prénom pour cocher." },
@@ -310,6 +402,7 @@ const STRINGS = {
   'err.title_required': { nl: 'Vul in waarover het gaat.', en: "Say what it's about.", fr: "Indique de quoi il s'agit." },
   'err.name_required': { nl: 'Vul je naam in.', en: 'Enter your name.', fr: 'Indique ton prénom.' },
   'err.invalid_date':  { nl: 'Kies minstens één datum.', en: 'Pick at least one date.', fr: 'Choisis au moins une date.' },
+  'err.limit_reached': { nl: 'Deze afspraak zit vol.', en: 'This poll is full.', fr: 'Ce rendez-vous est complet.' },
   'err.generic':       { nl: 'Er ging iets mis. Probeer opnieuw.', en: 'Something went wrong. Try again.', fr: 'Quelque chose a raté. Réessaie.' },
   'notfound.title':    { nl: 'Deze afspraak bestaat niet', en: "This poll doesn't exist", fr: "Ce rendez-vous n'existe pas" },
   'notfound.text':     { nl: 'Controleer de link, of maak een nieuwe.', en: 'Check the link, or create a new one.', fr: 'Vérifie le lien, ou crées-en un nouveau.' },
@@ -318,11 +411,18 @@ const STRINGS = {
   'lang.nl':           { nl: 'Nederlands', en: 'Nederlands', fr: 'Nederlands' },
   'lang.en':           { nl: 'English', en: 'English', fr: 'English' },
   'lang.fr':           { nl: 'Français', en: 'Français', fr: 'Français' },
+  'donate.button':     { nl: 'Doneer', en: 'Donate', fr: 'Faire un don' },
+  'donate.intro':      { nl: 'Whenly is en blijft gratis. Vind je het handig? Trakteer me gerust:', en: "Whenly is free and stays free. Handy? Feel free to treat me:", fr: 'Whenly est et reste gratuit. Ça te sert ? Offre-moi un petit quelque chose :' },
+  'donate.joke':       { nl: 'Echt groot fan? Dan mag het gek 😄', en: 'Really a big fan? Then go wild 😄', fr: 'Vraiment fan ? Alors lâche-toi 😄' },
+  'donate.free':       { nl: 'Liever zelf een bedrag kiezen', en: 'Rather choose your own amount', fr: 'Plutôt choisir ton montant' },
+  'donate.thanks':     { nl: 'Merci! 🙏', en: 'Thanks! 🙏', fr: 'Merci ! 🙏' },
 };
 const BRAND = 'Whenly';
 // Wordt bij het deployen vervangen door het korte git-commitnummer.
 const VERSION = '__VERSION__';
 const VERSIE = VERSION.startsWith('__') ? 'dev' : VERSION;
+// PayPal.me-gebruikersnaam voor de donatieknop. Leeg/placeholder = knop verborgen.
+const PAYPAL = 'PAYPAL_HANDLE';
 const LOCALES = { nl: 'nl-BE', en: 'en-GB', fr: 'fr-BE' };
 const FLAGS = { nl: '\u{1F1E7}\u{1F1EA}', en: '\u{1F1EC}\u{1F1E7}', fr: '\u{1F1EB}\u{1F1F7}' };
 // Eén vaste kleur per persoon (volgorde van binnenkomst), goed leesbaar op wit.
@@ -423,6 +523,7 @@ function bouwTalen() {
       vlagBtn.textContent = FLAGS[state.lang];
       bouwTalen();
       document.getElementById('voet').textContent = t('footer') + ' \u00B7 v' + VERSIE;
+      doneerHertaal();
       hertaal();
     });
     talenMenu.appendChild(b);
@@ -434,6 +535,44 @@ document.documentElement.lang = state.lang;
 bouwTalen();
 document.getElementById('voet').textContent = t('footer') + ' \u00B7 v' + VERSIE;
 
+/* ---------- doneren (PayPal.me) ---------- */
+let doneerHertaal = () => {};
+(function doneren() {
+  const doos = document.getElementById('doneer');
+  const btn = document.getElementById('doneerBtn');
+  const paneel = document.getElementById('doneerPaneel');
+  const actief = PAYPAL && !PAYPAL.startsWith('PAYPAL_');
+  doos.classList.toggle('verborgen', !actief);
+  if (!actief) return;
+
+  const link = (bedrag) => bedrag
+    ? 'https://www.paypal.com/paypalme/' + PAYPAL + '/' + bedrag + 'EUR'
+    : 'https://www.paypal.com/paypalme/' + PAYPAL;
+  const knop = (bedrag) => {
+    const a = el('a', 'doneer-bedrag', '\u20AC' + bedrag);
+    a.href = link(bedrag); a.target = '_blank'; a.rel = 'noopener';
+    return a;
+  };
+  function vul() {
+    btn.textContent = t('donate.button');
+    paneel.textContent = '';
+    paneel.append(el('p', 'doneer-intro', t('donate.intro')));
+    const rij1 = el('div', 'doneer-rij');
+    [1, 2, 5].forEach((b) => rij1.append(knop(b)));
+    paneel.append(rij1);
+    paneel.append(el('p', 'doneer-joke', t('donate.joke')));
+    const rij2 = el('div', 'doneer-rij');
+    [20, 50].forEach((b) => rij2.append(knop(b)));
+    paneel.append(rij2);
+    const vrij = el('a', 'doneer-vrij', t('donate.free'));
+    vrij.href = link(null); vrij.target = '_blank'; vrij.rel = 'noopener';
+    paneel.append(vrij);
+  }
+  btn.addEventListener('click', () => paneel.classList.toggle('verborgen'));
+  vul();
+  doneerHertaal = vul;
+})();
+
 const scherm = document.getElementById('scherm');
 
 /* ================================================================
@@ -443,6 +582,7 @@ function schermMaken() {
   scherm.textContent = '';
 
   const titelKop = el('h1');
+  const tagline = el('p', 'tagline');
   const watLabel = el('label', 'label');
   watLabel.htmlFor = 'titel';
   const titelIn = el('input');
@@ -489,6 +629,7 @@ function schermMaken() {
   hertaal = () => {
     document.title = t('make.title');
     titelKop.textContent = t('make.title');
+    tagline.textContent = t('make.tagline');
     watLabel.textContent = t('make.what');
     titelIn.placeholder = t('make.what.ph');
     naamLabel.textContent = t('make.name');
@@ -496,7 +637,7 @@ function schermMaken() {
     maakBtn.textContent = t('make.submit');
   };
 
-  scherm.append(titelKop, watLabel, titelIn, naamLabel, naamIn, el('div'), maakBtn, foutRegel);
+  scherm.append(titelKop, tagline, watLabel, titelIn, naamLabel, naamIn, el('div'), maakBtn, foutRegel);
   hertaal();
   checkKnop();
   titelIn.focus();
@@ -523,6 +664,8 @@ function schermAfspraak(pollId) {
 
   const titelRij = el('div', 'titelrij');
   const titelKop = el('h1');
+  const deelKnop = el('button', 'sec klein'); deelKnop.type = 'button';
+  deelKnop.style.cssText = 'margin:0 0 4px; padding:6px 0;';
   const titelEditBtn = el('button', 'sec'); titelEditBtn.type = 'button';
   const titelEditor = el('div', 'titeleditor verborgen');
   const titelIn = el('input'); titelIn.type = 'text'; titelIn.maxLength = 80; titelIn.autocomplete = 'off';
@@ -560,6 +703,7 @@ function schermAfspraak(pollId) {
 
   const kalHint = el('p', 'kopje'); kalHint.id = 'kalhint';
   const kal = el('div', 'kal');
+  const legenda = el('div', 'legenda');
   const tapLijn = el('p', 'taplijn');
   const lijstFout = el('p', 'fout verborgen');
 
@@ -573,7 +717,7 @@ function schermAfspraak(pollId) {
 
   const bezoek = el('p', 'bezoek verborgen');
 
-  scherm.append(deel, titelRij, statusBlok, naamZone, wieBar, chipsLabel, chips, nieuwRij, kalHint, kal, tapLijn, lijstFout, wegZone, bezoek);
+  scherm.append(deel, titelRij, deelKnop, statusBlok, naamZone, wieBar, chipsLabel, chips, nieuwRij, kalHint, kal, legenda, tapLijn, lijstFout, wegZone, bezoek);
 
   const nu = new Date();
   state.kalMaand = new Date(nu.getFullYear(), nu.getMonth(), 1);
@@ -604,6 +748,22 @@ function schermAfspraak(pollId) {
       sel.removeAllRanges();
       sel.addRange(range);
     }
+  });
+
+  // blijvende deelknop: native deel-venster op telefoon, anders link kopiëren
+  let deelTimer = null;
+  deelKnop.addEventListener('click', async () => {
+    const url = location.origin + '/p/' + pollId;
+    const titel = (state.data && state.data.title) || 'Whenly';
+    if (navigator.share) {
+      try { await navigator.share({ title: titel, url }); return; } catch { /* geannuleerd */ }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      deelKnop.textContent = t('share.copied');
+      clearTimeout(deelTimer);
+      deelTimer = setTimeout(() => { deelKnop.textContent = t('share.button'); }, 2000);
+    } catch { /* stil */ }
   });
 
   /* --- titel aanpassen (iedereen mag) --- */
@@ -922,6 +1082,7 @@ function schermAfspraak(pollId) {
       const opt = perDag.get(datum);
       const mijn = !!(opt && state.me && opt.votes.includes(state.me));
       const b = el('button', 'dag'); b.type = 'button';
+      if (datum < vandaag) b.classList.add('verleden');
       if (datum === vandaag) b.classList.add('vandaag');
       if (opt) b.classList.add('optie');
       if (mijn) b.classList.add('mijn');
@@ -1058,6 +1219,13 @@ function schermAfspraak(pollId) {
     nieuwIn.placeholder = t('cal.newName.ph');
     nieuwOk.textContent = t('poll.next');
 
+    deelKnop.textContent = t('share.button');
+    // legenda onder de kalender
+    legenda.textContent = '';
+    const lg1 = el('span'); lg1.append(el('span', 'vk', '✓'), el('span', null, t('legend.you')));
+    const lg2 = el('span'); lg2.append(el('span', 'dt'), el('span', null, t('legend.other')));
+    legenda.append(lg1, lg2);
+
     kalHint.textContent = state.me ? t('cal.hint') : t('poll.nameFirst');
     const wegNaam = ik ? ik.name : '';
     wegBtn.textContent = t('poll.leave', { name: wegNaam });
@@ -1145,6 +1313,89 @@ if (pad.startsWith('/p/') && pad.length > 3) {
 } else {
   schermMaken();
 }
+
+/* ---------- PWA: service worker, installeren, update-check ---------- */
+(function pwa() {
+  const isLocal = ['localhost', '127.0.0.1', '[::1]'].includes(location.hostname);
+
+  // service worker enkel in productie (houdt dev en tests schoon)
+  if ('serviceWorker' in navigator && !isLocal) {
+    window.addEventListener('load', () => { navigator.serviceWorker.register('/sw.js').catch(() => {}); });
+  }
+
+  // --- update-check: vergelijk de draaiende versie met de server ---
+  const updateBar = document.getElementById('updateBar');
+  const updateTekst = document.getElementById('updateTekst');
+  const updateBtn = document.getElementById('updateBtn');
+  function toonUpdate() {
+    updateTekst.textContent = t('update.text');
+    updateBtn.textContent = t('update.button');
+    updateBar.classList.remove('verborgen');
+  }
+  async function checkUpdate() {
+    try {
+      const res = await fetch('/api/version', { cache: 'no-store' });
+      if (!res.ok) return;
+      const d = await res.json();
+      if (d && d.version && d.version !== VERSIE) toonUpdate();
+    } catch {}
+  }
+  updateBtn.addEventListener('click', async () => {
+    updateBtn.disabled = true;
+    try {
+      if ('serviceWorker' in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map((r) => r.unregister()));
+      }
+      if (window.caches) {
+        const keys = await caches.keys();
+        await Promise.all(keys.map((k) => caches.delete(k)));
+      }
+    } catch {}
+    location.reload();
+  });
+  checkUpdate();
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') checkUpdate();
+  });
+
+  // --- installeren als app ---
+  const installBar = document.getElementById('installBar');
+  const installTekst = document.getElementById('installTekst');
+  const installBtn = document.getElementById('installBtn');
+  const installSluit = document.getElementById('installSluit');
+  const alGesloten = () => { try { return localStorage.getItem('whenly.install.dismiss') === '1'; } catch { return false; } };
+  const staat = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || navigator.standalone === true;
+  let deferred = null;
+  installSluit.addEventListener('click', () => {
+    installBar.classList.add('verborgen');
+    try { localStorage.setItem('whenly.install.dismiss', '1'); } catch {}
+  });
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferred = e;
+    if (staat || alGesloten()) return;
+    installTekst.textContent = t('install.text');
+    installBtn.textContent = t('install.button');
+    installBtn.classList.remove('verborgen');
+    installBar.classList.remove('verborgen');
+  });
+  installBtn.addEventListener('click', async () => {
+    if (!deferred) return;
+    deferred.prompt();
+    try { await deferred.userChoice; } catch {}
+    deferred = null;
+    installBar.classList.add('verborgen');
+  });
+  // iOS Safari kent geen beforeinstallprompt -> korte hint tonen
+  const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const isSafari = /^((?!chrome|crios|fxios|android).)*safari/i.test(navigator.userAgent);
+  if (isIOS && isSafari && !staat && !alGesloten()) {
+    installTekst.textContent = t('install.ios');
+    installBtn.classList.add('verborgen');
+    installBar.classList.remove('verborgen');
+  }
+})();
 </script>
 </body>
 </html>
