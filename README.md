@@ -1,5 +1,7 @@
 # Prikdatum
 
+**Probeer het live: [prikdatum.vanali.workers.dev](https://prikdatum.vanali.workers.dev)**
+
 **Een datum prikken met vrienden, zonder gedoe.** Typ waarover het gaat, kies een paar datums, deel de link. Wie de link opent, typt zijn naam en vinkt aan welke datums lukken. Zodra er een datum uitspringt, staat er bovenaan in het groen: *"We hebben een datum!"*
 
 Geen accounts. Geen wachtwoorden. Geen beheerder. Geen opslaan-knop. Iedereen met de link kan precies hetzelfde.
