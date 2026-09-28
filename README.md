@@ -1,6 +1,6 @@
-# Prikdatum
+# Whenly
 
-**Probeer het live: [prikdatum.vanali.workers.dev](https://prikdatum.vanali.workers.dev)**
+**Probeer het live: [whenly.vanali.workers.dev](https://whenly.vanali.workers.dev)**
 
 **Een datum prikken met vrienden, zonder gedoe.** Typ waarover het gaat en je naam, en je staat op de afsprakenpagina met een open kalender. Dagen die lukken klik je gewoon aan. Deel de link; wie hem opent geeft eerst zijn naam en klikt dan mee. Zodra er een datum uitspringt, staat er bovenaan in het groen: *"We hebben een datum!"*
 
@@ -8,7 +8,7 @@ Geen accounts. Geen wachtwoorden. Geen beheerder. Geen opslaan-knop. Iedereen me
 
 *(EN: a zero-friction date picker for groups of friends. No accounts, no admin, just a link. Interface in Dutch, English and French.)*
 
-![Prikdatum](docs/screenshot.png)
+![Whenly](docs/screenshot.png)
 
 ## Waarom dit fijn werkt
 
@@ -41,7 +41,7 @@ npm test
 
 ---
 
-# Prikdatum online zetten (eenmalig, ±10 minuten, gratis)
+# Whenly online zetten (eenmalig, ±10 minuten, gratis)
 
 Nodig: een computer met Node 18+ en een gratis Cloudflare-account (cloudflare.com → Sign up).
 
@@ -68,13 +68,13 @@ Nodig: een computer met Node 18+ en een gratis Cloudflare-account (cloudflare.co
 
        npm run deploy
 
-   Onderaan staat je adres: `https://prikdatum.<jouw-naam>.workers.dev`
+   Onderaan staat je adres: `https://whenly.<jouw-naam>.workers.dev`
 
 Klaar. Deel dat adres. Iedereen die het opent kan een afspraak maken.
 
 Later iets aanpassen? Wijzig de bestanden en doe opnieuw `npm run deploy`.
 
-Eigen domein? In het Cloudflare-dashboard: Workers & Pages → prikdatum → Settings → Domains & Routes.
+Eigen domein? In het Cloudflare-dashboard: Workers & Pages → whenly → Settings → Domains & Routes.
 
 ## Licentie
 
