@@ -122,7 +122,8 @@
   @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
 
   /* vlaggetje */
-  .kop { display: flex; align-items: flex-start; position: relative; min-height: 44px; }
+  .kop { display: flex; align-items: center; position: relative; min-height: 44px; }
+  #nieuw { margin-inline-start: auto; color: var(--groen); font-weight: 600; text-decoration: none; padding: 10px 0; min-height: 44px; display: inline-flex; align-items: center; gap: 4px; }
   #vlag {
     display: inline-flex;
     align-items: center;
@@ -178,7 +179,10 @@
     margin: 16px 0 0;
     font-size: 15px;
   }
-  .deel .url { user-select: all; word-break: break-all; display: block; margin: 4px 0 8px; }
+  .deel .url { user-select: all; word-break: break-all; display: block; margin: 4px 0 10px; }
+  .deel .knoppen { display: flex; gap: 10px; flex-wrap: wrap; }
+  .deel .knoppen button { display: inline-flex; align-items: center; gap: 8px; }
+  .deel .knoppen button.delen { background: #fff; color: var(--groen); border: 1px solid var(--groen); }
 
   /* titel aanpassen */
   .titelrij button.sec { font-size: 13px; color: var(--gedempt); padding: 4px 0; min-height: 44px; text-decoration: underline; font-weight: 400; }
@@ -232,6 +236,7 @@
   .chip { max-width: 100%; }
   .chip bdi { overflow-wrap: anywhere; }
   .chip.ik { border-color: var(--groen); background: var(--lichtgroen); font-weight: 600; }
+  .chip.toevoegen { border-style: dashed; color: var(--groen); font-weight: 600; }
   .nieuw { display: flex; gap: 8px; margin-top: 8px; }
 
   /* kalender */
@@ -290,7 +295,7 @@
   .weg.alles { margin-top: 8px; }
 
   .bezoek {
-    margin-top: 28px;
+    margin-top: 10px;
     font-size: 13px;
     color: var(--gedempt);
   }
@@ -358,18 +363,22 @@
 
   /* voorbije dagen gedimd (nog klikbaar, we blokkeren niets) */
   .dag.verleden span:first-child { color: var(--gedempt); }
-  .dag.verleden { border-style: dashed; }
+  .dag.verleden { border-style: dashed; cursor: default; }
   .dag.verleden.mijn, .dag.verleden.optie { border-style: solid; }
+  .dag.verleden:disabled { background: #fff; color: var(--tekst); opacity: .55; }
+  .dag.verleden.mijn:disabled { background: var(--lichtgroen); }
 
   /* doneren — licht en vrolijk */
   .doneer { margin-top: 22px; }
   .doneer-knop {
-    background: none; border: 1px solid var(--groen); color: var(--groen);
-    border-radius: 22px; padding: 8px 20px; min-height: 44px; font-size: 15px; font-weight: 600;
+    display: block; width: 100%;
+    background: var(--lichtgroen); border: none; color: var(--groen);
+    border-radius: 12px; padding: 14px 20px; min-height: 48px; font-size: 16px; font-weight: 600;
   }
+  .doneer-knop:hover { filter: brightness(0.97); }
   .doneer-paneel {
     margin-top: 12px; background: var(--lichtgroen); border: none;
-    border-radius: 16px; padding: 18px; max-width: 400px;
+    border-radius: 16px; padding: 18px;
     animation: fade .18s ease-out;
   }
   .doneer-intro { font-size: 15px; color: var(--tekst); margin: 0 0 14px; line-height: 1.45; }
@@ -401,12 +410,14 @@
   <div class="kop">
     <button id="vlag" type="button"></button>
     <div id="talen" class="verborgen"></div>
+    <a id="nieuw" class="verborgen" href="/"></a>
   </div>
   <div id="scherm"></div>
   <div id="doneer" class="doneer verborgen">
     <button id="doneerBtn" class="doneer-knop" type="button"></button>
     <div id="doneerPaneel" class="doneer-paneel verborgen"></div>
   </div>
+  <p class="bezoek verborgen" id="bezoek"></p>
   <p class="voet" id="voet"></p>
 </div>
 <script>
@@ -473,8 +484,6 @@ en: {
   'cal.hint': 'Click the days that work for you',
   'cal.prev': 'Previous month',
   'cal.next': 'Next month',
-  'cal.actAs': 'You are ticking as {name}',
-  'cal.switch': 'fill in for someone else',
   'cal.newName.ph': 'or type a new name',
   'time.label': 'Time (optional, anyone can change it)',
   'poll.nobody': 'nobody yet',
@@ -525,6 +534,13 @@ en: {
   'poll.delete': 'Delete this poll completely',
   'poll.deleteYes': 'Yes, delete it for everyone',
   'poll.deleted': 'The poll has been deleted.',
+  'share.link': 'Share this link:',
+  'members.title': 'Participants',
+  'members.add': 'Add a participant',
+  'members.addBtn': 'Add',
+  'members.actingFor': 'You are filling in for {name}.',
+  'members.backToMe': 'back to me',
+  'err.past_date': 'That day has already passed.',
 },
 nl: {
   'make.title': 'Wanneer spreken we af?',
@@ -554,8 +570,6 @@ nl: {
   'cal.hint': 'Klik de dagen aan die voor jou lukken',
   'cal.prev': 'Vorige maand',
   'cal.next': 'Volgende maand',
-  'cal.actAs': 'Jij klikt aan als {name}',
-  'cal.switch': 'iemand anders invullen',
   'cal.newName.ph': 'of typ een nieuwe naam',
   'time.label': 'Uur (optioneel, iedereen mag dit aanpassen)',
   'poll.nobody': 'nog niemand',
@@ -606,6 +620,13 @@ nl: {
   'poll.delete': 'Afspraak volledig verwijderen',
   'poll.deleteYes': 'Ja, verwijder alles voor iedereen',
   'poll.deleted': 'De afspraak is verwijderd.',
+  'share.link': 'Deel deze link:',
+  'members.title': 'Deelnemers',
+  'members.add': 'Lid toevoegen',
+  'members.addBtn': 'Toevoegen',
+  'members.actingFor': 'Je vult nu in voor {name}.',
+  'members.backToMe': 'terug naar mezelf',
+  'err.past_date': 'Die dag is al voorbij.',
 },
 fr: {
   'make.title': 'Quand se voit-on ?',
@@ -635,8 +656,6 @@ fr: {
   'cal.hint': 'Clique sur les jours qui te conviennent',
   'cal.prev': 'Mois précédent',
   'cal.next': 'Mois suivant',
-  'cal.actAs': 'Tu coches en tant que {name}',
-  'cal.switch': "remplir pour quelqu'un d'autre",
   'cal.newName.ph': 'ou tape un nouveau prénom',
   'time.label': 'Heure (optionnelle, modifiable par tous)',
   'poll.nobody': "personne pour l'instant",
@@ -687,6 +706,13 @@ fr: {
   'poll.delete': 'Supprimer ce rendez-vous complètement',
   'poll.deleteYes': 'Oui, tout supprimer pour tout le monde',
   'poll.deleted': 'Le rendez-vous a été supprimé.',
+  'share.link': 'Partage ce lien :',
+  'members.title': 'Participants',
+  'members.add': 'Ajouter un participant',
+  'members.addBtn': 'Ajouter',
+  'members.actingFor': 'Tu remplis pour {name}.',
+  'members.backToMe': 'revenir à moi',
+  'err.past_date': 'Ce jour est déjà passé.',
 },
 de: {
   'make.title': 'Wann treffen wir uns?',
@@ -716,8 +742,6 @@ de: {
   'cal.hint': 'Klicke die Tage an, die dir passen',
   'cal.prev': 'Vorheriger Monat',
   'cal.next': 'Nächster Monat',
-  'cal.actAs': 'Du wählst als {name}',
-  'cal.switch': 'für jemand anderen eintragen',
   'cal.newName.ph': 'oder gib einen neuen Namen ein',
   'time.label': 'Uhrzeit (optional, jeder darf sie ändern)',
   'poll.nobody': 'noch niemand',
@@ -768,6 +792,13 @@ de: {
   'poll.delete': 'Diese Umfrage vollständig löschen',
   'poll.deleteYes': 'Ja, für alle löschen',
   'poll.deleted': 'Die Umfrage wurde gelöscht.',
+  'share.link': 'Teile diesen Link:',
+  'members.title': 'Teilnehmer',
+  'members.add': 'Teilnehmer hinzufügen',
+  'members.addBtn': 'Hinzufügen',
+  'members.actingFor': 'Du trägst gerade für {name} ein.',
+  'members.backToMe': 'zurück zu mir',
+  'err.past_date': 'Dieser Tag ist schon vorbei.',
 },
 es: {
   'make.title': '¿Cuándo quedamos?',
@@ -797,8 +828,6 @@ es: {
   'cal.hint': 'Marca los días que te vienen bien',
   'cal.prev': 'Mes anterior',
   'cal.next': 'Mes siguiente',
-  'cal.actAs': 'Estás marcando como {name}',
-  'cal.switch': 'rellenar por otra persona',
   'cal.newName.ph': 'o escribe un nombre nuevo',
   'time.label': 'Hora (opcional, cualquiera puede cambiarla)',
   'poll.nobody': 'nadie todavía',
@@ -849,6 +878,13 @@ es: {
   'poll.delete': 'Eliminar esta encuesta por completo',
   'poll.deleteYes': 'Sí, eliminarla para todos',
   'poll.deleted': 'La encuesta se ha eliminado.',
+  'share.link': 'Comparte este enlace:',
+  'members.title': 'Participantes',
+  'members.add': 'Añadir participante',
+  'members.addBtn': 'Añadir',
+  'members.actingFor': 'Estás rellenando por {name}.',
+  'members.backToMe': 'volver a mí',
+  'err.past_date': 'Ese día ya pasó.',
 },
 pt: {
   'make.title': 'Quando nos encontramos?',
@@ -878,8 +914,6 @@ pt: {
   'cal.hint': 'Marca os dias que te dão jeito',
   'cal.prev': 'Mês anterior',
   'cal.next': 'Mês seguinte',
-  'cal.actAs': 'Estás a marcar como {name}',
-  'cal.switch': 'preencher por outra pessoa',
   'cal.newName.ph': 'ou escreve um nome novo',
   'time.label': 'Hora (opcional, qualquer pessoa pode alterar)',
   'poll.nobody': 'ainda ninguém',
@@ -930,6 +964,13 @@ pt: {
   'poll.delete': 'Apagar esta votação por completo',
   'poll.deleteYes': 'Sim, apagar para toda a gente',
   'poll.deleted': 'A votação foi apagada.',
+  'share.link': 'Partilha este link:',
+  'members.title': 'Participantes',
+  'members.add': 'Adicionar participante',
+  'members.addBtn': 'Adicionar',
+  'members.actingFor': 'Estás a preencher por {name}.',
+  'members.backToMe': 'voltar a mim',
+  'err.past_date': 'Esse dia já passou.',
 },
 pl: {
   'make.title': 'Kiedy się spotykamy?',
@@ -959,8 +1000,6 @@ pl: {
   'cal.hint': 'Zaznacz dni, które ci pasują',
   'cal.prev': 'Poprzedni miesiąc',
   'cal.next': 'Następny miesiąc',
-  'cal.actAs': 'Zaznaczasz jako {name}',
-  'cal.switch': 'wypełnij za kogoś innego',
   'cal.newName.ph': 'lub wpisz nowe imię',
   'time.label': 'Godzina (opcjonalnie, każdy może ją zmienić)',
   'poll.nobody': 'jeszcze nikt',
@@ -1011,6 +1050,13 @@ pl: {
   'poll.delete': 'Usuń tę ankietę całkowicie',
   'poll.deleteYes': 'Tak, usuń dla wszystkich',
   'poll.deleted': 'Ankieta została usunięta.',
+  'share.link': 'Udostępnij ten link:',
+  'members.title': 'Uczestnicy',
+  'members.add': 'Dodaj uczestnika',
+  'members.addBtn': 'Dodaj',
+  'members.actingFor': 'Wypełniasz za {name}.',
+  'members.backToMe': 'wróć do siebie',
+  'err.past_date': 'Ten dzień już minął.',
 },
 uk: {
   'make.title': 'Коли зустрічаємось?',
@@ -1040,8 +1086,6 @@ uk: {
   'cal.hint': 'Відмітьте дні, які вам підходять',
   'cal.prev': 'Попередній місяць',
   'cal.next': 'Наступний місяць',
-  'cal.actAs': 'Ви відмічаєте як {name}',
-  'cal.switch': 'заповнити за когось іншого',
   'cal.newName.ph': 'або введіть нове ім’я',
   'time.label': 'Час (необов’язково, будь-хто може змінити)',
   'poll.nobody': 'поки ніхто',
@@ -1092,6 +1136,13 @@ uk: {
   'poll.delete': 'Повністю видалити це опитування',
   'poll.deleteYes': 'Так, видалити для всіх',
   'poll.deleted': 'Опитування видалено.',
+  'share.link': 'Поділіться цим посиланням:',
+  'members.title': 'Учасники',
+  'members.add': 'Додати учасника',
+  'members.addBtn': 'Додати',
+  'members.actingFor': 'Ви заповнюєте за {name}.',
+  'members.backToMe': 'назад до себе',
+  'err.past_date': 'Цей день уже минув.',
 },
 ru: {
   'make.title': 'Когда встречаемся?',
@@ -1121,8 +1172,6 @@ ru: {
   'cal.hint': 'Отметьте дни, которые вам подходят',
   'cal.prev': 'Предыдущий месяц',
   'cal.next': 'Следующий месяц',
-  'cal.actAs': 'Вы отмечаете как {name}',
-  'cal.switch': 'заполнить за другого',
   'cal.newName.ph': 'или введите новое имя',
   'time.label': 'Время (необязательно, любой может изменить)',
   'poll.nobody': 'пока никто',
@@ -1173,6 +1222,13 @@ ru: {
   'poll.delete': 'Полностью удалить этот опрос',
   'poll.deleteYes': 'Да, удалить для всех',
   'poll.deleted': 'Опрос удалён.',
+  'share.link': 'Поделитесь этой ссылкой:',
+  'members.title': 'Участники',
+  'members.add': 'Добавить участника',
+  'members.addBtn': 'Добавить',
+  'members.actingFor': 'Вы заполняете за {name}.',
+  'members.backToMe': 'назад к себе',
+  'err.past_date': 'Этот день уже прошёл.',
 },
 tr: {
   'make.title': 'Ne zaman buluşuyoruz?',
@@ -1202,8 +1258,6 @@ tr: {
   'cal.hint': 'Sana uyan günleri işaretle',
   'cal.prev': 'Önceki ay',
   'cal.next': 'Sonraki ay',
-  'cal.actAs': '{name} olarak işaretliyorsun',
-  'cal.switch': 'başkası için doldur',
   'cal.newName.ph': 'veya yeni bir ad yaz',
   'time.label': 'Saat (isteğe bağlı, herkes değiştirebilir)',
   'poll.nobody': 'henüz kimse yok',
@@ -1254,6 +1308,13 @@ tr: {
   'poll.delete': 'Bu anketi tamamen sil',
   'poll.deleteYes': 'Evet, herkes için sil',
   'poll.deleted': 'Anket silindi.',
+  'share.link': 'Bu bağlantıyı paylaş:',
+  'members.title': 'Katılımcılar',
+  'members.add': 'Katılımcı ekle',
+  'members.addBtn': 'Ekle',
+  'members.actingFor': '{name} için dolduruyorsun.',
+  'members.backToMe': 'kendime dön',
+  'err.past_date': 'O gün geçti bile.',
 },
 ar: {
   'make.title': 'متى نلتقي؟',
@@ -1283,8 +1344,6 @@ ar: {
   'cal.hint': 'حدد الأيام التي تناسبك',
   'cal.prev': 'الشهر السابق',
   'cal.next': 'الشهر التالي',
-  'cal.actAs': 'أنت تحدد باسم {name}',
-  'cal.switch': 'التعبئة نيابة عن شخص آخر',
   'cal.newName.ph': 'أو اكتب اسماً جديداً',
   'time.label': 'الوقت (اختياري، يمكن للجميع تغييره)',
   'poll.nobody': 'لا أحد بعد',
@@ -1335,6 +1394,13 @@ ar: {
   'poll.delete': 'حذف هذا الاستطلاع نهائياً',
   'poll.deleteYes': 'نعم، احذفه للجميع',
   'poll.deleted': 'تم حذف الاستطلاع.',
+  'share.link': 'شارك هذا الرابط:',
+  'members.title': 'المشاركون',
+  'members.add': 'إضافة مشارك',
+  'members.addBtn': 'إضافة',
+  'members.actingFor': 'أنت تملأ نيابة عن {name}.',
+  'members.backToMe': 'العودة إليّ',
+  'err.past_date': 'هذا اليوم قد مضى.',
 },
 ur: {
   'make.title': 'ہم کب ملیں؟',
@@ -1364,8 +1430,6 @@ ur: {
   'cal.hint': 'وہ دن چنیں جو آپ کے لیے ٹھیک ہوں',
   'cal.prev': 'پچھلا مہینہ',
   'cal.next': 'اگلا مہینہ',
-  'cal.actAs': 'آپ {name} کے طور پر چن رہے ہیں',
-  'cal.switch': 'کسی اور کے لیے بھریں',
   'cal.newName.ph': 'یا نیا نام لکھیں',
   'time.label': 'وقت (اختیاری، کوئی بھی بدل سکتا ہے)',
   'poll.nobody': 'ابھی کوئی نہیں',
@@ -1416,6 +1480,13 @@ ur: {
   'poll.delete': 'یہ پول مکمل طور پر حذف کریں',
   'poll.deleteYes': 'ہاں، سب کے لیے حذف کریں',
   'poll.deleted': 'پول حذف کر دیا گیا۔',
+  'share.link': 'یہ لنک شیئر کریں:',
+  'members.title': 'شرکاء',
+  'members.add': 'رکن شامل کریں',
+  'members.addBtn': 'شامل کریں',
+  'members.actingFor': 'آپ {name} کے لیے بھر رہے ہیں۔',
+  'members.backToMe': 'واپس اپنے آپ پر',
+  'err.past_date': 'وہ دن گزر چکا ہے۔',
 },
 hi: {
   'make.title': 'हम कब मिलें?',
@@ -1445,8 +1516,6 @@ hi: {
   'cal.hint': 'वे दिन चुनें जो आपके लिए ठीक हों',
   'cal.prev': 'पिछला महीना',
   'cal.next': 'अगला महीना',
-  'cal.actAs': 'आप {name} के रूप में चुन रहे हैं',
-  'cal.switch': 'किसी और के लिए भरें',
   'cal.newName.ph': 'या नया नाम लिखें',
   'time.label': 'समय (वैकल्पिक, कोई भी बदल सकता है)',
   'poll.nobody': 'अभी कोई नहीं',
@@ -1497,6 +1566,13 @@ hi: {
   'poll.delete': 'यह पोल पूरी तरह हटाएँ',
   'poll.deleteYes': 'हाँ, सबके लिए हटाएँ',
   'poll.deleted': 'पोल हटा दिया गया।',
+  'share.link': 'यह लिंक शेयर करें:',
+  'members.title': 'प्रतिभागी',
+  'members.add': 'सदस्य जोड़ें',
+  'members.addBtn': 'जोड़ें',
+  'members.actingFor': 'आप {name} के लिए भर रहे हैं।',
+  'members.backToMe': 'वापस अपने पर',
+  'err.past_date': 'वह दिन बीत चुका है।',
 },
 bn: {
   'make.title': 'আমরা কবে দেখা করব?',
@@ -1526,8 +1602,6 @@ bn: {
   'cal.hint': 'যে দিনগুলো আপনার জন্য ঠিক সেগুলো বেছে নিন',
   'cal.prev': 'আগের মাস',
   'cal.next': 'পরের মাস',
-  'cal.actAs': 'আপনি {name} হিসেবে বাছছেন',
-  'cal.switch': 'অন্য কারো হয়ে পূরণ করুন',
   'cal.newName.ph': 'অথবা নতুন নাম লিখুন',
   'time.label': 'সময় (ঐচ্ছিক, যে কেউ বদলাতে পারে)',
   'poll.nobody': 'এখনো কেউ নয়',
@@ -1578,6 +1652,13 @@ bn: {
   'poll.delete': 'এই পোল সম্পূর্ণ মুছে ফেলুন',
   'poll.deleteYes': 'হ্যাঁ, সবার জন্য মুছে ফেলুন',
   'poll.deleted': 'পোলটি মুছে ফেলা হয়েছে।',
+  'share.link': 'এই লিংক শেয়ার করুন:',
+  'members.title': 'অংশগ্রহণকারী',
+  'members.add': 'সদস্য যোগ করুন',
+  'members.addBtn': 'যোগ করুন',
+  'members.actingFor': 'আপনি {name}-এর হয়ে পূরণ করছেন।',
+  'members.backToMe': 'নিজের কাছে ফিরুন',
+  'err.past_date': 'সেই দিন পেরিয়ে গেছে।',
 },
 id: {
   'make.title': 'Kapan kita bertemu?',
@@ -1607,8 +1688,6 @@ id: {
   'cal.hint': 'Klik hari yang cocok untukmu',
   'cal.prev': 'Bulan sebelumnya',
   'cal.next': 'Bulan berikutnya',
-  'cal.actAs': 'Kamu memilih sebagai {name}',
-  'cal.switch': 'isi untuk orang lain',
   'cal.newName.ph': 'atau ketik nama baru',
   'time.label': 'Jam (opsional, siapa pun boleh mengubah)',
   'poll.nobody': 'belum ada',
@@ -1659,6 +1738,13 @@ id: {
   'poll.delete': 'Hapus polling ini sepenuhnya',
   'poll.deleteYes': 'Ya, hapus untuk semua orang',
   'poll.deleted': 'Polling telah dihapus.',
+  'share.link': 'Bagikan tautan ini:',
+  'members.title': 'Peserta',
+  'members.add': 'Tambah peserta',
+  'members.addBtn': 'Tambah',
+  'members.actingFor': 'Kamu mengisi untuk {name}.',
+  'members.backToMe': 'kembali ke saya',
+  'err.past_date': 'Hari itu sudah lewat.',
 },
 vi: {
   'make.title': 'Khi nào chúng ta gặp nhau?',
@@ -1688,8 +1774,6 @@ vi: {
   'cal.hint': 'Nhấn vào những ngày bạn rảnh',
   'cal.prev': 'Tháng trước',
   'cal.next': 'Tháng sau',
-  'cal.actAs': 'Bạn đang chọn với tên {name}',
-  'cal.switch': 'điền giúp người khác',
   'cal.newName.ph': 'hoặc nhập tên mới',
   'time.label': 'Giờ (tùy chọn, ai cũng có thể đổi)',
   'poll.nobody': 'chưa có ai',
@@ -1740,6 +1824,13 @@ vi: {
   'poll.delete': 'Xóa hoàn toàn bình chọn này',
   'poll.deleteYes': 'Có, xóa cho tất cả mọi người',
   'poll.deleted': 'Bình chọn đã được xóa.',
+  'share.link': 'Chia sẻ liên kết này:',
+  'members.title': 'Người tham gia',
+  'members.add': 'Thêm người tham gia',
+  'members.addBtn': 'Thêm',
+  'members.actingFor': 'Bạn đang điền giúp {name}.',
+  'members.backToMe': 'quay lại tôi',
+  'err.past_date': 'Ngày đó đã qua rồi.',
 },
 zh: {
   'make.title': '我们什么时候见面？',
@@ -1769,8 +1860,6 @@ zh: {
   'cal.hint': '点选你方便的日子',
   'cal.prev': '上个月',
   'cal.next': '下个月',
-  'cal.actAs': '你正以 {name} 的身份选择',
-  'cal.switch': '替别人填写',
   'cal.newName.ph': '或输入新名字',
   'time.label': '时间（可选，任何人都可以修改）',
   'poll.nobody': '还没有人',
@@ -1821,6 +1910,13 @@ zh: {
   'poll.delete': '彻底删除这个投票',
   'poll.deleteYes': '是，为所有人删除',
   'poll.deleted': '投票已删除。',
+  'share.link': '分享这个链接：',
+  'members.title': '参与者',
+  'members.add': '添加参与者',
+  'members.addBtn': '添加',
+  'members.actingFor': '你正在替 {name} 填写。',
+  'members.backToMe': '回到自己',
+  'err.past_date': '那一天已经过去了。',
 },
 ja: {
   'make.title': 'いつ会いましょう？',
@@ -1850,8 +1946,6 @@ ja: {
   'cal.hint': '都合のよい日をタップ',
   'cal.prev': '前の月',
   'cal.next': '次の月',
-  'cal.actAs': '{name} として選択中',
-  'cal.switch': '他の人の分を入力',
   'cal.newName.ph': 'または新しい名前を入力',
   'time.label': '時刻（任意、誰でも変更できます）',
   'poll.nobody': 'まだ誰もいません',
@@ -1902,6 +1996,13 @@ ja: {
   'poll.delete': 'この日程調整を完全に削除',
   'poll.deleteYes': 'はい、全員分を削除する',
   'poll.deleted': '日程調整を削除しました。',
+  'share.link': 'このリンクを共有：',
+  'members.title': '参加者',
+  'members.add': '参加者を追加',
+  'members.addBtn': '追加',
+  'members.actingFor': '{name} の代わりに入力中です。',
+  'members.backToMe': '自分に戻る',
+  'err.past_date': 'その日はもう過ぎています。',
 },
 ko: {
   'make.title': '언제 만날까요?',
@@ -1931,8 +2032,6 @@ ko: {
   'cal.hint': '가능한 날을 누르세요',
   'cal.prev': '이전 달',
   'cal.next': '다음 달',
-  'cal.actAs': '{name}(으)로 선택 중',
-  'cal.switch': '다른 사람 대신 입력',
   'cal.newName.ph': '또는 새 이름 입력',
   'time.label': '시간 (선택 사항, 누구나 변경 가능)',
   'poll.nobody': '아직 없음',
@@ -1983,6 +2082,13 @@ ko: {
   'poll.delete': '이 투표 완전히 삭제',
   'poll.deleteYes': '네, 모두에게서 삭제',
   'poll.deleted': '투표가 삭제되었어요.',
+  'share.link': '이 링크를 공유하세요:',
+  'members.title': '참여자',
+  'members.add': '참여자 추가',
+  'members.addBtn': '추가',
+  'members.actingFor': '{name} 대신 입력 중이에요.',
+  'members.backToMe': '나로 돌아가기',
+  'err.past_date': '그날은 이미 지났어요.',
 },
 sw: {
   'make.title': 'Tukutane lini?',
@@ -2012,8 +2118,6 @@ sw: {
   'cal.hint': 'Bofya siku zinazokufaa',
   'cal.prev': 'Mwezi uliopita',
   'cal.next': 'Mwezi ujao',
-  'cal.actAs': 'Unachagua kama {name}',
-  'cal.switch': 'jaza kwa niaba ya mtu mwingine',
   'cal.newName.ph': 'au andika jina jipya',
   'time.label': 'Saa (si lazima, mtu yeyote anaweza kubadilisha)',
   'poll.nobody': 'bado hakuna',
@@ -2064,6 +2168,13 @@ sw: {
   'poll.delete': 'Futa kura hii kabisa',
   'poll.deleteYes': 'Ndiyo, futa kwa kila mtu',
   'poll.deleted': 'Kura imefutwa.',
+  'share.link': 'Shiriki kiungo hiki:',
+  'members.title': 'Washiriki',
+  'members.add': 'Ongeza mshiriki',
+  'members.addBtn': 'Ongeza',
+  'members.actingFor': 'Unajaza kwa niaba ya {name}.',
+  'members.backToMe': 'rudi kwangu',
+  'err.past_date': 'Siku hiyo imeshapita.',
 },
 zgh: {
   'make.title': 'ⵎⴰⵏⴰⴳ ⴰⴷ ⵏⵎⵢⴰⴳⴰⵔ?',
@@ -2093,8 +2204,6 @@ zgh: {
   'cal.hint': 'ⵙⵉⵜ ⵅⴼ ⵓⵙⵙⴰⵏ ⵏⵏⴰ ⴰⴽ ⵉⵛⵇⵇⴰⵏ',
   'cal.prev': 'ⴰⵢⵢⵓⵔ ⵉⵣⵔⵉⵏ',
   'cal.next': 'ⴰⵢⵢⵓⵔ ⴷ ⵉⵜⴷⴷⵓⵏ',
-  'cal.actAs': 'ⴰⵔ ⵜⵙⵜⴰⵢⴷ ⵙ ⵢⵉⵙⵎ ⵏ {name}',
-  'cal.switch': 'ⴰⵛⵛⴰⵔ ⵉ ⵢⴰⵏ ⵢⴰⴹⵏ',
   'cal.newName.ph': 'ⵏⵖ ⴰⵔⴰ ⵉⵙⵎ ⴰⵎⴰⵢⵏⵓ',
   'time.label': 'ⵜⴰⵙⵔⴰⴳⵜ (ⵎⴽ ⵜⵔⵉⴷ, ⴽⵓ ⵢⴰⵏ ⵉⵣⵎⵔ ⴰⴷ ⵜⵜ ⵉⵙⵏⴼⵍ)',
   'poll.nobody': 'ⵓⵔ ⵜⴰ ⵢⴰⵏ',
@@ -2145,6 +2254,13 @@ zgh: {
   'poll.delete': 'ⴽⴽⵙ ⴰⵎⵙⴰⴳⴰⵔ ⴰⴷ ⵙ ⵓⵎⴰⵜⴰ',
   'poll.deleteYes': 'ⵢⴰⵀ, ⴽⴽⵙ ⵜ ⵉ ⴽⵓ ⵢⴰⵏ',
   'poll.deleted': 'ⵉⵜⵜⵓⴽⴽⵙ ⵓⵎⵙⴰⴳⴰⵔ.',
+  'share.link': 'ⴱⴹⵓ ⴰⵙⵖⵏ ⴰⴷ:',
+  'members.title': 'ⵉⵎⴷⵔⴰⵡⵏ',
+  'members.add': 'ⵔⵏⵓ ⴰⵎⴷⵔⴰⵡ',
+  'members.addBtn': 'ⵔⵏⵓ',
+  'members.actingFor': 'ⴰⵔ ⵜⵙⵎⴷⵉⴷ ⵉ {name}.',
+  'members.backToMe': 'ⴰⵖⵓⵍ ⵖⵓⵔⵉ',
+  'err.past_date': 'ⴰⵙⵙ ⴰⴷ ⵉⵣⵔⵉ ⵢⴰⴷ.',
 },
 ku: {
   'make.title': 'Kengî em hev bibînin?',
@@ -2174,8 +2290,6 @@ ku: {
   'cal.hint': 'Rojên ku ji te re dibin nîşan bike',
   'cal.prev': 'Meha berê',
   'cal.next': 'Meha bê',
-  'cal.actAs': 'Tu wek {name} nîşan dikî',
-  'cal.switch': 'ji bo kesekî din dagire',
   'cal.newName.ph': 'an navekî nû binivîse',
   'time.label': 'Dem (ne mecbûrî, her kes dikare biguherîne)',
   'poll.nobody': 'hîn kes tune',
@@ -2226,6 +2340,13 @@ ku: {
   'poll.delete': 'Vê anketê bi tevahî jê bibe',
   'poll.deleteYes': 'Erê, ji bo her kesî jê bibe',
   'poll.deleted': 'Anket hat jêbirin.',
+  'share.link': 'Vê lînkê parve bike:',
+  'members.title': 'Beşdar',
+  'members.add': 'Beşdarekî zêde bike',
+  'members.addBtn': 'Zêde bike',
+  'members.actingFor': 'Tu ji bo {name} dagirî.',
+  'members.backToMe': 'vegere ser min',
+  'err.past_date': 'Ew roj derbas bûye.',
 },
 sn: {
   'make.title': 'Tosangana rinhi?',
@@ -2255,8 +2376,6 @@ sn: {
   'cal.hint': 'Dzvanya mazuva anokuitira',
   'cal.prev': 'Mwedzi wapfuura',
   'cal.next': 'Mwedzi unotevera',
-  'cal.actAs': 'Uri kusarudza sa {name}',
-  'cal.switch': 'zadzira mumwe munhu',
   'cal.newName.ph': 'kana kunyora zita idzva',
   'time.label': 'Nguva (hazvisi pamutemo, munhu wese anogona kushandura)',
   'poll.nobody': 'hapana parizvino',
@@ -2307,6 +2426,13 @@ sn: {
   'poll.delete': 'Dzima poll iyi zvachose',
   'poll.deleteYes': 'Hongu, dzima kune vese',
   'poll.deleted': 'Poll yadzimwa.',
+  'share.link': 'Govera link iyi:',
+  'members.title': 'Vatori vechikamu',
+  'members.add': 'Wedzera nhengo',
+  'members.addBtn': 'Wedzera',
+  'members.actingFor': 'Uri kuzadzira {name}.',
+  'members.backToMe': 'dzokera kwandiri',
+  'err.past_date': 'Zuva iroro rakatopfuura.',
 },
 };
 const BRAND = 'Whenly';
@@ -2571,6 +2697,7 @@ function pasTaalToe() {
   vlagBtn.setAttribute('aria-label', t('lang.pick'));
   vlagBtn.title = t('lang.pick');
   document.getElementById('installSluit').setAttribute('aria-label', t('close'));
+  document.getElementById('nieuw').textContent = '+ ' + t('notfound.new');
   const voet = document.getElementById('voet');
   voet.textContent = '';
   const merk = el('a', null, BRAND); merk.href = '/';
@@ -2790,19 +2917,29 @@ function schermAfspraak(pollId) {
   scherm.textContent = '';
 
   /* --- vaste elementen die nooit mee her-renderen --- */
-  const deel = el('div', 'deel verborgen');
+  const deel = el('div', 'deel');
   const deelTekst = el('span');
   const deelUrl = el('span', 'url', location.origin + '/p/' + pollId); deelUrl.dir = 'ltr';
-  const kopieKnop = el('button', 'klein'); kopieKnop.type = 'button';
-  deel.append(deelTekst, deelUrl, kopieKnop);
+  const kopieKnop = el('button', 'klein kopieer'); kopieKnop.type = 'button';
+  const deelKnop = el('button', 'klein delen'); deelKnop.type = 'button';
+  const deelKnoppen = el('div', 'knoppen'); deelKnoppen.append(kopieKnop, deelKnop);
+  deel.append(deelTekst, deelUrl, deelKnoppen);
+  let netGemaakt = false;
+  function deelIcoon() {
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('width', '18'); svg.setAttribute('height', '18'); svg.setAttribute('aria-hidden', 'true');
+    const p = document.createElementNS(ns, 'path');
+    p.setAttribute('d', 'M18 16a3 3 0 0 0-2.4 1.2l-7-4.1a3 3 0 0 0 0-2.2l7-4.1A3 3 0 1 0 15 5a3 3 0 0 0 .1.8l-7 4.1a3 3 0 1 0 0 4.2l7 4.1A3 3 0 1 0 18 16z');
+    p.setAttribute('fill', 'currentColor');
+    svg.append(p);
+    return svg;
+  }
+  function zetDeelKnop(tekst) { deelKnop.textContent = ''; deelKnop.append(deelIcoon(), document.createTextNode(tekst)); }
 
   const titelRij = el('div', 'titelrij');
   const titelKop = el('h1'); titelKop.dir = 'auto';
-  const deelKnop = el('button', 'sec klein'); deelKnop.type = 'button';
-  deelKnop.style.cssText = 'margin:0 0 4px; padding:6px 0;';
-  const nieuwKnop = el('a', 'sec klein'); nieuwKnop.href = '/';
-  nieuwKnop.style.cssText = 'display:inline-flex; align-items:center; color:var(--groen); font-weight:600; text-decoration:none; padding:6px 0; min-height:44px;';
-  const knoppenRij = el('div', 'knoppenrij'); knoppenRij.append(deelKnop, nieuwKnop);
+  document.getElementById('nieuw').classList.remove('verborgen');
   const titelEditBtn = el('button', 'sec'); titelEditBtn.type = 'button';
   const titelEditor = el('div', 'titeleditor verborgen');
   const titelIn = el('input'); titelIn.type = 'text'; titelIn.maxLength = 80; titelIn.autocomplete = 'off'; titelIn.dir = 'auto';
@@ -2825,6 +2962,7 @@ function schermAfspraak(pollId) {
   naamKnopRij.append(verderBtn);
   naamZone.append(naamLabel, naamIn, naamKnopRij, naamFout);
 
+  // "Je vult nu in voor Tom. · terug naar mezelf" (alleen als je namens iemand anders bezig bent)
   const wieBar = el('p', 'wie verborgen');
   const wieTekst = el('span');
   const wieNaam = el('b'); // geïsoleerd via CSS (unicode-bidi), zie .wie b
@@ -2862,7 +3000,7 @@ function schermAfspraak(pollId) {
   alleBevestig.append(alleJa, alleNee);
   alleZone.append(alleBtn, alleBevestig);
 
-  const bezoek = el('p', 'bezoek verborgen');
+  const bezoek = document.getElementById('bezoek');
   const weggehaaldLijn = el('p', 'weggehaald verborgen');
 
   // melding bij offline of een server die niet antwoordt, met "opnieuw"
@@ -2889,7 +3027,7 @@ function schermAfspraak(pollId) {
   titelIn.setAttribute('aria-label', t('make.what'));
   nieuwIn.setAttribute('aria-label', t('cal.newName.ph'));
 
-  scherm.append(foutBalk, deel, titelRij, knoppenRij, statusBlok, naamZone, wieBar, chipsLabel, chips, weggehaaldLijn, nieuwRij, kalHint, kal, legenda, tapLijn, lijstFout, wegZone, alleZone, bezoek);
+  scherm.append(foutBalk, deel, titelRij, statusBlok, naamZone, chipsLabel, chips, nieuwRij, wieBar, weggehaaldLijn, kalHint, kal, legenda, tapLijn, lijstFout, wegZone, alleZone);
 
   const nu = new Date();
   state.kalMaand = new Date(nu.getFullYear(), nu.getMonth(), 1);
@@ -2907,7 +3045,7 @@ function schermAfspraak(pollId) {
   try {
     if (sessionStorage.getItem(LS.just) === pollId) {
       sessionStorage.removeItem(LS.just);
-      deel.classList.remove('verborgen');
+      netGemaakt = true;
     }
   } catch {}
   let kopieTimer = null;
@@ -2936,9 +3074,9 @@ function schermAfspraak(pollId) {
     }
     try {
       await navigator.clipboard.writeText(url);
-      deelKnop.textContent = t('share.copied');
+      zetDeelKnop(t('share.copied'));
       clearTimeout(deelTimer);
-      deelTimer = setTimeout(() => { deelKnop.textContent = t('share.button'); }, 2000);
+      deelTimer = setTimeout(() => { zetDeelKnop(t('share.button')); }, 2000);
     } catch { /* stil */ }
   });
 
@@ -3012,10 +3150,10 @@ function schermAfspraak(pollId) {
   });
   naamIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') verderBtn.click(); });
 
-  wieWissel.addEventListener('click', () => {
-    state.nieuwOpen = !state.nieuwOpen;
-    render();
-    if (state.nieuwOpen) nieuwIn.focus();
+  wieWissel.addEventListener('click', async () => {
+    zetActing(state.own);
+    state.lastJson = '';
+    await haalOp(true);
   });
   nieuwOk.addEventListener('click', async () => {
     if (!nieuwIn.value.trim()) { nieuwIn.focus(); return; }
@@ -3088,6 +3226,7 @@ function schermAfspraak(pollId) {
   }
   async function klikDagNu(datum) {
     if (!state.me) { naamIn.focus(); return; }
+    if (datum < isoDag(new Date())) return; // nooit in het verleden
     state.tapDag = datum;
     lijstFout.classList.add('verborgen');
     const d = state.data;
@@ -3311,7 +3450,7 @@ function schermAfspraak(pollId) {
       const opt = perDag.get(datum);
       const mijn = !!(opt && state.me && opt.votes.includes(state.me));
       const b = el('button', 'dag'); b.type = 'button';
-      if (datum < vandaag) b.classList.add('verleden');
+      if (datum < vandaag) { b.classList.add('verleden'); b.disabled = true; }
       if (datum === vandaag) b.classList.add('vandaag');
       if (opt) b.classList.add('optie');
       if (mijn) b.classList.add('mijn');
@@ -3409,32 +3548,34 @@ function schermAfspraak(pollId) {
     titelEditBtn.textContent = t('title.edit');
     titelOk.textContent = t('title.save');
     titelIn.placeholder = t('make.what.ph');
-    deelTekst.textContent = t('share.ready') + ' ';
+    deelTekst.textContent = (netGemaakt ? t('share.ready') : t('share.link')) + ' ';
     if (kopieKnop.textContent !== t('share.copied')) {
       kopieKnop.textContent = t('share.copy');
     }
+    if (deelKnop.textContent !== t('share.copied')) zetDeelKnop(t('share.button'));
     naamZone.classList.toggle('verborgen', !!state.me);
     naamLabel.textContent = t('make.name');
     naamIn.placeholder = t('make.name.ph');
     verderBtn.textContent = t('poll.next');
 
     const ik = d.participants.find((p) => p.id === state.me);
-    wieBar.classList.toggle('verborgen', !state.me);
-    // "{name}" mag vooraan of achteraan staan, afhankelijk van de taal
-    const [voor, na] = t('cal.actAs').split('{name}');
+    // alleen tonen als je namens iemand anders bezig bent
+    const namensAnder = !!(state.me && state.own && state.me !== state.own);
+    wieBar.classList.toggle('verborgen', !namensAnder);
+    const [voor, na] = t('members.actingFor').split('{name}');
     wieTekst.textContent = voor || '';
     wieNaam.textContent = ik ? ik.name : '';
     wieNaam.style.color = ik ? kleurTekstVan(ik.id) : '';
     wieNa.textContent = na || '';
-    wieWissel.textContent = t('cal.switch');
+    wieWissel.textContent = t('members.backToMe');
 
     // gekleurde naamchips: altijd zichtbaar zolang er deelnemers zijn.
     // Klik zonder eigen naam = "dat ben ik" (identiteit claimen);
     // klik met eigen naam = tijdelijk namens die persoon aanklikken.
     const heeftNamen = d.participants.length > 0;
     chips.classList.toggle('verborgen', !heeftNamen);
-    chipsLabel.classList.toggle('verborgen', !(heeftNamen && !state.me));
-    chipsLabel.textContent = t('pick.who');
+    chipsLabel.classList.toggle('verborgen', !heeftNamen);
+    chipsLabel.textContent = state.me ? t('members.title') : t('pick.who');
     chips.textContent = '';
     for (const p of d.participants) {
       const b = el('button', 'chip' + (p.id === state.me ? ' ik' : ''));
@@ -3459,6 +3600,18 @@ function schermAfspraak(pollId) {
       });
       chips.append(b);
     }
+    // "+ Lid toevoegen" als laatste chip (voor iemand anders invullen)
+    if (state.me) {
+      const plus = el('button', 'chip toevoegen', '+ ' + t('members.add'));
+      plus.type = 'button';
+      plus.setAttribute('aria-expanded', state.nieuwOpen ? 'true' : 'false');
+      plus.addEventListener('click', () => {
+        state.nieuwOpen = !state.nieuwOpen;
+        render();
+        if (state.nieuwOpen) nieuwIn.focus();
+      });
+      chips.append(plus);
+    }
     // info voor de groep: iemand (niet de app) heeft een naam weggehaald
     weggehaaldLijn.textContent = '';
     const weg = d.removed || [];
@@ -3471,10 +3624,8 @@ function schermAfspraak(pollId) {
     }
     nieuwRij.classList.toggle('verborgen', !(state.me && state.nieuwOpen));
     nieuwIn.placeholder = t('cal.newName.ph');
-    nieuwOk.textContent = t('poll.next');
+    nieuwOk.textContent = t('members.addBtn');
 
-    deelKnop.textContent = t('share.button');
-    nieuwKnop.textContent = t('notfound.new');
     // legenda onder de kalender
     legenda.textContent = '';
     const lg1 = el('span'); lg1.append(el('span', 'vk', '✓'), el('span', null, t('legend.you')));

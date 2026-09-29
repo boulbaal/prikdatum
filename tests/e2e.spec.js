@@ -370,12 +370,18 @@ test.describe("Scenario's", () => {
 
     await expect(ali.locator('.deel')).toBeVisible();
     await expect(ali.locator('.deel .url')).toHaveText(pollUrl);
-    await ali.locator('.deel button').click();
-    await expect(ali.locator('.deel button')).toHaveText('Gekopieerd');
+    await expect(ali.locator('.deel')).toContainText('Klaar. Deel deze link:');
+    await ali.locator('.deel button.kopieer').click();
+    await expect(ali.locator('.deel button.kopieer')).toHaveText('Gekopieerd');
+    await expect(ali.locator('.deel button.delen')).toContainText('Deel');
+    await expect(ali.locator('.deel button.delen svg')).toHaveCount(1);
+    await expect(ali.locator('#nieuw')).toBeVisible();
+    await expect(ali.locator('#nieuw')).toHaveText('+ Nieuwe afspraak');
     await expect(ali.locator('h1')).toHaveText('Etentje');
     await expect(ali.locator('#voet')).toContainText('vdev'); // versie-label (dev in de testomgeving)
-    await expect(ali.locator('.wie')).toContainText('Jij klikt aan als');
-    await expect(ali.locator('.wie b')).toHaveText('Ali');
+    await expect(ali.locator('.wie')).toBeHidden(); // je bent gewoon jezelf: geen extra regel
+    await expect(ali.locator('.chip.ik')).toContainText('Ali');
+    await expect(ali.locator('.kopje', { hasText: 'Deelnemers' })).toBeVisible();
     await expect(ali.locator('.chip', { hasText: 'Ali (jij)' })).toHaveClass(/ik/);
     await expect(ali.locator('#joinnaam')).toBeHidden();
     await expect(ali.locator('.status .balk')).toHaveClass(/rood/); // nog geen datum -> rood
@@ -398,7 +404,7 @@ test.describe("Scenario's", () => {
     const sofieCtx = await browser.newContext(ctxOpties(testInfo));
     const sofie = await sofieCtx.newPage();
     await sofie.goto(pollUrl);
-    await expect(sofie.locator('.deel')).toBeHidden();
+    await expect(sofie.locator('.deel')).toContainText('Deel deze link:'); // altijd zichtbaar, nooit kwijt
     await expect(sofie.locator('#joinnaam')).toBeVisible();
     await expect(sofie.locator('.kal')).toHaveClass(/inactief/);
     await expect(sofie.locator('#kalhint')).toHaveText('Vul eerst je naam in om aan te klikken.');
@@ -411,7 +417,7 @@ test.describe("Scenario's", () => {
     await sofie.fill('#joinnaam', 'Sofie');
     await sofie.press('#joinnaam', 'Enter');
     await expect(sofie.locator('.kal')).not.toHaveClass(/inactief/);
-    await expect(sofie.locator('.wie b')).toHaveText('Sofie');
+    await expect(sofie.locator('.chip.ik')).toContainText('Sofie');
     await toonMaand(sofie, MAAND);
     await dag(sofie, D1).click();
     await expect(dag(sofie, D1)).toHaveClass(/mijn/);
@@ -437,13 +443,19 @@ test.describe("Scenario's", () => {
     }
 
     /* ---------- S4: tijdelijk namens iemand anders (Tom) ---------- */
-    await sofie.locator('.wie button', { hasText: 'iemand anders invullen' }).click();
+    await sofie.locator('.chip.toevoegen', { hasText: 'Lid toevoegen' }).click();
     await sofie.locator('.nieuw input').fill('Tom');
-    await sofie.locator('.nieuw button').click();
+    await sofie.locator('.nieuw button', { hasText: 'Toevoegen' }).click();
+    await expect(sofie.locator('.wie')).toContainText('Je vult nu in voor');
     await expect(sofie.locator('.wie b')).toHaveText('Tom');
-    await expect(sofie.locator('.chip')).toHaveCount(3);
+    await expect(sofie.locator('.chip:not(.toevoegen)')).toHaveCount(3);
     await expect(sofie.locator('.chip', { hasText: 'Tom' })).toHaveClass(/ik/);
     await expect(sofie.locator('.chip', { hasText: 'Sofie (jij)' })).toBeVisible();
+    // "terug naar mezelf" werkt, daarna opnieuw als Tom verder
+    await sofie.locator('.wie button', { hasText: 'terug naar mezelf' }).click();
+    await expect(sofie.locator('.chip.ik')).toContainText('Sofie');
+    await sofie.locator('.chip', { hasText: 'Tom' }).click();
+    await expect(sofie.locator('.wie b')).toHaveText('Tom');
     await toonMaand(sofie, MAAND);
     await expect(dag(sofie, D1)).not.toHaveClass(/mijn/); // Tom heeft 9 okt niet aangeklikt
     await dag(sofie, D2).click();
@@ -486,7 +498,8 @@ test.describe("Scenario's", () => {
     await expect(sofie.locator('#joinnaam')).toBeHidden();
     // klik op je eigen chip en je bent weer gewoon jezelf
     await sofie.locator('.chip', { hasText: 'Sofie (jij)' }).click();
-    await expect(sofie.locator('.wie b')).toHaveText('Sofie');
+    await expect(sofie.locator('.chip.ik')).toContainText('Sofie');
+    await expect(sofie.locator('.wie')).toBeHidden();
     await toonMaand(sofie, MAAND);
     await expect(dag(sofie, D1)).toHaveClass(/mijn/);
     // het invullen voor Tom heeft je opgeslagen eigen naam NIET overschreven
@@ -497,7 +510,7 @@ test.describe("Scenario's", () => {
     // in een nieuw tabblad ben je meteen weer jezelf, niet Tom
     const zelfdeBrowser = await sofieCtx.newPage();
     await zelfdeBrowser.goto(pollUrl);
-    await expect(zelfdeBrowser.locator('.wie b')).toHaveText('Sofie');
+    await expect(zelfdeBrowser.locator('.chip.ik')).toContainText('Sofie');
     await zelfdeBrowser.close();
 
     // ander "toestel", zelfde naam in kleine letters -> eigen vinkjes terug
@@ -506,12 +519,12 @@ test.describe("Scenario's", () => {
     await sofie2.goto(pollUrl);
     await sofie2.fill('#joinnaam', 'sofie');
     await sofie2.press('#joinnaam', 'Enter');
-    await expect(sofie2.locator('.wie b')).toHaveText('Sofie');
+    await expect(sofie2.locator('.chip.ik')).toContainText('Sofie');
     await toonMaand(sofie2, MAAND);
     await expect(dag(sofie2, D1)).toHaveClass(/mijn/);
 
     /* ---------- S9: weggaan ---------- */
-    await expect(sofie2.locator('.wie b')).toHaveText('Sofie');
+    await expect(sofie2.locator('.chip.ik')).toContainText('Sofie');
     await sofie2.locator('.weg:not(.alles) > button').click(); // "Haal Sofie weg uit deze afspraak"
     await sofie2.locator('.weg:not(.alles) .bevestig button.ja').click(); // "Ja, haal Sofie weg"
     await expect(sofie2.locator('#joinnaam')).toBeVisible();
@@ -540,7 +553,7 @@ test.describe("Scenario's", () => {
     await page.locator('.chip', { hasText: 'Sofie' }).click();
     // nu ben je Sofie: kalender actief, naamveld weg, jouw chip gemarkeerd
     await expect(page.locator('#joinnaam')).toBeHidden();
-    await expect(page.locator('.wie b')).toHaveText('Sofie');
+    await expect(page.locator('.chip.ik')).toContainText('Sofie');
     await expect(page.locator('.chip', { hasText: 'Sofie (jij)' })).toHaveClass(/ik/);
     await expect(page.locator('.kal')).not.toHaveClass(/inactief/);
     await toonMaand(page, MAAND);
@@ -610,7 +623,15 @@ test.describe("Scenario's", () => {
     await toonMaand(page, nu.getFullYear() + '-' + mm);
     if (eersteVanDeMaand !== vandaag) {
       await expect(dag(page, eersteVanDeMaand)).toHaveClass(/verleden/);
+      await expect(dag(page, eersteVanDeMaand)).toBeDisabled(); // nooit in het verleden
     }
+    // de API weigert een dag in het verleden (met 1 dag speling voor tijdzones)
+    const full = await (await request.get('/api/polls/' + id)).json();
+    const res = await request.post('/api/polls/' + id + '/options', { data: { participantId: full.participants[0].id, date: '2020-01-01', time: null } });
+    expect(res.status()).toBe(400);
+    expect((await res.json()).error).toBe('past_date');
+    const res2 = await request.post('/api/polls/' + id + '/options', { data: { participantId: full.participants[0].id, date: vandaag, time: null } });
+    expect(res2.status()).toBe(201);
     await ctx.close();
   });
 
@@ -870,6 +891,9 @@ test.describe("Scenario's", () => {
     await expect(page.locator('.chip', { hasText: 'Sofie' })).toHaveCount(0);
     // voettekst: privacy-link
     await expect(page.locator('#voet a.privacy')).toHaveAttribute('href', '/privacy');
+    // bezoekteller staat onder de doneerknop, niet meer in de afspraak zelf
+    await expect(page.locator('#bezoek')).toContainText('Aantal bezocht');
+    expect(await page.evaluate(() => document.getElementById('bezoek').compareDocumentPosition(document.getElementById('doneer')) & Node.DOCUMENT_POSITION_PRECEDING)).toBeTruthy();
     await ctx.close();
   });
 
@@ -907,7 +931,7 @@ test.describe("Scenario's", () => {
     await page.goto('/p/' + b.id);
     await expect(page.locator('h1')).toHaveText('Weekend aan zee');
     // knop "Nieuwe afspraak" naast "Deel" brengt je naar de start
-    const nieuw = page.locator('.knoppenrij a', { hasText: 'Nieuwe afspraak' });
+    const nieuw = page.locator('#nieuw');
     await expect(nieuw).toHaveAttribute('href', '/');
     await nieuw.click();
     await page.waitForURL(/\/$/);

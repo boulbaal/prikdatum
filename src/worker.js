@@ -174,6 +174,13 @@ function validDate(d) {
   return dt.getUTCFullYear() === y && dt.getUTCMonth() === m - 1 && dt.getUTCDate() === day;
 }
 
+// Dagen in het verleden kunnen niet (meer) gekozen worden. Eén dag speling
+// voor tijdzones: de server rekent in UTC, de gebruiker in zijn eigen tijd.
+function inVerleden(d) {
+  const gisteren = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+  return d < gisteren;
+}
+
 function validTime(t) {
   if (t === null || t === undefined || t === '') return true; // wordt NULL
   if (typeof t !== 'string' || !/^\d{2}:\d{2}$/.test(t)) return false;
@@ -206,7 +213,7 @@ function cleanOptions(raw) {
   const out = [];
   for (const o of raw) {
     if (!o || typeof o !== 'object') continue;
-    if (!validDate(o.date) || !validTime(o.time)) continue;
+    if (!validDate(o.date) || !validTime(o.time) || inVerleden(o.date)) continue;
     const time = o.time ? o.time : null;
     if (seen.has(o.date)) continue;
     seen.add(o.date);
@@ -383,6 +390,7 @@ async function addOption(env, pollId, body) {
   ).bind(body.participantId ?? '', pollId).first();
   if (!participant) return fail('not_found', 404);
   if (!validDate(body.date) || !validTime(body.time)) return fail('invalid_date');
+  if (inVerleden(body.date)) return fail('past_date');
   const time = body.time ? body.time : null;
   const existing = await env.DB.prepare(
     'SELECT id FROM options WHERE poll_id = ? AND date = ?'
