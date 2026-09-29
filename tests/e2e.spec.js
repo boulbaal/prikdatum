@@ -312,6 +312,15 @@ test.describe('API', () => {
     expect((await request.get('/api/polls/' + nieuw.id)).status()).toBe(200);
   });
 
+  test('A26 DELETE /api/polls/:id: meteen en volledig weg', async ({ request }) => {
+    const { id } = await apiMaakPoll(request, { title: 'Weg', name: 'Ali', options: [{ date: D1, time: T1 }] });
+    await request.post('/api/polls/' + id + '/participants', { data: { name: 'Sofie' } });
+    expect((await request.delete('/api/polls/' + id)).status()).toBe(200);
+    expect((await request.get('/api/polls/' + id)).status()).toBe(404);
+    expect((await request.delete('/api/polls/' + id)).status()).toBe(404);
+    expect((await request.post('/api/polls/' + id + '/participants', { data: { name: 'Tom' } })).status()).toBe(404);
+  });
+
   test('A23 afspraakpagina niet indexeerbaar, statische pagina\'s en headers', async ({ request }) => {
     const p = await request.get('/p/abcdefghij');
     expect(p.status()).toBe(200);
@@ -322,6 +331,7 @@ test.describe('API', () => {
     expect(faq.headers()['x-content-type-options']).toBe('nosniff');
     expect(faq.headers()['content-security-policy']).toContain("frame-ancestors 'none'");
     expect(await faq.text()).toContain('"@type": "FAQPage"');
+    expect(await (await request.get('/privacy')).text()).toContain('Afspraak volledig verwijderen');
     const robots = await request.get('/robots.txt');
     expect(robots.headers()['content-type']).toContain('text/plain');
     expect(await robots.text()).toContain('Sitemap: https://whenly.vanali.workers.dev/sitemap.xml');
@@ -502,8 +512,8 @@ test.describe("Scenario's", () => {
 
     /* ---------- S9: weggaan ---------- */
     await expect(sofie2.locator('.wie b')).toHaveText('Sofie');
-    await sofie2.locator('.weg > button').click();          // "Haal Sofie weg uit deze afspraak"
-    await sofie2.locator('.weg .bevestig button.ja').click(); // "Ja, haal Sofie weg"
+    await sofie2.locator('.weg:not(.alles) > button').click(); // "Haal Sofie weg uit deze afspraak"
+    await sofie2.locator('.weg:not(.alles) .bevestig button.ja').click(); // "Ja, haal Sofie weg"
     await expect(sofie2.locator('#joinnaam')).toBeVisible();
     await sofie2.fill('#joinnaam', 'Sofie');
     await sofie2.press('#joinnaam', 'Enter');
@@ -917,6 +927,31 @@ test.describe("Scenario's", () => {
     await page2.goto('/');
     await expect(page2.locator('.recent')).toHaveCount(0);
     await ctx2.close();
+    await ctx.close();
+  });
+
+  test('S27 afspraak volledig verwijderen: bevestiging, terug naar start met melding, uit "Jouw afspraken"', async ({ browser, request }, testInfo) => {
+    const { id, participantId } = await apiMaakPoll(request, { title: 'Weg ermee', name: 'Ali', options: [{ date: D1, time: null }] });
+    const ctx = await browser.newContext(ctxOpties(testInfo));
+    await ctx.addInitScript(([pid, pol]) => { localStorage.setItem('prikdatum.p.' + pol, pid); }, [participantId, id]);
+    const page = await ctx.newPage();
+    await page.goto('/p/' + id);
+    await expect(page.locator('h1')).toHaveText('Weg ermee');
+    const knop = page.locator('.weg.alles > button');
+    await expect(knop).toHaveText('Afspraak volledig verwijderen');
+    await knop.click();
+    // eerst "toch niet": niets gebeurt
+    await page.locator('.weg.alles .bevestig button', { hasText: 'Toch niet' }).click();
+    expect((await request.get('/api/polls/' + id)).status()).toBe(200);
+    await knop.click();
+    await page.locator('.weg.alles .bevestig button.ja').click();
+    await page.waitForURL(/\/$/);
+    await expect(page.locator('#scherm [role="status"]')).toHaveText('De afspraak is verwijderd.');
+    await expect(page.locator('.recent a', { hasText: 'Weg ermee' })).toHaveCount(0);
+    expect((await request.get('/api/polls/' + id)).status()).toBe(404);
+    // wie de oude link nog opent, ziet "bestaat niet"
+    await page.goto('/p/' + id);
+    await expect(page.locator('h1')).toHaveText('Deze afspraak bestaat niet');
     await ctx.close();
   });
 

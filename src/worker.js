@@ -446,6 +446,16 @@ async function deleteParticipant(env, pollId, pid) {
   return json({});
 }
 
+// DELETE /api/polls/:id — de hele afspraak meteen en volledig weg (opties,
+// deelnemers en stemmen via ON DELETE CASCADE). Iedereen met de link mag dit,
+// net als alles op de afspraak; de app vraagt eerst om bevestiging.
+async function deletePoll(env, pollId) {
+  const poll = await getPoll(env, pollId);
+  if (!poll) return fail('not_found', 404);
+  await env.DB.prepare('DELETE FROM polls WHERE id = ?').bind(pollId).run();
+  return json({});
+}
+
 // POST /api/polls/:id/visit — bezoekteller +1 (frontend telt 1x per browser)
 async function bumpVisit(env, pollId) {
   const poll = await getPoll(env, pollId);
@@ -565,6 +575,11 @@ export default {
       if (p.length === 3 && method === 'GET') {
         const full = await getFullPoll(env, pollId);
         return full ? json(full) : fail('not_found', 404);
+      }
+
+      // DELETE /api/polls/:id — volledig verwijderen
+      if (p.length === 3 && method === 'DELETE') {
+        return await deletePoll(env, pollId);
       }
 
       // POST /api/polls/:id/participants

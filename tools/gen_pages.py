@@ -139,7 +139,7 @@ FAQ_NL = [
     ('Wat is het verschil met Doodle?', 'Whenly vraagt niemand om te registreren, toont geen reclame en is gratis. Je klikt dagen aan op een kalender in plaats van velden in te vullen, en een stoplicht toont wanneer iedereen kan.'),
     ('Kan ik voor iemand anders een datum invullen?', 'Ja. Kies "iemand anders invullen", typ een naam en klik de dagen voor die persoon aan.'),
     ('Wie kan mijn afspraak zien?', 'Iedereen met de link. De link is een lange willekeurige code die niet te raden is. Pagina\'s van afspraken worden niet geïndexeerd door zoekmachines. Deel de link dus alleen met je groep.'),
-    ('Wat gebeurt er met mijn gegevens?', 'Alleen de titel, de namen en de aangeklikte dagen worden bewaard, niets anders. Geen e-mailadres, geen telefoonnummer, geen tracking, geen cookies van derden.'),
+    ('Wat gebeurt er met mijn gegevens?', 'Alleen de titel, de namen en de aangeklikte dagen worden bewaard, niets anders. Geen e-mailadres, geen telefoonnummer, geen tracking, geen cookies van derden. Jij hebt er zelf controle over: onderaan elke afspraak staat "Afspraak volledig verwijderen", en dan is alles meteen en definitief weg. Verwijder je niets, dan blijft de afspraak 12 maanden na de laatste activiteit staan zodat je er later op kunt terugkomen, niet om gegevens te verzamelen. Daarna wordt ze automatisch gewist.'),
 ]
 FAQ_EN = [
     ('Is Whenly free?', 'Yes. Whenly is completely free and stays free. No paywall, no ads.'),
@@ -149,7 +149,7 @@ FAQ_EN = [
     ('How is it different from Doodle?', 'Whenly asks nobody to sign up, shows no ads and is free. You tap days on a calendar instead of filling in fields, and a traffic light shows when everyone can make it.'),
     ('Can I fill in dates for someone else?', 'Yes. Choose "fill in for someone else", type a name and tap the days for that person.'),
     ('Who can see my poll?', 'Anyone with the link. The link is a long random code that cannot be guessed, and poll pages are not indexed by search engines. Share the link only with your group.'),
-    ('What happens to my data?', 'Only the title, the names and the tapped days are stored, nothing else. No email address, no phone number, no tracking, no third-party cookies.'),
+    ('What happens to my data?', 'Only the title, the names and the tapped days are stored, nothing else. No email address, no phone number, no tracking, no third-party cookies. You are in control: at the bottom of every poll there is "Delete this poll completely", and then everything is gone immediately and for good. If you delete nothing, the poll stays for 12 months after the last activity so you can come back to it, not to collect data. After that it is deleted automatically.'),
 ]
 
 
@@ -177,12 +177,12 @@ PRIVACY_NL = """
 <p>Geen tracking, geen advertenties, geen cookies van derden, geen analytics. Je browser onthoudt lokaal alleen je taal, je naam en welke naam de jouwe is in een afspraak, zodat je niet elke keer opnieuw hoeft te typen. Dat blijft op je eigen toestel.</p>
 <h2>Wie kan een afspraak zien</h2>
 <p>Iedereen met de link. De link is een lange willekeurige code die niet te raden is, en afspraakpagina's worden niet door zoekmachines geïndexeerd. Deel de link dus alleen met je groep. Iedereen met de link kan ook namen en dagen aanpassen of weghalen; als iemand een naam weghaalt, blijft dat 30 dagen als korte melding zichtbaar zodat de groep weet dat het geen fout van de app was.</p>
-<h2>Hoe lang</h2>
-<p>Een afspraak wordt automatisch en volledig verwijderd na 12 maanden zonder activiteit (geen bezoek, geen wijziging). Een weggehaalde naam verdwijnt definitief na 30 dagen.</p>
+<h2>Hoe lang, en wie beslist</h2>
+<p>Jij. Onderaan elke afspraak staat "Afspraak volledig verwijderen". Klik je daarop (en bevestig je), dan zijn de titel, alle namen en alle aangeklikte dagen meteen en definitief weg, voor iedereen. Verwijder je niets, dan blijft de afspraak 12 maanden na de laatste activiteit (bezoek of wijziging) staan, zodat je er later op kunt terugkomen. Dat is niet om gegevens te verzamelen; daarna wordt ze automatisch en volledig gewist. Een weggehaalde naam verdwijnt definitief na 30 dagen.</p>
 <h2>Waar</h2>
 <p>De gegevens staan op servers van Cloudflare (Workers en D1). Whenly is open source; de code staat op <a href="https://github.com/boulbaal/whenly">GitHub</a>.</p>
-<h2>Vragen of iets laten verwijderen</h2>
-<p>Open een issue op <a href="https://github.com/boulbaal/whenly/issues">GitHub</a>. Wil je een afspraak eerder weg? Haal je naam weg via de knop onderaan de afspraak; de rest verdwijnt vanzelf na 12 maanden zonder activiteit.</p>
+<h2>Vragen</h2>
+<p>Een afspraak verwijder je zelf, via de knop onderaan de afspraak. Alleen je eigen naam weghalen kan ook. Andere vragen: open een issue op <a href="https://github.com/boulbaal/whenly/issues">GitHub</a>.</p>
 """
 PRIVACY_EN = """
 <h2>Privacy (English)</h2>
@@ -192,12 +192,12 @@ PRIVACY_EN = """
 <p>No tracking, no ads, no third-party cookies, no analytics. Your browser locally remembers only your language, your name and which name is yours in a poll, so you do not have to retype it. That stays on your own device.</p>
 <h2>Who can see a poll</h2>
 <p>Anyone with the link. The link is a long random code that cannot be guessed, and poll pages are not indexed by search engines, so share the link only with your group. Anyone with the link can also change or remove names and days; when someone removes a name, a short note stays visible for 30 days so the group knows it was not an app error.</p>
-<h2>How long</h2>
-<p>A poll is deleted automatically and completely after 12 months without activity (no visit, no change). A removed name disappears for good after 30 days.</p>
+<h2>How long, and who decides</h2>
+<p>You do. At the bottom of every poll there is "Delete this poll completely". Click it (and confirm) and the title, all names and all tapped days are gone immediately and for good, for everyone. If you delete nothing, the poll stays for 12 months after the last activity (a visit or a change) so you can come back to it. That is not to collect data; after that it is deleted automatically and completely. A removed name disappears for good after 30 days.</p>
 <h2>Where</h2>
 <p>Data is stored on Cloudflare servers (Workers and D1). Whenly is open source; the code is on <a href="https://github.com/boulbaal/whenly">GitHub</a>.</p>
-<h2>Questions or removal requests</h2>
-<p>Open an issue on <a href="https://github.com/boulbaal/whenly/issues">GitHub</a>. Want a poll gone sooner? Remove your name with the button at the bottom of the poll; the rest disappears by itself after 12 months without activity.</p>
+<h2>Questions</h2>
+<p>You delete a poll yourself, with the button at the bottom of the poll. Removing only your own name is possible too. Other questions: open an issue on <a href="https://github.com/boulbaal/whenly/issues">GitHub</a>.</p>
 """
 
 
