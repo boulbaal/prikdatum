@@ -16,6 +16,10 @@ const SHELL = [
   '/favicon.png',
 ];
 
+function isApp(pad) {
+  return pad === '/' || /^\/[a-z]{2,3}\/?$/.test(pad) || pad.startsWith('/p/');
+}
+
 self.addEventListener('install', (e) => {
   self.skipWaiting();
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(SHELL)).catch(() => {}));
@@ -46,7 +50,8 @@ self.addEventListener('fetch', (e) => {
     // netwerk-eerst; bij offline val terug op de cache (voor navigatie op de app-shell)
     e.respondWith(
       fetch(req).then((res) => {
-        if (isNav && res && res.ok) {
+        // alleen de app zelf (/, /<taal>/, /p/...) als app-shell bewaren; niet /faq, /privacy enz.
+        if (isNav && res && res.ok && isApp(url.pathname)) {
           const kopie = res.clone();
           caches.open(CACHE).then((c) => c.put('/', kopie)).catch(() => {});
         }
