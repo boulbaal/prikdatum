@@ -675,10 +675,1290 @@
   <url>
     <loc>https://whenly.vanali.workers.dev/faq</loc>
     <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/nl/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/fr/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/de/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/es/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/pt/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/pl/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/uk/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/ru/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/tr/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/ar/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/ur/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/hi/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/bn/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/id/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/vi/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/zh/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/ja/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/ko/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/sw/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/zgh/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/ku/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/sn/faq</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/faq"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/faq"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/faq"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/faq"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/faq"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/faq"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/faq"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/faq"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/faq"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/faq"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/faq"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/faq"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/faq"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/faq"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/faq"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/faq"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/faq"/>
   </url>
   <url>
     <loc>https://whenly.vanali.workers.dev/privacy</loc>
     <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/nl/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/fr/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/de/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/es/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/pt/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/pl/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/uk/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/ru/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/tr/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/ar/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/ur/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/hi/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/bn/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/id/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/vi/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/zh/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/ja/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/ko/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/sw/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/zgh/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/ku/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
+  </url>
+  <url>
+    <loc>https://whenly.vanali.workers.dev/sn/privacy</loc>
+    <lastmod>2026-09-29</lastmod>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://whenly.vanali.workers.dev/privacy"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://whenly.vanali.workers.dev/nl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://whenly.vanali.workers.dev/fr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://whenly.vanali.workers.dev/de/privacy"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://whenly.vanali.workers.dev/es/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://whenly.vanali.workers.dev/pt/privacy"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://whenly.vanali.workers.dev/pl/privacy"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://whenly.vanali.workers.dev/uk/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://whenly.vanali.workers.dev/ru/privacy"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://whenly.vanali.workers.dev/tr/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://whenly.vanali.workers.dev/ar/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ur" href="https://whenly.vanali.workers.dev/ur/privacy"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://whenly.vanali.workers.dev/hi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://whenly.vanali.workers.dev/bn/privacy"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://whenly.vanali.workers.dev/id/privacy"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://whenly.vanali.workers.dev/vi/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://whenly.vanali.workers.dev/zh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://whenly.vanali.workers.dev/ja/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://whenly.vanali.workers.dev/ko/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sw" href="https://whenly.vanali.workers.dev/sw/privacy"/>
+    <xhtml:link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy"/>
+    <xhtml:link rel="alternate" hreflang="ku" href="https://whenly.vanali.workers.dev/ku/privacy"/>
+    <xhtml:link rel="alternate" hreflang="sn" href="https://whenly.vanali.workers.dev/sn/privacy"/>
   </url>
   <url>
     <loc>https://whenly.vanali.workers.dev/vergelijking</loc>

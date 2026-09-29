@@ -2,29 +2,53 @@
 """Maakt de statische pagina's in public/ uit de markdown in promo/ plus de FAQ.
 
 Gebruik: python3 tools/gen_pages.py
-Maakt: public/faq.html, public/vergelijking.html, public/blog/*.html, public/sitemap.xml
-De pagina's delen één stijl (inline, niets extern) en linken naar de app.
+Maakt: public/faq.html en public/privacy.html (Engels, x-default, stuurt door naar de taal van
+de bezoeker), public/<taal>/faq.html en public/<taal>/privacy.html voor alle 23 talen (teksten in
+tools/paginas_teksten.py), public/vergelijking.html, public/blog/*.html en public/sitemap.xml.
+De pagina's delen één stijl (inline, niets extern) en linken naar de app in dezelfde taal.
 """
 import html
+import json
 import os
 import re
+import sys
 import datetime
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from paginas_teksten import P  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PUB = os.path.join(ROOT, 'public')
 PROMO = os.path.join(ROOT, 'promo')
 SITE = 'https://whenly.vanali.workers.dev'
+TALEN = 'en nl fr de es pt pl uk ru tr ar ur hi bn id vi zh ja ko sw zgh ku sn'.split()
+NAMEN = {'en': 'English', 'nl': 'Nederlands', 'fr': 'Français', 'de': 'Deutsch', 'es': 'Español', 'pt': 'Português',
+         'pl': 'Polski', 'uk': 'Українська', 'ru': 'Русский', 'tr': 'Türkçe', 'ar': 'العربية', 'ur': 'اردو',
+         'hi': 'हिन्दी', 'bn': 'বাংলা', 'id': 'Bahasa Indonesia', 'vi': 'Tiếng Việt', 'zh': '中文', 'ja': '日本語',
+         'ko': '한국어', 'sw': 'Kiswahili', 'zgh': 'ⵜⴰⵎⴰⵣⵉⵖⵜ', 'ku': 'Kurdî', 'sn': 'chiShona'}
+RTL = {'ar', 'ur'}
+GITHUB = 'https://github.com/boulbaal/whenly'
 
 CSS = """
 :root{--tekst:#1F2933;--gedempt:#5B6570;--lijn:#E3E7EB;--groen:#26784C;--lichtgroen:#E8F5EE}
 *{box-sizing:border-box}body{margin:0;background:#fff;color:var(--tekst);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:17px;line-height:1.6}
 .col{max-width:680px;margin:0 auto;padding:24px 16px 80px}
-nav{display:flex;gap:16px;align-items:center;font-size:15px;margin-bottom:28px}nav a{color:var(--groen);font-weight:600;text-decoration:none}nav .app{margin-inline-start:auto;background:var(--groen);color:#fff;padding:10px 16px;border-radius:8px}
+nav{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;font-size:15px;margin-bottom:28px}nav a{color:var(--groen);font-weight:600;text-decoration:none}nav .app{margin-inline-start:auto;background:var(--groen);color:#fff;padding:10px 16px;border-radius:8px}
 h1{font-size:28px;line-height:1.25;margin:0 0 8px}h2{font-size:21px;margin:32px 0 8px}p{margin:0 0 16px}a{color:var(--groen)}
 table{border-collapse:collapse;width:100%;font-size:15px;margin:0 0 16px}th,td{border:1px solid var(--lijn);padding:8px;text-align:start;vertical-align:top}th{background:var(--lichtgroen)}
 .cta{display:inline-block;background:var(--groen);color:#fff;padding:12px 20px;border-radius:8px;text-decoration:none;font-weight:600;margin:8px 0 24px}
 .voet{margin-top:40px;font-size:13px;color:var(--gedempt)}.datum{font-size:14px;color:var(--gedempt);margin:0 0 20px}
 details{border:1px solid var(--lijn);border-radius:8px;padding:10px 14px;margin:0 0 10px}summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0}
+.taal{font:inherit;font-size:14px;color:var(--tekst);background:#fff;border:1px solid var(--lijn);border-radius:8px;padding:6px 8px;max-width:140px}
+.col{overflow-wrap:anywhere}
+@font-face{font-family:"Noto Sans Tifinagh";src:url(/fonts/noto-sans-tifinagh-tifinagh-400-normal.woff2) format("woff2");unicode-range:U+2D30-2D7F;font-display:swap}
+:lang(zgh){font-family:"Noto Sans Tifinagh",Ebrima,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+:lang(ar),:lang(ur){font-family:"Segoe UI","Noto Naskh Arabic","Noto Sans Arabic","Geeza Pro",Tahoma,Arial,sans-serif}:lang(ur){line-height:1.8}
+:lang(hi){font-family:"Nirmala UI","Noto Sans Devanagari","Kohinoor Devanagari",Mangal,Arial,sans-serif}
+:lang(bn){font-family:"Nirmala UI","Noto Sans Bengali","Kohinoor Bangla",Vrinda,Arial,sans-serif}
+:lang(zh){font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans CJK SC","Noto Sans SC",sans-serif}
+:lang(ja){font-family:-apple-system,"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI",Meiryo,"Noto Sans CJK JP","Noto Sans JP",sans-serif}
+:lang(ko){font-family:-apple-system,"Apple SD Gothic Neo","Malgun Gothic","Noto Sans CJK KR","Noto Sans KR",sans-serif}
 """
 
 
@@ -79,8 +103,18 @@ def md_to_html(md):
     return '\n'.join(out)
 
 
-def page(*, lang, title, desc, path, body, extra_head='', dir_='ltr', nav_app='Open de app', nav_faq='FAQ'):
+def page(*, lang, title, desc, path, body, extra_head='', nav_app='Open de app', nav_faq='FAQ', nav_priv='Privacy', taalkeuze=None):
+    """Eén pagina. Links in de nav volgen de taal (/<lang>/…), zodat wie in een taal zit, erin blijft.
+    taalkeuze: de bladzijde ('faq' of 'privacy') waarvoor een taalmenu getoond wordt, of None."""
     canon = SITE + path
+    dir_ = 'rtl' if lang in RTL else 'ltr'
+    pre = '' if lang == 'nl' and path.startswith(('/vergelijking', '/blog/')) else f'/{lang}'
+    app = f'{pre}/' if pre else '/'
+    menu = ''
+    if taalkeuze:
+        opties = ''.join(f'<option value="{l}" lang="{l}"{" selected" if l == lang else ""}>{html.escape(NAMEN[l])}</option>' for l in TALEN)
+        menu = (f'<select class="taal" aria-label="Language" onchange="try{{localStorage.setItem(\'prikdatum.lang\',this.value)}}catch(e){{}};'
+                f'location.href=\'/\'+this.value+\'/{taalkeuze}\'">{opties}</select>')
     return f"""<!doctype html>
 <html lang="{lang}" dir="{dir_}">
 <head>
@@ -103,9 +137,9 @@ def page(*, lang, title, desc, path, body, extra_head='', dir_='ltr', nav_app='O
 </head>
 <body>
 <div class="col">
-<nav><a href="/">Whenly</a><a href="/faq">{nav_faq}</a><a href="/privacy">Privacy</a><a class="app" href="/">{nav_app}</a></nav>
+<nav><a href="{app}">Whenly</a><a href="{pre}/faq">{html.escape(nav_faq)}</a><a href="{pre}/privacy">{html.escape(nav_priv)}</a>{menu}<a class="app" href="{app}">{html.escape(nav_app)}</a></nav>
 {body}
-<p class="voet"><a href="/">Whenly</a> · gratis, zonder account · free, no account</p>
+<p class="voet"><a href="{app}">Whenly</a> · gratis, zonder account · free, no account</p>
 </div>
 </body>
 </html>
@@ -128,89 +162,70 @@ def md_page(md_file, path, desc, datum=None):
     if datum:
         body = body.replace('</h1>', f'</h1>\n<p class="datum">{datum}</p>', 1)
     body += f'\n<a class="cta" href="/">Probeer Whenly, gratis en zonder account</a>'
-    return title, page(lang='nl', title=title, desc=desc, path=path, body=body)
+    return title, page(lang='nl', title=title, desc=desc, path=path, body=body, nav_app='Open de app', nav_faq='FAQ', nav_priv='Privacy')
 
 
-FAQ_NL = [
-    ('Is Whenly gratis?', 'Ja. Whenly is volledig gratis en blijft gratis. Geen betaalmuur, geen reclame.'),
-    ('Moet ik een account maken?', 'Nee. Niemand hoeft een account te maken, ook niet wie de afspraak aanmaakt. Je typt je naam en klikt je dagen aan.'),
-    ('Werkt het op mijn telefoon?', 'Ja. Whenly werkt in elke browser en kan als app op je startscherm worden gezet (PWA), zonder appstore.'),
-    ('In welke talen werkt Whenly?', 'Drieëntwintig talen, waaronder Nederlands, Engels, Frans, Duits, Spaans, Portugees, Pools, Oekraïens, Russisch, Turks, Arabisch, Urdu, Hindi, Bengaals, Indonesisch, Vietnamees, Chinees, Japans, Koreaans, Swahili, Tamazight, Koerdisch en Shona. De taal volgt je browser en is te wisselen via de wereldbol.'),
-    ('Wat is het verschil met Doodle?', 'Whenly vraagt niemand om te registreren, toont geen reclame en is gratis. Je klikt dagen aan op een kalender in plaats van velden in te vullen, en een stoplicht toont wanneer iedereen kan.'),
-    ('Kan ik voor iemand anders een datum invullen?', 'Ja. Kies "iemand anders invullen", typ een naam en klik de dagen voor die persoon aan.'),
-    ('Wie kan mijn afspraak zien?', 'Iedereen met de link. De link is een lange willekeurige code die niet te raden is. Pagina\'s van afspraken worden niet geïndexeerd door zoekmachines. Deel de link dus alleen met je groep.'),
-    ('Wat gebeurt er met mijn gegevens?', 'Alleen de titel, de namen en de aangeklikte dagen worden bewaard, niets anders. Geen e-mailadres, geen telefoonnummer, geen tracking, geen cookies van derden. Jij hebt er zelf controle over: onderaan elke afspraak staat "Afspraak volledig verwijderen", en dan is alles meteen en definitief weg. Verwijder je niets, dan blijft de afspraak 12 maanden na de laatste activiteit staan zodat je er later op kunt terugkomen, niet om gegevens te verzamelen. Daarna wordt ze automatisch gewist.'),
-]
-FAQ_EN = [
-    ('Is Whenly free?', 'Yes. Whenly is completely free and stays free. No paywall, no ads.'),
-    ('Do I need an account?', 'No. Nobody needs an account, not even the person who creates the poll. Type your name and tap your days.'),
-    ('Does it work on my phone?', 'Yes. Whenly works in any browser and can be added to your home screen like an app (PWA), no app store needed.'),
-    ('Which languages does Whenly support?', 'Twenty-three, including English, Dutch, French, German, Spanish, Portuguese, Polish, Ukrainian, Russian, Turkish, Arabic, Urdu, Hindi, Bengali, Indonesian, Vietnamese, Chinese, Japanese, Korean, Swahili, Tamazight, Kurdish and Shona. It follows your browser language and you can switch with the globe button.'),
-    ('How is it different from Doodle?', 'Whenly asks nobody to sign up, shows no ads and is free. You tap days on a calendar instead of filling in fields, and a traffic light shows when everyone can make it.'),
-    ('Can I fill in dates for someone else?', 'Yes. Choose "fill in for someone else", type a name and tap the days for that person.'),
-    ('Who can see my poll?', 'Anyone with the link. The link is a long random code that cannot be guessed, and poll pages are not indexed by search engines. Share the link only with your group.'),
-    ('What happens to my data?', 'Only the title, the names and the tapped days are stored, nothing else. No email address, no phone number, no tracking, no third-party cookies. You are in control: at the bottom of every poll there is "Delete this poll completely", and then everything is gone immediately and for good. If you delete nothing, the poll stays for 12 months after the last activity so you can come back to it, not to collect data. After that it is deleted automatically.'),
-]
+def hreflangs(blad):
+    """<link rel=alternate hreflang> voor /faq of /privacy: x-default en en op de wortel, de rest op /<taal>/."""
+    out = [f'<link rel="alternate" hreflang="x-default" href="{SITE}/{blad}">']
+    for l in TALEN:
+        href = f'{SITE}/{blad}' if l == 'en' else f'{SITE}/{l}/{blad}'
+        out.append(f'<link rel="alternate" hreflang="{l}" href="{href}">')
+    return '\n'.join(out)
 
 
-def faq_page():
-    def blok(items):
-        return '\n'.join(f'<details><summary>{html.escape(q)}</summary><p>{html.escape(a)}</p></details>' for q, a in items)
-    body = '<h1>Veelgestelde vragen</h1><p class="datum">Frequently asked questions (English below)</p>\n' + blok(FAQ_NL)
-    body += '\n<h2 lang="en">Frequently asked questions</h2>\n<div lang="en">' + blok(FAQ_EN) + '</div>'
-    body += '\n<a class="cta" href="/">Open Whenly</a>'
-    import json
-    ld = {
-        '@context': 'https://schema.org', '@type': 'FAQPage',
-        'mainEntity': [{'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in FAQ_NL + FAQ_EN],
-    }
-    extra = '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>'
-    return page(lang='nl', title='Veelgestelde vragen', desc='Antwoorden over Whenly: gratis, zonder account, 23 talen, privacy. FAQ in het Nederlands en Engels.', path='/faq', body=body, extra_head=extra)
+def kort(s, n=155):
+    """Meta-omschrijving: afkappen op een woordgrens."""
+    if len(s) <= n:
+        return s
+    return s[:n].rsplit(' ', 1)[0].rstrip(',.;:') + '…'
 
 
-PRIVACY_NL = """
-<h1>Privacy</h1>
-<p class="datum">Kort en zonder juridisch jargon. English below.</p>
-<h2>Wat Whenly bewaart</h2>
-<p>Alleen wat je zelf intypt: de titel van de afspraak, de namen van de deelnemers, de aangeklikte dagen en eventueel een uur. Verder niets. Geen e-mailadres, geen telefoonnummer, geen account, geen wachtwoord.</p>
-<h2>Wat Whenly niet doet</h2>
-<p>Geen tracking, geen advertenties, geen cookies van derden, geen analytics. Je browser onthoudt lokaal alleen je taal, je naam en welke naam de jouwe is in een afspraak, zodat je niet elke keer opnieuw hoeft te typen. Dat blijft op je eigen toestel.</p>
-<h2>Wie kan een afspraak zien</h2>
-<p>Iedereen met de link. De link is een lange willekeurige code die niet te raden is, en afspraakpagina's worden niet door zoekmachines geïndexeerd. Deel de link dus alleen met je groep. Iedereen met de link kan ook namen en dagen aanpassen of weghalen; als iemand een naam weghaalt, blijft dat 30 dagen als korte melding zichtbaar zodat de groep weet dat het geen fout van de app was.</p>
-<h2>Hoe lang, en wie beslist</h2>
-<p>Jij. Onderaan elke afspraak staat "Afspraak volledig verwijderen". Klik je daarop (en bevestig je), dan zijn de titel, alle namen en alle aangeklikte dagen meteen en definitief weg, voor iedereen. Verwijder je niets, dan blijft de afspraak 12 maanden na de laatste activiteit (bezoek of wijziging) staan, zodat je er later op kunt terugkomen. Dat is niet om gegevens te verzamelen; daarna wordt ze automatisch en volledig gewist. Een weggehaalde naam verdwijnt definitief na 30 dagen.</p>
-<h2>Waar</h2>
-<p>De gegevens staan op servers van Cloudflare (Workers en D1). Whenly is open source; de code staat op <a href="https://github.com/boulbaal/whenly">GitHub</a>.</p>
-<h2>Vragen</h2>
-<p>Een afspraak verwijder je zelf, via de knop onderaan de afspraak. Alleen je eigen naam weghalen kan ook. Andere vragen: open een issue op <a href="https://github.com/boulbaal/whenly/issues">GitHub</a>.</p>
-"""
-PRIVACY_EN = """
-<h2>Privacy (English)</h2>
-<h2>What Whenly stores</h2>
-<p>Only what you type yourself: the poll title, the participants' names, the tapped days and an optional time. Nothing else. No email address, no phone number, no account, no password.</p>
-<h2>What Whenly does not do</h2>
-<p>No tracking, no ads, no third-party cookies, no analytics. Your browser locally remembers only your language, your name and which name is yours in a poll, so you do not have to retype it. That stays on your own device.</p>
-<h2>Who can see a poll</h2>
-<p>Anyone with the link. The link is a long random code that cannot be guessed, and poll pages are not indexed by search engines, so share the link only with your group. Anyone with the link can also change or remove names and days; when someone removes a name, a short note stays visible for 30 days so the group knows it was not an app error.</p>
-<h2>How long, and who decides</h2>
-<p>You do. At the bottom of every poll there is "Delete this poll completely". Click it (and confirm) and the title, all names and all tapped days are gone immediately and for good, for everyone. If you delete nothing, the poll stays for 12 months after the last activity (a visit or a change) so you can come back to it. That is not to collect data; after that it is deleted automatically and completely. A removed name disappears for good after 30 days.</p>
-<h2>Where</h2>
-<p>Data is stored on Cloudflare servers (Workers and D1). Whenly is open source; the code is on <a href="https://github.com/boulbaal/whenly">GitHub</a>.</p>
-<h2>Questions</h2>
-<p>You delete a poll yourself, with the button at the bottom of the poll. Removing only your own name is possible too. Other questions: open an issue on <a href="https://github.com/boulbaal/whenly/issues">GitHub</a>.</p>
-"""
+DOORSTUREN = """<script>(function(){var T=%s;try{var l=localStorage.getItem('prikdatum.lang');if(!l){var ls=navigator.languages||[navigator.language];for(var i=0;i<ls.length;i++){var b=String(ls[i]||'').toLowerCase().split('-')[0];if(T.indexOf(b)>=0){l=b;break}}}if(l&&l!=='en'&&T.indexOf(l)>=0)location.replace('/'+l+'/%s')}catch(e){}})()</script>"""
 
 
-def privacy_page():
-    body = PRIVACY_NL + '<div lang="en">' + PRIVACY_EN + '</div>\n<a class="cta" href="/">Open Whenly</a>'
-    return page(lang='nl', title='Privacy', desc='Wat Whenly bewaart (alleen titel, namen en dagen), hoe lang (12 maanden zonder activiteit) en wat het niet doet (geen tracking, geen reclame). NL en EN.', path='/privacy', body=body)
+def faq_page(lang, wortel=False):
+    """/faq (wortel, Engels, stuurt door naar de taal van de bezoeker) of /<lang>/faq."""
+    d = P[lang]
+    items = list(zip(d['q'], d['a']))
+    body = f'<h1>{html.escape(d["faq_title"])}</h1>\n'
+    body += '\n'.join(f'<details><summary>{html.escape(q)}</summary><p>{html.escape(a)}</p></details>' for q, a in items)
+    body += f'\n<a class="cta" href="/{lang}/">{html.escape(d["open"])}</a>'
+    ld = {'@context': 'https://schema.org', '@type': 'FAQPage', 'inLanguage': lang,
+          'mainEntity': [{'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in items]}
+    extra = '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>\n' + hreflangs('faq')
+    if wortel:
+        extra += '\n' + DOORSTUREN % (json.dumps(TALEN), 'faq')
+    path = '/faq' if (wortel or lang == 'en') else f'/{lang}/faq'
+    return page(lang=lang, title=d['faq_title'], desc=kort(d['a'][0] + ' ' + d['a'][1]), path=path, body=body, extra_head=extra,
+                nav_app=d['open'], nav_faq=d['faq'], nav_priv=d['privacy'], taalkeuze='faq')
+
+
+def privacy_page(lang, wortel=False):
+    """/privacy (wortel, Engels, stuurt door) of /<lang>/privacy."""
+    d = P[lang]
+    body = f'<h1>{html.escape(d["priv_title"])}</h1>\n'
+    for h, p in zip(d['h'], d['p']):
+        p = html.escape(p).replace('GITHUB', f'<a href="{GITHUB}">GitHub</a>')
+        body += f'<h2>{html.escape(h)}</h2>\n<p>{p}</p>\n'
+    body += f'<a class="cta" href="/{lang}/">{html.escape(d["open"])}</a>'
+    extra = hreflangs('privacy')
+    if wortel:
+        extra += '\n' + DOORSTUREN % (json.dumps(TALEN), 'privacy')
+    path = '/privacy' if (wortel or lang == 'en') else f'/{lang}/privacy'
+    return page(lang=lang, title=d['priv_title'], desc=kort(d['p'][0]), path=path, body=body, extra_head=extra,
+                nav_app=d['open'], nav_faq=d['faq'], nav_priv=d['privacy'], taalkeuze='privacy')
 
 
 def main():
     vandaag = datetime.date.today().isoformat()
     paginas = []
-    write('faq.html', faq_page()); paginas.append('/faq')
-    write('privacy.html', privacy_page()); paginas.append('/privacy')
+    write('faq.html', faq_page('en', wortel=True))
+    write('privacy.html', privacy_page('en', wortel=True))
+    for l in TALEN:
+        # /en/faq bestaat ook (de app linkt altijd naar /<taal>/…), maar wijst met canonical naar /faq
+        write(f'{l}/faq.html', faq_page(l))
+        write(f'{l}/privacy.html', privacy_page(l))
 
     t, h = md_page('vergelijking-whenly-doodle-when2meet.md', '/vergelijking',
                    'Eerlijke vergelijking van Whenly, Doodle en When2meet: account, reclame, kost, mobiel, talen, open source.')
@@ -224,17 +239,27 @@ def main():
                    'Praktische aanpak om met een grote groep een datum te vinden zonder dat het weken duurt.', datum='28 september 2026')
     write('blog/datum-prikken-met-een-grote-groep.html', h); paginas.append('/blog/datum-prikken-met-een-grote-groep')
 
-    talen = 'en nl fr de es pt pl uk ru tr ar ur hi bn id vi zh ja ko sw zgh ku sn'.split()
-    urls = [SITE + '/'] + [f'{SITE}/{l}/' for l in talen] + [SITE + p for p in paginas]
+    talen = TALEN
+    # (url, hreflang-groep of None); /en/faq en /en/privacy niet: die zijn canonical naar de wortel
+    urls = [(SITE + '/', 'app')] + [(f'{SITE}/{l}/', 'app') for l in talen]
+    for blad in ('faq', 'privacy'):
+        urls.append((f'{SITE}/{blad}', blad))
+        urls += [(f'{SITE}/{l}/{blad}', blad) for l in talen if l != 'en']
+    urls += [(SITE + p, None) for p in paginas]
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">']
-    for u in urls:
+    for u, groep in urls:
         sm.append('  <url>')
         sm.append(f'    <loc>{u}</loc>')
         sm.append(f'    <lastmod>{vandaag}</lastmod>')
-        if u == SITE + '/' or u.rstrip('/').rsplit('/', 1)[-1] in talen:
+        if groep == 'app':
             sm.append(f'    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/"/>')
             for l in talen:
                 sm.append(f'    <xhtml:link rel="alternate" hreflang="{l}" href="{SITE}/{l}/"/>')
+        elif groep:
+            sm.append(f'    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}/{groep}"/>')
+            for l in talen:
+                href = f'{SITE}/{groep}' if l == 'en' else f'{SITE}/{l}/{groep}'
+                sm.append(f'    <xhtml:link rel="alternate" hreflang="{l}" href="{href}"/>')
         sm.append('  </url>')
     sm.append('</urlset>')
     write('sitemap.xml', '\n'.join(sm) + '\n')

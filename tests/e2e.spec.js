@@ -341,7 +341,30 @@ test.describe('API', () => {
     expect(faq.headers()['x-content-type-options']).toBe('nosniff');
     expect(faq.headers()['content-security-policy']).toContain("frame-ancestors 'none'");
     expect(await faq.text()).toContain('"@type": "FAQPage"');
-    expect(await (await request.get('/privacy')).text()).toContain('Afspraak volledig verwijderen');
+    // wortel = Engels (x-default) met doorsturen naar de taal van de bezoeker
+    const privRoot = await (await request.get('/privacy')).text();
+    expect(privRoot).toContain('<html lang="en" dir="ltr">');
+    expect(privRoot).toContain('Delete this poll completely');
+    expect(privRoot).toContain("location.replace('/'+l+'/privacy')");
+    expect(privRoot).toContain('<link rel="alternate" hreflang="zgh" href="https://whenly.vanali.workers.dev/zgh/privacy">');
+    // per taal: /<taal>/faq en /<taal>/privacy, in die taal, met de nav in die taal
+    const nlPriv = await (await request.get('/nl/privacy')).text();
+    expect(nlPriv).toContain('<html lang="nl" dir="ltr">');
+    expect(nlPriv).toContain('Afspraak volledig verwijderen');
+    expect(nlPriv).toContain('<link rel="canonical" href="https://whenly.vanali.workers.dev/nl/privacy">');
+    expect(nlPriv).not.toContain("location.replace(");
+    const arFaq = await (await request.get('/ar/faq')).text();
+    expect(arFaq).toContain('<html lang="ar" dir="rtl">');
+    expect(arFaq).toContain('"@type": "FAQPage"');
+    expect(arFaq).toContain('<a href="/ar/privacy">الخصوصية</a>');
+    expect(arFaq).toContain('<option value="ar" lang="ar" selected>');
+    const zghFaq = await (await request.get('/zgh/faq')).text();
+    expect(zghFaq).toContain('<html lang="zgh" dir="ltr">');
+    expect(zghFaq).toContain('ⵉⵙⵇⵙⵉⵜⵏ');
+    for (const l of ['en', 'fr', 'ur', 'hi', 'bn', 'zh', 'ja', 'ko', 'sw', 'ku', 'sn']) {
+      expect((await request.get(`/${l}/faq`)).status(), l).toBe(200);
+      expect((await request.get(`/${l}/privacy`)).status(), l).toBe(200);
+    }
     const robots = await request.get('/robots.txt');
     expect(robots.headers()['content-type']).toContain('text/plain');
     expect(await robots.text()).toContain('Sitemap: https://whenly.vanali.workers.dev/sitemap.xml');
@@ -349,6 +372,9 @@ test.describe('API', () => {
     expect(sm.headers()['content-type']).toContain('xml');
     const smt = await sm.text();
     expect(smt).toContain('<loc>https://whenly.vanali.workers.dev/sw/</loc>');
+    expect(smt).toContain('<loc>https://whenly.vanali.workers.dev/ar/privacy</loc>');
+    expect(smt).toContain('<xhtml:link rel="alternate" hreflang="x-default" href="https://whenly.vanali.workers.dev/faq"/>');
+    expect(smt).not.toContain('<loc>https://whenly.vanali.workers.dev/en/faq</loc>'); // canonical naar /faq
     expect(smt).toContain('<loc>https://whenly.vanali.workers.dev/blog/gratis-doodle-alternatieven</loc>');
     for (const pad of ['/vergelijking', '/privacy', '/blog/gratis-doodle-alternatieven', '/blog/datum-prikken-met-een-grote-groep', '/fonts/noto-sans-tifinagh-tifinagh-400-normal.woff2', '/icon-maskable-512.png', '/screenshots/phone.png']) {
       expect((await request.get(pad)).status(), pad).toBe(200);
@@ -915,8 +941,9 @@ test.describe("Scenario's", () => {
     await page.reload();
     await expect(page.locator('.weggehaald')).toContainText('Iemand heeft Sofie weggehaald');
     await expect(page.locator('.chip', { hasText: 'Sofie' })).toHaveCount(0);
-    // voettekst: privacy-link
-    await expect(page.locator('#voet a.privacy')).toHaveAttribute('href', '/privacy');
+    // voettekst: FAQ- en privacy-link in de taal van de app
+    await expect(page.locator('#voet a.privacy')).toHaveAttribute('href', '/nl/privacy');
+    await expect(page.locator('#voet a.faq')).toHaveAttribute('href', '/nl/faq');
     // bezoekteller staat onder de doneerknop, niet meer in de afspraak zelf
     await expect(page.locator('#bezoek')).toContainText('Aantal bezocht');
     expect(await page.evaluate(() => document.getElementById('bezoek').compareDocumentPosition(document.getElementById('doneer')) & Node.DOCUMENT_POSITION_PRECEDING)).toBeTruthy();
