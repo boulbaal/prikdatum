@@ -17,13 +17,11 @@ Status van de tekst hieronder: klaar om te plakken. Pas aan wat je anders wilt z
 
 ## Stap 0: voor je ergens post (deze week)
 
-1. **GitHub-repo netjes.** README is nu Engels bovenaan met een screenshot, Nederlands eronder. Nog te doen door jou (Settings van de repo, of ik doe het via `gh` als dat op je pc staat):
-   - Description: `Pick a date with a group. No account, no ads, free. 23 languages. Cloudflare Workers + D1, one HTML file.`
-   - Website: `https://whenly.vanali.workers.dev`
-   - Topics: `scheduling`, `date-picker`, `group-scheduling`, `doodle-alternative`, `cloudflare-workers`, `d1`, `pwa`, `i18n`, `no-account`
+1. **GitHub-repo netjes.** [GEDAAN] README Engels bovenaan met screenshot, Nederlands eronder; description, website en topics gezet via `gh`.
 2. **Product Hunt-account nu al aanmaken** (jij), onder de naam die je wil, en de komende twee weken af en toe een product upvoten of een reactie schrijven. PH weegt stemmen en posts van gloednieuwe accounts lager. Launch daarom pas in stap 4.
 3. **Hacker News-account** (jij). Ook hier telt leeftijd van het account iets; maak hem nu.
 4. **Google Search Console en Bing Webmaster Tools** (jij, eigen Google/Microsoft-account). Verifiëren kan met een HTML-bestand: geef mij het bestand of de code, ik zet het op de site. Daarna de sitemap indienen: `https://whenly.vanali.workers.dev/sitemap.xml`. Zonder dit weet Google niet dat de 23 taalpagina's bestaan.
+   [GEDAAN zonder account] IndexNow: alle 73 URL's aangemeld bij Bing, Yandex, Naver en Seznam (`node tools/indexnow.mjs`, opnieuw draaien na elke deploy met nieuwe pagina's). Google doet daar niet aan mee.
 5. **Geen awesome-selfhosted.** Die lijst eist dat software niet van één cloudprovider afhangt en dat het project minstens vier maanden oud is. Whenly draait op Cloudflare Workers + D1 en is één dag oud. Punt 10 uit de promokit vervalt dus. Awesome-lijsten rond scheduling zijn er wel; die zoeken we op zodra er gebruikers zijn.
 6. **Niet doen:** Lobsters (alleen op uitnodiging), BetaList (voor bèta's, betaalde wachtrij), massaal aanmelden bij "launch directories" die om een backlink of geld vragen.
 
@@ -142,7 +140,7 @@ Voorbereiden op PH kan je een paar dagen vooraf; kies dan de launchdatum.
 
 **Topics:** Productivity, Calendar, Open Source, Meetings.
 
-**Galerij** (1270×760): `shot-desktop-poll-en.png`, `shot-desktop-home-en.png`, `shot-mobiel-poll-en.png` (zet die op een achtergrond van 1270×760, of laat mij dat doen). Eerste beeld: de afspraakpagina met het groene "Everyone can make …". Geen logo als eerste beeld.
+**Galerij** (1270×760, klaar in `promo/assets/`): `ph-gallery-1-poll.png` (afspraakpagina met het groene "Everyone can make …"), `ph-gallery-2-mobile.png` (telefoon met tagline), `ph-gallery-3-home.png` (startpagina). In die volgorde; geen logo als eerste beeld. Demo: `demo-en.gif`.
 
 **Thumbnail:** `public/icon-512.png`.
 
@@ -179,7 +177,7 @@ Na twee weken: cijfers naast de kanalen leggen en beslissen waar de regionale fa
 ## Wat ik zelf nog kan doen zonder account
 
 - Verificatiebestand voor Search Console / Bing op de site zetten zodra jij het geeft.
-- IndexNow (Bing, Yandex, Naver, Seznam) instellen: een sleutelbestand op de site en de sitemap-URL's aanmelden. Google doet niet mee aan IndexNow.
-- Galerijbeelden op maat maken (1270×760 met de telefoonscreenshot op een achtergrond).
-- Een Engelse demo-GIF van 10 seconden voor PH en Reddit (frames staan al in `promo/assets/gif-*-en.png`).
+- Formulieren (AlternativeTo, OpenAlternative, Product Hunt) in jouw browser vooraf invullen terwijl jij ingelogd bent; jij drukt op verzenden.
 - Antwoorden helpen schrijven op reacties, als je ze me doorgeeft.
+
+Gedaan: IndexNow, galerijbeelden, demo-GIF, README, repo-metadata.
