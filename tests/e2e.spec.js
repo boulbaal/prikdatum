@@ -265,16 +265,51 @@ test.describe('API', () => {
     expect(de).toContain('<html lang="de">');
     expect(de).toContain('<title>Wann treffen wir uns? · Whenly</title>');
     expect(de).toContain('<link rel="canonical" href="https://whenly.vanali.workers.dev/de/">');
-    expect((de.match(/hreflang="/g) || []).length).toBe(21); // 20 talen + x-default
+    expect((de.match(/hreflang="/g) || []).length).toBe(24); // 23 talen + x-default
     const ar = await (await request.get('/ar')).text();
     expect(ar).toContain('<html lang="ar" dir="rtl">');
     expect(ar).toContain('<meta property="og:locale" content="ar_EG">');
     const home = await (await request.get('/')).text();
     expect(home).toContain('<html lang="en">');
-    expect((home.match(/hreflang="/g) || []).length).toBe(21);
+    expect((home.match(/hreflang="/g) || []).length).toBe(24);
     expect(home).toContain('"@type":"WebApplication"');
     // een onbekende taalcode is gewoon de app (SPA-fallback), geen 500
     expect((await request.get('/xx/')).status()).toBe(200);
+  });
+
+  test('A24 weghalen is zacht: naam verdwijnt uit de lijst, blijft als "weggehaald"-info, komt terug bij opnieuw meedoen', async ({ request }) => {
+    const { id } = await apiMaakPoll(request, { title: 'Etentje', name: 'Ali', options: [{ date: D1, time: null }] });
+    const s = await (await request.post('/api/polls/' + id + '/participants', { data: { name: 'Sofie' } })).json();
+    const full1 = await (await request.get('/api/polls/' + id)).json();
+    await request.put(`/api/polls/${id}/participants/${s.participantId}/votes`, { data: { optionIds: [full1.options[0].id] } });
+    expect((await request.delete(`/api/polls/${id}/participants/${s.participantId}`)).status()).toBe(200);
+    const full2 = await (await request.get('/api/polls/' + id)).json();
+    expect(full2.participants.map((p) => p.name)).toEqual(['Ali']);
+    expect(full2.removed.map((r) => r.name)).toEqual(['Sofie']);
+    expect(full2.removed[0].deletedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
+    expect(full2.options[0].votes).not.toContain(s.participantId); // stemmen zijn weg
+    // een weggehaalde deelnemer kan niets meer doen
+    expect((await request.put(`/api/polls/${id}/participants/${s.participantId}/votes`, { data: { optionIds: [] } })).status()).toBe(404);
+    // dezelfde naam komt terug: weer actief, zonder oude stemmen, en niet meer "weggehaald"
+    const terug = await (await request.post('/api/polls/' + id + '/participants', { data: { name: 'sofie' } })).json();
+    expect(terug.participantId).toBe(s.participantId);
+    const full3 = await (await request.get('/api/polls/' + id)).json();
+    expect(full3.participants.map((p) => p.name)).toEqual(['Ali', 'sofie']);
+    expect(full3.removed).toEqual([]);
+    expect(full3.options[0].votes).not.toContain(s.participantId);
+  });
+
+  test('A25 opruiming: afspraak zonder activiteit sinds 12 maanden verdwijnt, actieve blijft', async ({ request }) => {
+    const oud = await apiMaakPoll(request, { title: 'Oud', name: 'Ali', options: [{ date: D1, time: null }] });
+    const nieuw = await apiMaakPoll(request, { title: 'Nieuw', name: 'Ali', options: [{ date: D1, time: null }] });
+    // activiteit 400 dagen terugzetten in de lokale database
+    execSync(`npx wrangler d1 execute prikdatum --local --command "UPDATE polls SET last_activity_at = '2025-01-01T00:00:00.000Z' WHERE id = '${oud.id}'"`, {
+      cwd: path.join(__dirname, '..'), stdio: 'pipe', timeout: 60_000,
+    });
+    const cron = await request.get('/__scheduled?cron=17+3+*+*+*');
+    expect(cron.status()).toBe(200);
+    expect((await request.get('/api/polls/' + oud.id)).status()).toBe(404);
+    expect((await request.get('/api/polls/' + nieuw.id)).status()).toBe(200);
   });
 
   test('A23 afspraakpagina niet indexeerbaar, statische pagina\'s en headers', async ({ request }) => {
@@ -295,7 +330,7 @@ test.describe('API', () => {
     const smt = await sm.text();
     expect(smt).toContain('<loc>https://whenly.vanali.workers.dev/sw/</loc>');
     expect(smt).toContain('<loc>https://whenly.vanali.workers.dev/blog/gratis-doodle-alternatieven</loc>');
-    for (const pad of ['/vergelijking', '/blog/gratis-doodle-alternatieven', '/blog/datum-prikken-met-een-grote-groep']) {
+    for (const pad of ['/vergelijking', '/privacy', '/blog/gratis-doodle-alternatieven', '/blog/datum-prikken-met-een-grote-groep', '/fonts/noto-sans-tifinagh-tifinagh-400-normal.woff2', '/icon-maskable-512.png', '/screenshots/phone.png']) {
       expect((await request.get(pad)).status(), pad).toBe(200);
     }
   });
@@ -556,9 +591,13 @@ test.describe("Scenario's", () => {
     await page.goto('/p/' + id);
     await expect(page.locator('.legenda')).toContainText('jij kan');
     await expect(page.locator('.legenda')).toContainText('iemand anders kan');
-    // de kalender opent op de huidige maand; een dag vroeg in die maand ligt in het verleden
-    const eersteVanDeMaand = new Date().toISOString().slice(0, 8) + '01';
-    const vandaag = new Date().toISOString().slice(0, 10);
+    // blader naar de huidige maand (de kalender opent op de eerste komende dag);
+    // een dag vroeg in de huidige maand ligt in het verleden. Lokale tijd, zoals de app.
+    const nu = new Date();
+    const mm = String(nu.getMonth() + 1).padStart(2, '0');
+    const eersteVanDeMaand = nu.getFullYear() + '-' + mm + '-01';
+    const vandaag = eersteVanDeMaand.slice(0, 8) + String(nu.getDate()).padStart(2, '0');
+    await toonMaand(page, nu.getFullYear() + '-' + mm);
     if (eersteVanDeMaand !== vandaag) {
       await expect(dag(page, eersteVanDeMaand)).toHaveClass(/verleden/);
     }
@@ -689,7 +728,7 @@ test.describe("Scenario's", () => {
     await page.goto('/');
     await page.locator('#vlag').click();
     await expect(page.locator('#talen')).toBeVisible();
-    expect(await page.locator('#talen button').count()).toBe(20);
+    expect(await page.locator('#talen button').count()).toBe(23);
     await expect(page.locator('#vlag')).toHaveAttribute('aria-expanded', 'true');
     await page.keyboard.press('Escape');
     await expect(page.locator('#talen')).toBeHidden();
@@ -712,7 +751,7 @@ test.describe("Scenario's", () => {
     const page = await ctx.newPage();
     await page.goto('/ja/');
     await expect(page.locator('h1')).toHaveText('いつ会いましょう？');
-    await expect(page.locator('#voet a')).toHaveAttribute('href', '/');
+    await expect(page.locator('#voet a').first()).toHaveAttribute('href', '/');
     // keuze blijft bewaard op de gewone startpagina
     await page.goto('/');
     await expect(page.locator('h1')).toHaveText('いつ会いましょう？');
@@ -726,6 +765,158 @@ test.describe("Scenario's", () => {
     await expect(page.locator('.status .balk')).toHaveClass(/definitief/);
     await expect(page.locator('.status .nog')).toHaveText('Nog een datum prikken?');
     await expect(page.locator('.status .nog')).toHaveAttribute('href', '/');
+    await ctx.close();
+  });
+
+  test('S21 server antwoordt niet: melding met "opnieuw", daarna weer gewoon', async ({ browser, request }, testInfo) => {
+    const { id } = await apiMaakPoll(request, { title: 'Etentje', name: 'Ali', options: [{ date: D1, time: T1 }] });
+    const ctx = await browser.newContext(ctxOpties(testInfo));
+    const page = await ctx.newPage();
+    await page.route('**/api/polls/' + id, (route) => route.abort());
+    await page.goto('/p/' + id);
+    await expect(page.locator('.melding.fout')).toBeVisible();
+    await expect(page.locator('.melding.fout')).toContainText('De server antwoordt even niet.');
+    await page.unroute('**/api/polls/' + id);
+    await page.locator('.melding.fout button').click();
+    await expect(page.locator('.melding.fout')).toBeHidden();
+    await expect(page.locator('h1')).toHaveText('Etentje');
+    await ctx.close();
+  });
+
+  test('S22 snel klikken: dubbelklik op een nieuwe dag en twee dagen vlak na elkaar verliezen geen stem', async ({ browser, request }, testInfo) => {
+    const { id, participantId } = await apiMaakPoll(request, { title: 'Etentje', name: 'Ali', options: [] });
+    const ctx = await browser.newContext(ctxOpties(testInfo));
+    await ctx.addInitScript(([pid, pol]) => { localStorage.setItem('prikdatum.p.' + pol, pid); }, [participantId, id]);
+    const page = await ctx.newPage();
+    await page.goto('/p/' + id);
+    await toonMaand(page, MAAND);
+    // dubbelklik = aan en meteen weer uit: geen fout, geen halve toestand
+    await dag(page, D1).dblclick();
+    await page.waitForTimeout(1500);
+    await expect(page.locator('.fout:visible')).toHaveCount(0);
+    let full = await (await request.get('/api/polls/' + id)).json();
+    const d1 = full.options.find((o) => o.date === D1);
+    const uiMijn = await dag(page, D1).evaluate((n) => n.classList.contains('mijn'));
+    expect(!!(d1 && d1.votes.includes(participantId))).toBe(uiMijn); // server en scherm zijn het eens
+    // twee nieuwe dagen vlak na elkaar (zonder te wachten): allebei aangevinkt
+    await dag(page, D2).click({ noWaitAfter: true });
+    await dag(page, D3).click({ noWaitAfter: true });
+    await page.waitForTimeout(2000);
+    full = await (await request.get('/api/polls/' + id)).json();
+    for (const dt of [D2, D3]) {
+      const o = full.options.find((x) => x.date === dt);
+      expect(o && o.votes.includes(participantId), dt).toBe(true);
+    }
+    await expect(dag(page, D2)).toHaveClass(/mijn/);
+    await expect(dag(page, D3)).toHaveClass(/mijn/);
+    await ctx.close();
+  });
+
+  test('S23 kalender opent op de eerste komende dag, of op de definitieve dag', async ({ browser, request }, testInfo) => {
+    // opties in oktober 2026 (in de toekomst): de kalender opent daar, niet op de huidige maand
+    const { id } = await apiMaakPoll(request, { title: 'Later', name: 'Ali', options: [{ date: D2, time: null }, { date: D1, time: null }] });
+    const ctx = await browser.newContext(ctxOpties(testInfo));
+    const page = await ctx.newPage();
+    await page.goto('/p/' + id);
+    await expect(page.locator('#kalmaand')).toHaveAttribute('data-maand', MAAND);
+    // definitieve dag wint
+    const ver = '2027-03-12';
+    const p2 = await apiMaakPoll(request, { title: 'Definitief', name: 'Ali', options: [{ date: D1, time: null }, { date: ver, time: null }] });
+    const f2 = await (await request.get('/api/polls/' + p2.id)).json();
+    await request.put('/api/polls/' + p2.id + '/final', { data: { optionId: f2.options.find((o) => o.date === ver).id } });
+    await page.goto('/p/' + p2.id);
+    await expect(page.locator('#kalmaand')).toHaveAttribute('data-maand', '2027-03');
+    // bladeren blijft werken
+    await page.locator('.kalkop button').nth(0).click();
+    await expect(page.locator('#kalmaand')).toHaveAttribute('data-maand', '2027-02');
+    await ctx.close();
+  });
+
+  test('S24 toegankelijkheid: dagen hebben een volledige naam en toestand, focus blijft staan na Enter, "weggehaald"-info', async ({ browser, request }, testInfo) => {
+    const { id, participantId } = await apiMaakPoll(request, { title: 'Etentje', name: 'Ali', options: [{ date: D1, time: null }] });
+    const sofie = await (await request.post('/api/polls/' + id + '/participants', { data: { name: 'Sofie' } })).json();
+    const ctx = await browser.newContext(ctxOpties(testInfo));
+    await ctx.addInitScript(([pid, pol]) => { localStorage.setItem('prikdatum.p.' + pol, pid); }, [participantId, id]);
+    const page = await ctx.newPage();
+    await page.goto('/p/' + id);
+    await toonMaand(page, MAAND);
+    await expect(dag(page, D1)).toHaveAttribute('aria-label', 'vrijdag 9 oktober 2026: jij');
+    await expect(dag(page, D1)).toHaveAttribute('aria-pressed', 'true');
+    await expect(dag(page, D2)).toHaveAttribute('aria-label', /vrijdag 16 oktober 2026: nog niemand/);
+    await expect(dag(page, D2)).toHaveAttribute('aria-pressed', 'false');
+    await expect(page.locator('.chip', { hasText: 'Ali' })).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('.chip', { hasText: 'Sofie' })).toHaveAttribute('aria-pressed', 'false');
+    await expect(page.locator('.status')).toHaveAttribute('aria-live', 'polite');
+    // toetsenbord: focus op een dag, Enter, de focus blijft op dezelfde dag
+    await dag(page, D2).focus();
+    await page.keyboard.press('Enter');
+    await expect(dag(page, D2)).toHaveClass(/mijn/);
+    await page.waitForTimeout(600);
+    expect(await page.evaluate(() => document.activeElement && document.activeElement.dataset.date)).toBe(D2);
+    // iemand haalt Sofie weg: info voor de groep
+    await request.delete(`/api/polls/${id}/participants/${sofie.participantId}`);
+    await page.reload();
+    await expect(page.locator('.weggehaald')).toContainText('Iemand heeft Sofie weggehaald');
+    await expect(page.locator('.chip', { hasText: 'Sofie' })).toHaveCount(0);
+    // voettekst: privacy-link
+    await expect(page.locator('#voet a.privacy')).toHaveAttribute('href', '/privacy');
+    await ctx.close();
+  });
+
+  test('S25 Tamazight, Koerdisch en Shona: eigen datumnamen als de browser de taal niet kent', async ({ browser, request }, testInfo) => {
+    const { id } = await apiMaakPoll(request, { title: 'Imnsi', name: 'Kushim', options: [{ date: D1, time: T1 }] });
+    const gevallen = [
+      ['zgh', 'ⵎⴰⵏⴰⴳ ⴰⴷ ⵏⵎⵢⴰⴳⴰⵔ?', /ⴰⵙⵉⵎ 9 ⴽⵜⵓ ⴳ 18:00/, 'ⴰⵢⵏ', 'ⴽⵜⵓⴱⵔ 2026'],
+      ['ku', 'Kengî em hev bibînin?', /9 cot, înî saet 18:00/, 'dşm', 'cotmeh 2026'],
+      ['sn', 'Tosangana rinhi?', /Gum 9, Chs na 18:00/, 'Svo', 'Gumiguru 2026'],
+    ];
+    for (const [taal, titel, datum, eersteWd, maand] of gevallen) {
+      const ctx = await browser.newContext(ctxOpties(testInfo)); // nl-BE-browser: mag niet doorsijpelen
+      const page = await ctx.newPage();
+      await page.goto('/' + taal + '/');
+      await expect(page.locator('h1')).toHaveText(titel);
+      await page.goto('/p/' + id);
+      await expect(page.locator('.status .groot'), taal).toHaveText(datum);
+      const wd = await page.locator('.maandblok').first().locator('.kalwd').allTextContents();
+      expect(wd[0], taal + ' weekstart').toBe(eersteWd);
+      await expect(page.locator('.maandblok').first().locator('.maandnaam'), taal).toHaveText(maand);
+      await ctx.close();
+    }
+  });
+
+  test('S26 "Nieuwe afspraak" op de afspraak; de startpagina toont je eerdere afspraken (alleen deze browser)', async ({ browser, request }, testInfo) => {
+    const ctx = await browser.newContext(ctxOpties(testInfo));
+    const page = await ctx.newPage();
+    // nog niets bezocht: geen lijst
+    await page.goto('/');
+    await expect(page.locator('.recent')).toHaveCount(0);
+    const a = await apiMaakPoll(request, { title: 'Etentje', name: 'Ali', options: [{ date: D1, time: null }] });
+    const b = await apiMaakPoll(request, { title: 'Weekend aan zee', name: 'Ali', options: [{ date: D2, time: null }] });
+    await page.goto('/p/' + a.id);
+    await expect(page.locator('h1')).toHaveText('Etentje');
+    await page.goto('/p/' + b.id);
+    await expect(page.locator('h1')).toHaveText('Weekend aan zee');
+    // knop "Nieuwe afspraak" naast "Deel" brengt je naar de start
+    const nieuw = page.locator('.knoppenrij a', { hasText: 'Nieuwe afspraak' });
+    await expect(nieuw).toHaveAttribute('href', '/');
+    await nieuw.click();
+    await page.waitForURL(/\/$/);
+    // beide afspraken staan er, nieuwste eerst, en linken naar de juiste pagina
+    await expect(page.locator('.recent h2')).toHaveText('Jouw afspraken');
+    await expect(page.locator('.recent .hint')).toHaveText('Alleen op dit toestel');
+    const links = page.locator('.recent a');
+    await expect(links).toHaveCount(2);
+    await expect(links.nth(0)).toHaveText('Weekend aan zee');
+    await expect(links.nth(0)).toHaveAttribute('href', '/p/' + b.id);
+    await expect(links.nth(1)).toHaveText('Etentje');
+    await links.nth(1).click();
+    await expect(page.locator('h1')).toHaveText('Etentje');
+    // een andere browser ziet niets (alleen dit toestel)
+    const ctx2 = await browser.newContext(ctxOpties(testInfo));
+    const page2 = await ctx2.newPage();
+    await page2.goto('/');
+    await expect(page2.locator('.recent')).toHaveCount(0);
+    await ctx2.close();
     await ctx.close();
   });
 
@@ -775,7 +966,7 @@ test.describe('Statisch', () => {
   test('alle 20 talen hebben alle sleutels, met dezelfde plaatshouders', () => {
     const V = new Function('return ' + /const VERTALINGEN = (\{[\s\S]*?\n\});/.exec(html)[1])();
     const T = new Function('return ' + /const TALEN = (\{[\s\S]*?\n\});/.exec(html)[1])();
-    expect(Object.keys(T).length).toBe(20);
+    expect(Object.keys(T).length).toBe(23);
     const sleutels = Object.keys(V.en);
     expect(sleutels.length).toBeGreaterThan(60);
     const ph = (x) => [...new Set(((typeof x === 'string' ? x : Object.values(x).join(' ')).match(/\{\w+\}/g) || []))].sort().join();

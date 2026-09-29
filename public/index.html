@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Whenly</title>
-<meta name="description" content="Pick a date together with friends, family or colleagues. No account, no fuss, free forever. Available in 20 languages.">
-<meta name="theme-color" content="#2F8F5B">
+<meta name="description" content="Pick a date together with friends, family or colleagues. No account, no fuss, free forever. Available in 23 languages.">
+<meta name="theme-color" content="#26784C">
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="icon" href="/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -27,14 +27,15 @@
 <meta name="twitter:description" content="No account, no fuss. Tap the days that work and share the link. Free forever.">
 <meta name="twitter:image" content="https://whenly.vanali.workers.dev/og.png">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebApplication","name":"Whenly","url":"https://whenly.vanali.workers.dev/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript","description":"Pick a date together with friends, family or colleagues. No account, no ads, free forever.","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"inLanguage":["en","nl","fr","de","es","pt","pl","uk","ru","tr","ar","ur","hi","bn","id","vi","zh","ja","ko","sw"],"isAccessibleForFree":true}
+{"@context":"https://schema.org","@type":"WebApplication","name":"Whenly","url":"https://whenly.vanali.workers.dev/","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","browserRequirements":"Requires JavaScript","description":"Pick a date together with friends, family or colleagues. No account, no ads, free forever.","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"},"inLanguage":["en","nl","fr","de","es","pt","pl","uk","ru","tr","ar","ur","hi","bn","id","vi","zh","ja","ko","sw","zgh","ku","sn"],"isAccessibleForFree":true}
 </script>
 <style>
   :root {
     --tekst: #1F2933;
-    --gedempt: #6B7580;
-    --lijn: #E3E7EB;
-    --groen: #2F8F5B;
+    --gedempt: #5B6570;   /* 5.9:1 op wit */
+    --lijn: #E3E7EB;      /* decoratieve lijnen */
+    --rand: #8A949E;      /* randen van invoervelden en dagknoppen: 3:1 (WCAG 1.4.11) */
+    --groen: #26784C;     /* 5.4:1 met witte tekst */
     --lichtgroen: #E8F5EE;
     --rood: #B23A3A;
     --oranje: #A85B00;
@@ -70,7 +71,7 @@
   input[type="text"], input[type="time"] {
     font: inherit;
     color: inherit;
-    border: 1px solid var(--lijn);
+    border: 1px solid var(--rand);
     border-radius: 8px;
     padding: 12px;
     min-height: 44px;
@@ -80,7 +81,11 @@
   input:focus {
     outline: none;
     border-color: var(--groen);
-    box-shadow: 0 0 0 1px var(--groen);
+    box-shadow: 0 0 0 2px var(--groen);
+  }
+  button:focus-visible, a:focus-visible { outline: 3px solid var(--groen); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
   }
   button {
     font: inherit;
@@ -242,7 +247,7 @@
   .kalwd { font-size: 12px; color: var(--gedempt); text-align: center; padding: 2px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .dag {
     min-height: 50px;
-    border: 1px solid var(--lijn);
+    border: 1px solid var(--rand);
     border-radius: 8px;
     background: #fff;
     color: var(--tekst);
@@ -294,10 +299,22 @@
     color: var(--gedempt);
   }
   .voet a { color: var(--gedempt); font-weight: 600; text-decoration: none; }
+  .voet a.privacy { font-weight: 400; text-decoration: underline; }
+  .weggehaald { font-size: 13px; color: var(--gedempt); margin: 6px 0 0; }
+  .recent { margin-top: 36px; }
+  .recent h2 { font-size: 16px; margin: 0 0 2px; }
+  .recent .hint { font-size: 13px; color: var(--gedempt); margin: 0 0 8px; }
+  .recent ul { list-style: none; margin: 0; padding: 0; }
+  .recent li { border-top: 1px solid var(--lijn); }
+  .recent a { display: block; padding: 10px 0; color: var(--tekst); text-decoration: none; min-height: 44px; }
+  .recent a:hover { color: var(--groen); }
+  .knoppenrij { display: flex; gap: 14px; align-items: center; }
   .status .nog { display: inline-block; margin-top: 10px; font-size: 14px; color: var(--groen); }
   .verborgen { display: none !important; }
 
-  /* lettertypen per schrift (systeemfonts, niets extern) */
+  /* lettertypen per schrift (systeemfonts; alleen Tifinagh brengen we zelf mee, want dat ontbreekt op de meeste toestellen) */
+  @font-face { font-family: "Noto Sans Tifinagh"; src: url(/fonts/noto-sans-tifinagh-tifinagh-400-normal.woff2) format("woff2"); unicode-range: U+2D30-2D7F; font-display: swap; }
+  :lang(zgh) { font-family: "Noto Sans Tifinagh", Ebrima, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
   :lang(ar), :lang(ur) { font-family: "Segoe UI", "Noto Naskh Arabic", "Noto Sans Arabic", "Geeza Pro", Tahoma, Arial, sans-serif; }
   :lang(ur) { line-height: 1.8; }
   :lang(hi) { font-family: "Nirmala UI", "Noto Sans Devanagari", "Kohinoor Devanagari", Mangal, Arial, sans-serif; }
@@ -321,6 +338,7 @@
   }
   .melding .tekst { flex: 1 1 auto; min-width: 140px; }
   .melding.update { background: var(--lichtoranje); color: var(--oranje); }
+  .melding.fout { background: var(--lichtrood); color: var(--rood); }
   .melding.install { background: var(--lichtgroen); color: var(--tekst); }
   .melding button.klein { flex: 0 0 auto; }
   .melding .sluit {
@@ -418,6 +436,9 @@ const TALEN = {
   ja: { naam: '日本語',           locale: 'ja-JP' },
   ko: { naam: '한국어',           locale: 'ko-KR' },
   sw: { naam: 'Kiswahili',        locale: 'sw-KE' },
+  zgh: { naam: 'ⵜⴰⵎⴰⵣⵉⵖⵜ',       locale: 'zgh-MA' },
+  ku: { naam: 'Kurdî',            locale: 'ku-TR' },
+  sn: { naam: 'chiShona',         locale: 'sn-ZW' },
 };
 // Per taal alle teksten. Een waarde mag een object met meervoudsvormen zijn
 // ({one, few, many, other ...}); t() kiest dan via Intl.PluralRules op {n}.
@@ -429,7 +450,7 @@ en: {
   'make.what': 'What is it about?',
   'make.what.ph': 'e.g. Dinner, padel, weekend at the coast',
   'make.name': 'Your name',
-  'make.name.ph': 'e.g. Ali',
+  'make.name.ph': 'e.g. Kushim',
   'make.submit': 'Create the poll',
   'share.ready': 'Done. Share this link:',
   'share.copy': 'Copy',
@@ -493,6 +514,13 @@ en: {
   'lang.pick': 'Choose language',
   'share.text': 'Let\'s find a date (no account needed). Just tap the days you can make:',
   'poll.another': 'Plan another date?',
+  'footer.privacy': 'Privacy',
+  'err.offline': 'You are offline. Changes are not saved.',
+  'err.server': 'The server is not responding right now.',
+  'retry': 'Try again',
+  'removed.info': 'Someone removed {name} ({date}).',
+  'recent.title': 'Your polls',
+  'recent.hint': 'Only on this device',
 },
 nl: {
   'make.title': 'Wanneer spreken we af?',
@@ -500,7 +528,7 @@ nl: {
   'make.what': 'Waarover gaat het?',
   'make.what.ph': 'bv. Etentje, padel, weekend aan zee',
   'make.name': 'Je naam',
-  'make.name.ph': 'bv. Ali',
+  'make.name.ph': 'bv. Kushim',
   'make.submit': 'Maak de afspraak',
   'share.ready': 'Klaar. Deel deze link:',
   'share.copy': 'Kopieer',
@@ -564,6 +592,13 @@ nl: {
   'lang.pick': 'Taal kiezen',
   'share.text': 'Laten we een datum prikken (geen account nodig). Klik gewoon de dagen die je kan:',
   'poll.another': 'Nog een datum prikken?',
+  'footer.privacy': 'Privacy',
+  'err.offline': 'Je bent offline. Wijzigingen worden niet opgeslagen.',
+  'err.server': 'De server antwoordt even niet.',
+  'retry': 'Opnieuw proberen',
+  'removed.info': 'Iemand heeft {name} weggehaald ({date}).',
+  'recent.title': 'Jouw afspraken',
+  'recent.hint': 'Alleen op dit toestel',
 },
 fr: {
   'make.title': 'Quand se voit-on ?',
@@ -571,7 +606,7 @@ fr: {
   'make.what': "De quoi s'agit-il ?",
   'make.what.ph': 'p.ex. Dîner, padel, week-end à la mer',
   'make.name': 'Ton prénom',
-  'make.name.ph': 'p.ex. Ali',
+  'make.name.ph': 'p.ex. Kushim',
   'make.submit': 'Créer le rendez-vous',
   'share.ready': "C'est prêt. Partage ce lien :",
   'share.copy': 'Copier',
@@ -635,6 +670,13 @@ fr: {
   'lang.pick': 'Choisir la langue',
   'share.text': 'Trouvons une date (sans compte). Clique sur les jours où tu peux :',
   'poll.another': 'Une autre date à trouver ?',
+  'footer.privacy': 'Confidentialité',
+  'err.offline': 'Tu es hors ligne. Les changements ne sont pas enregistrés.',
+  'err.server': 'Le serveur ne répond pas pour le moment.',
+  'retry': 'Réessayer',
+  'removed.info': 'Quelqu\'un a retiré {name} ({date}).',
+  'recent.title': 'Tes rendez-vous',
+  'recent.hint': 'Seulement sur cet appareil',
 },
 de: {
   'make.title': 'Wann treffen wir uns?',
@@ -642,7 +684,7 @@ de: {
   'make.what': 'Worum geht es?',
   'make.what.ph': 'z. B. Abendessen, Padel, Wochenende am Meer',
   'make.name': 'Dein Name',
-  'make.name.ph': 'z. B. Ali',
+  'make.name.ph': 'z. B. Kushim',
   'make.submit': 'Umfrage erstellen',
   'share.ready': 'Fertig. Teile diesen Link:',
   'share.copy': 'Kopieren',
@@ -706,6 +748,13 @@ de: {
   'lang.pick': 'Sprache wählen',
   'share.text': 'Lass uns einen Termin finden (kein Konto nötig). Klick einfach die Tage an, die dir passen:',
   'poll.another': 'Noch einen Termin finden?',
+  'footer.privacy': 'Datenschutz',
+  'err.offline': 'Du bist offline. Änderungen werden nicht gespeichert.',
+  'err.server': 'Der Server antwortet gerade nicht.',
+  'retry': 'Erneut versuchen',
+  'removed.info': 'Jemand hat {name} entfernt ({date}).',
+  'recent.title': 'Deine Umfragen',
+  'recent.hint': 'Nur auf diesem Gerät',
 },
 es: {
   'make.title': '¿Cuándo quedamos?',
@@ -713,7 +762,7 @@ es: {
   'make.what': '¿De qué se trata?',
   'make.what.ph': 'p. ej. Cena, pádel, fin de semana en la playa',
   'make.name': 'Tu nombre',
-  'make.name.ph': 'p. ej. Ali',
+  'make.name.ph': 'p. ej. Kushim',
   'make.submit': 'Crear la encuesta',
   'share.ready': 'Listo. Comparte este enlace:',
   'share.copy': 'Copiar',
@@ -777,6 +826,13 @@ es: {
   'lang.pick': 'Elegir idioma',
   'share.text': 'Busquemos una fecha (sin cuenta). Marca los días que puedas:',
   'poll.another': '¿Otra fecha que elegir?',
+  'footer.privacy': 'Privacidad',
+  'err.offline': 'Estás sin conexión. Los cambios no se guardan.',
+  'err.server': 'El servidor no responde ahora mismo.',
+  'retry': 'Reintentar',
+  'removed.info': 'Alguien quitó a {name} ({date}).',
+  'recent.title': 'Tus encuestas',
+  'recent.hint': 'Solo en este dispositivo',
 },
 pt: {
   'make.title': 'Quando nos encontramos?',
@@ -784,7 +840,7 @@ pt: {
   'make.what': 'Sobre o que é?',
   'make.what.ph': 'ex. Jantar, padel, fim de semana na praia',
   'make.name': 'O teu nome',
-  'make.name.ph': 'ex. Ali',
+  'make.name.ph': 'ex. Kushim',
   'make.submit': 'Criar a votação',
   'share.ready': 'Pronto. Partilha este link:',
   'share.copy': 'Copiar',
@@ -848,6 +904,13 @@ pt: {
   'lang.pick': 'Escolher idioma',
   'share.text': 'Vamos marcar uma data (sem conta). Marca os dias em que podes:',
   'poll.another': 'Marcar outra data?',
+  'footer.privacy': 'Privacidade',
+  'err.offline': 'Estás offline. As alterações não são guardadas.',
+  'err.server': 'O servidor não está a responder.',
+  'retry': 'Tentar outra vez',
+  'removed.info': 'Alguém removeu {name} ({date}).',
+  'recent.title': 'As tuas votações',
+  'recent.hint': 'Só neste dispositivo',
 },
 pl: {
   'make.title': 'Kiedy się spotykamy?',
@@ -855,7 +918,7 @@ pl: {
   'make.what': 'O co chodzi?',
   'make.what.ph': 'np. Kolacja, padel, weekend nad morzem',
   'make.name': 'Twoje imię',
-  'make.name.ph': 'np. Ali',
+  'make.name.ph': 'np. Kushim',
   'make.submit': 'Utwórz ankietę',
   'share.ready': 'Gotowe. Udostępnij ten link:',
   'share.copy': 'Kopiuj',
@@ -919,6 +982,13 @@ pl: {
   'lang.pick': 'Wybierz język',
   'share.text': 'Ustalmy datę (bez konta). Kliknij dni, w które możesz:',
   'poll.another': 'Ustalić kolejną datę?',
+  'footer.privacy': 'Prywatność',
+  'err.offline': 'Jesteś offline. Zmiany nie są zapisywane.',
+  'err.server': 'Serwer teraz nie odpowiada.',
+  'retry': 'Spróbuj ponownie',
+  'removed.info': 'Ktoś usunął {name} ({date}).',
+  'recent.title': 'Twoje ankiety',
+  'recent.hint': 'Tylko na tym urządzeniu',
 },
 uk: {
   'make.title': 'Коли зустрічаємось?',
@@ -926,7 +996,7 @@ uk: {
   'make.what': 'Про що йдеться?',
   'make.what.ph': 'напр. Вечеря, падел, вихідні на морі',
   'make.name': 'Ваше ім’я',
-  'make.name.ph': 'напр. Алі',
+  'make.name.ph': 'напр. Кушім',
   'make.submit': 'Створити опитування',
   'share.ready': 'Готово. Поділіться цим посиланням:',
   'share.copy': 'Копіювати',
@@ -990,6 +1060,13 @@ uk: {
   'lang.pick': 'Обрати мову',
   'share.text': 'Оберімо дату (без акаунта). Просто позначте дні, коли можете:',
   'poll.another': 'Обрати ще одну дату?',
+  'footer.privacy': 'Конфіденційність',
+  'err.offline': 'Ви офлайн. Зміни не зберігаються.',
+  'err.server': 'Сервер зараз не відповідає.',
+  'retry': 'Спробувати ще раз',
+  'removed.info': 'Хтось видалив {name} ({date}).',
+  'recent.title': 'Ваші опитування',
+  'recent.hint': 'Лише на цьому пристрої',
 },
 ru: {
   'make.title': 'Когда встречаемся?',
@@ -997,7 +1074,7 @@ ru: {
   'make.what': 'О чём речь?',
   'make.what.ph': 'напр. Ужин, падел, выходные на море',
   'make.name': 'Ваше имя',
-  'make.name.ph': 'напр. Али',
+  'make.name.ph': 'напр. Кушим',
   'make.submit': 'Создать опрос',
   'share.ready': 'Готово. Поделитесь этой ссылкой:',
   'share.copy': 'Копировать',
@@ -1061,6 +1138,13 @@ ru: {
   'lang.pick': 'Выбрать язык',
   'share.text': 'Давайте выберем дату (без аккаунта). Просто отметьте дни, когда можете:',
   'poll.another': 'Выбрать ещё одну дату?',
+  'footer.privacy': 'Конфиденциальность',
+  'err.offline': 'Вы офлайн. Изменения не сохраняются.',
+  'err.server': 'Сервер сейчас не отвечает.',
+  'retry': 'Попробовать ещё раз',
+  'removed.info': 'Кто-то удалил {name} ({date}).',
+  'recent.title': 'Ваши опросы',
+  'recent.hint': 'Только на этом устройстве',
 },
 tr: {
   'make.title': 'Ne zaman buluşuyoruz?',
@@ -1068,7 +1152,7 @@ tr: {
   'make.what': 'Konu ne?',
   'make.what.ph': 'örn. Akşam yemeği, padel, deniz kenarında hafta sonu',
   'make.name': 'Adın',
-  'make.name.ph': 'örn. Ali',
+  'make.name.ph': 'örn. Kuşim',
   'make.submit': 'Anketi oluştur',
   'share.ready': 'Hazır. Bu bağlantıyı paylaş:',
   'share.copy': 'Kopyala',
@@ -1132,6 +1216,13 @@ tr: {
   'lang.pick': 'Dil seç',
   'share.text': 'Bir tarih belirleyelim (hesap gerekmez). Müsait olduğun günlere dokun:',
   'poll.another': 'Başka bir tarih belirlemek ister misin?',
+  'footer.privacy': 'Gizlilik',
+  'err.offline': 'Çevrimdışısın. Değişiklikler kaydedilmiyor.',
+  'err.server': 'Sunucu şu anda yanıt vermiyor.',
+  'retry': 'Tekrar dene',
+  'removed.info': 'Birisi {name} adını kaldırdı ({date}).',
+  'recent.title': 'Anketlerin',
+  'recent.hint': 'Sadece bu cihazda',
 },
 ar: {
   'make.title': 'متى نلتقي؟',
@@ -1139,7 +1230,7 @@ ar: {
   'make.what': 'ما المناسبة؟',
   'make.what.ph': 'مثلاً: عشاء، بادل، عطلة على البحر',
   'make.name': 'اسمك',
-  'make.name.ph': 'مثلاً: علي',
+  'make.name.ph': 'مثلاً: كوشيم',
   'make.submit': 'أنشئ الاستطلاع',
   'share.ready': 'تم. شارك هذا الرابط:',
   'share.copy': 'نسخ',
@@ -1203,6 +1294,13 @@ ar: {
   'lang.pick': 'اختر اللغة',
   'share.text': 'لنحدد موعداً (بدون حساب). اضغط على الأيام المناسبة لك:',
   'poll.another': 'تحديد موعد آخر؟',
+  'footer.privacy': 'الخصوصية',
+  'err.offline': 'أنت غير متصل. لا يتم حفظ التغييرات.',
+  'err.server': 'الخادم لا يستجيب حالياً.',
+  'retry': 'حاول مجدداً',
+  'removed.info': 'قام شخص ما بإزالة {name} ({date}).',
+  'recent.title': 'استطلاعاتك',
+  'recent.hint': 'على هذا الجهاز فقط',
 },
 ur: {
   'make.title': 'ہم کب ملیں؟',
@@ -1210,7 +1308,7 @@ ur: {
   'make.what': 'کس بارے میں ہے؟',
   'make.what.ph': 'مثلاً: ڈنر، پیڈل، ساحل پر ویک اینڈ',
   'make.name': 'آپ کا نام',
-  'make.name.ph': 'مثلاً: علی',
+  'make.name.ph': 'مثلاً: کوشیم',
   'make.submit': 'پول بنائیں',
   'share.ready': 'ہو گیا۔ یہ لنک شیئر کریں:',
   'share.copy': 'کاپی کریں',
@@ -1274,6 +1372,13 @@ ur: {
   'lang.pick': 'زبان چنیں',
   'share.text': 'آئیں ایک تاریخ طے کریں (اکاؤنٹ کی ضرورت نہیں)۔ بس وہ دن دبائیں جن میں آپ آ سکتے ہیں:',
   'poll.another': 'ایک اور تاریخ طے کریں؟',
+  'footer.privacy': 'رازداری',
+  'err.offline': 'آپ آف لائن ہیں۔ تبدیلیاں محفوظ نہیں ہو رہیں۔',
+  'err.server': 'سرور ابھی جواب نہیں دے رہا۔',
+  'retry': 'دوبارہ کوشش کریں',
+  'removed.info': 'کسی نے {name} کو ہٹا دیا ({date})۔',
+  'recent.title': 'آپ کے پول',
+  'recent.hint': 'صرف اس ڈیوائس پر',
 },
 hi: {
   'make.title': 'हम कब मिलें?',
@@ -1281,7 +1386,7 @@ hi: {
   'make.what': 'किस बारे में है?',
   'make.what.ph': 'जैसे: डिनर, पैडल, समुद्र किनारे वीकेंड',
   'make.name': 'आपका नाम',
-  'make.name.ph': 'जैसे: अली',
+  'make.name.ph': 'जैसे: कुशिम',
   'make.submit': 'पोल बनाएँ',
   'share.ready': 'हो गया। यह लिंक शेयर करें:',
   'share.copy': 'कॉपी करें',
@@ -1345,6 +1450,13 @@ hi: {
   'lang.pick': 'भाषा चुनें',
   'share.text': 'चलो एक तारीख़ तय करें (अकाउंट की ज़रूरत नहीं)। जिन दिनों आप आ सकते हैं उन्हें चुनें:',
   'poll.another': 'एक और तारीख़ तय करें?',
+  'footer.privacy': 'गोपनीयता',
+  'err.offline': 'आप ऑफ़लाइन हैं। बदलाव सहेजे नहीं जा रहे।',
+  'err.server': 'सर्वर अभी जवाब नहीं दे रहा।',
+  'retry': 'फिर कोशिश करें',
+  'removed.info': 'किसी ने {name} को हटा दिया ({date})।',
+  'recent.title': 'आपके पोल',
+  'recent.hint': 'केवल इस डिवाइस पर',
 },
 bn: {
   'make.title': 'আমরা কবে দেখা করব?',
@@ -1352,7 +1464,7 @@ bn: {
   'make.what': 'কী নিয়ে?',
   'make.what.ph': 'যেমন: ডিনার, প্যাডেল, সমুদ্রে সপ্তাহান্ত',
   'make.name': 'আপনার নাম',
-  'make.name.ph': 'যেমন: আলি',
+  'make.name.ph': 'যেমন: কুশিম',
   'make.submit': 'পোল তৈরি করুন',
   'share.ready': 'হয়ে গেছে। এই লিংকটি শেয়ার করুন:',
   'share.copy': 'কপি করুন',
@@ -1416,6 +1528,13 @@ bn: {
   'lang.pick': 'ভাষা বেছে নিন',
   'share.text': 'চলুন একটি তারিখ ঠিক করি (অ্যাকাউন্ট লাগবে না)। যে দিনগুলো পারবেন সেগুলো ট্যাপ করুন:',
   'poll.another': 'আরেকটি তারিখ ঠিক করবেন?',
+  'footer.privacy': 'গোপনীয়তা',
+  'err.offline': 'আপনি অফলাইনে আছেন। পরিবর্তন সংরক্ষণ হচ্ছে না।',
+  'err.server': 'সার্ভার এখন সাড়া দিচ্ছে না।',
+  'retry': 'আবার চেষ্টা করুন',
+  'removed.info': 'কেউ {name}-কে সরিয়ে দিয়েছে ({date})।',
+  'recent.title': 'আপনার পোলগুলো',
+  'recent.hint': 'শুধু এই ডিভাইসে',
 },
 id: {
   'make.title': 'Kapan kita bertemu?',
@@ -1423,7 +1542,7 @@ id: {
   'make.what': 'Tentang apa?',
   'make.what.ph': 'mis. Makan malam, padel, akhir pekan di pantai',
   'make.name': 'Nama kamu',
-  'make.name.ph': 'mis. Ali',
+  'make.name.ph': 'mis. Kushim',
   'make.submit': 'Buat polling',
   'share.ready': 'Selesai. Bagikan tautan ini:',
   'share.copy': 'Salin',
@@ -1487,6 +1606,13 @@ id: {
   'lang.pick': 'Pilih bahasa',
   'share.text': 'Ayo tentukan tanggal (tanpa akun). Ketuk saja hari yang kamu bisa:',
   'poll.another': 'Tentukan tanggal lain?',
+  'footer.privacy': 'Privasi',
+  'err.offline': 'Kamu sedang offline. Perubahan tidak tersimpan.',
+  'err.server': 'Server sedang tidak merespons.',
+  'retry': 'Coba lagi',
+  'removed.info': 'Seseorang menghapus {name} ({date}).',
+  'recent.title': 'Polling kamu',
+  'recent.hint': 'Hanya di perangkat ini',
 },
 vi: {
   'make.title': 'Khi nào chúng ta gặp nhau?',
@@ -1494,7 +1620,7 @@ vi: {
   'make.what': 'Về việc gì?',
   'make.what.ph': 'vd: Ăn tối, padel, cuối tuần đi biển',
   'make.name': 'Tên của bạn',
-  'make.name.ph': 'vd: Ali',
+  'make.name.ph': 'vd: Kushim',
   'make.submit': 'Tạo bình chọn',
   'share.ready': 'Xong. Chia sẻ liên kết này:',
   'share.copy': 'Sao chép',
@@ -1558,6 +1684,13 @@ vi: {
   'lang.pick': 'Chọn ngôn ngữ',
   'share.text': 'Cùng chọn ngày nhé (không cần tài khoản). Bấm vào những ngày bạn rảnh:',
   'poll.another': 'Chọn thêm một ngày khác?',
+  'footer.privacy': 'Quyền riêng tư',
+  'err.offline': 'Bạn đang ngoại tuyến. Thay đổi không được lưu.',
+  'err.server': 'Máy chủ hiện không phản hồi.',
+  'retry': 'Thử lại',
+  'removed.info': 'Ai đó đã xóa {name} ({date}).',
+  'recent.title': 'Bình chọn của bạn',
+  'recent.hint': 'Chỉ trên thiết bị này',
 },
 zh: {
   'make.title': '我们什么时候见面？',
@@ -1565,7 +1698,7 @@ zh: {
   'make.what': '是关于什么的？',
   'make.what.ph': '例如：聚餐、板式网球、海边周末',
   'make.name': '你的名字',
-  'make.name.ph': '例如：Ali',
+  'make.name.ph': '例如：Kushim',
   'make.submit': '创建投票',
   'share.ready': '完成。分享这个链接：',
   'share.copy': '复制',
@@ -1629,6 +1762,13 @@ zh: {
   'lang.pick': '选择语言',
   'share.text': '一起选个日期吧（无需账号）。点选你方便的日子：',
   'poll.another': '再选一个日期？',
+  'footer.privacy': '隐私',
+  'err.offline': '你已离线，更改不会被保存。',
+  'err.server': '服务器暂时没有响应。',
+  'retry': '重试',
+  'removed.info': '有人移除了 {name}（{date}）。',
+  'recent.title': '你的投票',
+  'recent.hint': '仅在此设备上',
 },
 ja: {
   'make.title': 'いつ会いましょう？',
@@ -1636,7 +1776,7 @@ ja: {
   'make.what': '何の予定ですか？',
   'make.what.ph': '例：食事会、パデル、海で週末',
   'make.name': 'あなたの名前',
-  'make.name.ph': '例：Ali',
+  'make.name.ph': '例：Kushim',
   'make.submit': '日程調整を作成',
   'share.ready': '完了。このリンクを共有：',
   'share.copy': 'コピー',
@@ -1700,6 +1840,13 @@ ja: {
   'lang.pick': '言語を選択',
   'share.text': '日程を決めよう（アカウント不要）。都合のよい日をタップしてね：',
   'poll.another': '別の日程も決める？',
+  'footer.privacy': 'プライバシー',
+  'err.offline': 'オフラインです。変更は保存されません。',
+  'err.server': 'サーバーが応答していません。',
+  'retry': '再試行',
+  'removed.info': '誰かが {name} を削除しました（{date}）。',
+  'recent.title': 'あなたの日程調整',
+  'recent.hint': 'この端末のみ',
 },
 ko: {
   'make.title': '언제 만날까요?',
@@ -1707,7 +1854,7 @@ ko: {
   'make.what': '무슨 일인가요?',
   'make.what.ph': '예: 저녁 식사, 파델, 바다에서 주말',
   'make.name': '이름',
-  'make.name.ph': '예: Ali',
+  'make.name.ph': '예: Kushim',
   'make.submit': '투표 만들기',
   'share.ready': '완료. 이 링크를 공유하세요:',
   'share.copy': '복사',
@@ -1771,6 +1918,13 @@ ko: {
   'lang.pick': '언어 선택',
   'share.text': '날짜를 정해요 (계정 불필요). 가능한 날을 눌러 주세요:',
   'poll.another': '다른 날짜도 정할까요?',
+  'footer.privacy': '개인정보',
+  'err.offline': '오프라인 상태예요. 변경 사항이 저장되지 않아요.',
+  'err.server': '서버가 지금 응답하지 않아요.',
+  'retry': '다시 시도',
+  'removed.info': '누군가 {name}을(를) 삭제했어요 ({date}).',
+  'recent.title': '내 투표',
+  'recent.hint': '이 기기에서만',
 },
 sw: {
   'make.title': 'Tukutane lini?',
@@ -1778,7 +1932,7 @@ sw: {
   'make.what': 'Inahusu nini?',
   'make.what.ph': 'mf. Chakula cha jioni, padel, wikendi pwani',
   'make.name': 'Jina lako',
-  'make.name.ph': 'mf. Ali',
+  'make.name.ph': 'mf. Kushim',
   'make.submit': 'Tengeneza kura',
   'share.ready': 'Tayari. Shiriki kiungo hiki:',
   'share.copy': 'Nakili',
@@ -1842,6 +1996,247 @@ sw: {
   'lang.pick': 'Chagua lugha',
   'share.text': 'Tupange tarehe (bila akaunti). Bofya tu siku unazoweza:',
   'poll.another': 'Kupanga tarehe nyingine?',
+  'footer.privacy': 'Faragha',
+  'err.offline': 'Uko nje ya mtandao. Mabadiliko hayahifadhiwi.',
+  'err.server': 'Seva haijibu kwa sasa.',
+  'retry': 'Jaribu tena',
+  'removed.info': 'Mtu fulani aliondoa {name} ({date}).',
+  'recent.title': 'Kura zako',
+  'recent.hint': 'Kwenye kifaa hiki tu',
+},
+zgh: {
+  'make.title': 'ⵎⴰⵏⴰⴳ ⴰⴷ ⵏⵎⵢⴰⴳⴰⵔ?',
+  'make.tagline': 'ⵙⵜⵉⵜ ⴰⵙⵙ ⵙ ⵓⵎⵢⴰⵡⴰⵙ. ⴱⵍⴰ ⴰⵎⵉⴹⴰⵏ, ⴱⵍⴰ ⴰⵖⵓⵏ.',
+  'make.what': 'ⵎⴰ ⴷ ⵜⵉⵖⴰⵡⵙⴰ?',
+  'make.what.ph': 'ⵣⵓⵏ ⴷ: ⵉⵎⵏⵙⵉ, ⴱⴰⴷⵍ, ⴰⵏⴳⴳⴰⵔⵓ ⵏ ⵉⵎⴰⵍⴰⵙⵙ ⴳ ⵢⵉⵍⵍ',
+  'make.name': 'ⵉⵙⵎ ⵏⵏⴽ',
+  'make.name.ph': 'ⵣⵓⵏ ⴷ: ⴽⵓⵛⵉⵎ',
+  'make.submit': 'ⵙⴽⵔ ⴰⵎⵙⴰⴳⴰⵔ',
+  'share.ready': 'ⵉⵎⵎⴷ. ⴱⴹⵓ ⴰⵙⵖⵏ ⴰⴷ:',
+  'share.copy': 'ⵙⵏⵖⵍ',
+  'share.copied': 'ⵉⵜⵜⵓⵙⵏⵖⵍ',
+  'share.button': 'ⴱⴹⵓ',
+  'legend.you': 'ⴽⵢⵢⵉ ⵜⵣⵎⵔⴷ',
+  'legend.other': 'ⵢⴰⵏ ⵢⴰⴹⵏ ⵉⵣⵎⵔ',
+  'update.text': 'ⵜⵍⵍⴰ ⵜⵓⵏⵖⵉⵍⵜ ⵜⴰⵎⴰⵢⵏⵓⵜ ⵏ Whenly.',
+  'update.button': 'ⵙⵎⴰⵢⵏⵓ',
+  'install.text': 'ⵔⵏⵓ Whenly ⵖⵔ ⵓⴳⴷⵉⵍ ⴰⵎⵣⵡⴰⵔⵓ, ⴰⵎ ⵜⵙⵏⵙⵉ.',
+  'install.button': 'ⵙⵔⵙ',
+  'install.ios': 'ⵙⵉⵜ ⵅⴼ  ⬆  (ⴱⴹⵓ), ⵙ ⵜⵖⴰⵔⴰⵙⵜ “ⵔⵏⵓ ⵖⵔ ⵓⴳⴷⵉⵍ ⴰⵎⵣⵡⴰⵔⵓ”.',
+  'title.edit': 'ⵙⵏⴼⵍ ⴰⵣⵡⵍ',
+  'title.save': 'ⵃⴹⵓ',
+  'poll.nameFirst': 'ⴰⵔⴰ ⵉⵙⵎ ⵏⵏⴽ ⵜⴰⵣⵡⴰⵔⴰ ⴰⴼⴰⴷ ⴰⴷ ⵜⵙⵜⵉⴷ ⵓⵙⵙⴰⵏ.',
+  'poll.next': 'ⴽⵎⵎⵍ',
+  'pick.who': 'ⵉⵙ ⵜⴳⵉⴷ ⵢⴰⵏ ⴳⵉⵙⵏ? ⵙⵉⵜ ⵅⴼ ⵉⵙⵎ ⵏⵏⴽ:',
+  'visits': 'ⵜⵉⵔⵣⴰⴼ: {n}',
+  'cal.hint': 'ⵙⵉⵜ ⵅⴼ ⵓⵙⵙⴰⵏ ⵏⵏⴰ ⴰⴽ ⵉⵛⵇⵇⴰⵏ',
+  'cal.prev': 'ⴰⵢⵢⵓⵔ ⵉⵣⵔⵉⵏ',
+  'cal.next': 'ⴰⵢⵢⵓⵔ ⴷ ⵉⵜⴷⴷⵓⵏ',
+  'cal.actAs': 'ⴰⵔ ⵜⵙⵜⴰⵢⴷ ⵙ ⵢⵉⵙⵎ ⵏ {name}',
+  'cal.switch': 'ⴰⵛⵛⴰⵔ ⵉ ⵢⴰⵏ ⵢⴰⴹⵏ',
+  'cal.newName.ph': 'ⵏⵖ ⴰⵔⴰ ⵉⵙⵎ ⴰⵎⴰⵢⵏⵓ',
+  'time.label': 'ⵜⴰⵙⵔⴰⴳⵜ (ⵎⴽ ⵜⵔⵉⴷ, ⴽⵓ ⵢⴰⵏ ⵉⵣⵎⵔ ⴰⴷ ⵜⵜ ⵉⵙⵏⴼⵍ)',
+  'poll.nobody': 'ⵓⵔ ⵜⴰ ⵢⴰⵏ',
+  'poll.you': 'ⴽⵢⵢⵉ',
+  'poll.at': 'ⴳ {time}',
+  'poll.leave': 'ⴽⴽⵙ {name} ⵙⴳ ⵓⵎⵙⴰⴳⴰⵔ ⴰⴷ',
+  'poll.leaveYes': 'ⵢⴰⵀ, ⴽⴽⵙ {name}',
+  'poll.leaveNo': 'ⵓⵀⵓ, ⴰⵊⵊ ⵜ',
+  'status.none': 'ⵓⵔ ⵜⴰ ⵉⵍⵍⵉ ⵓⵙⵙ. ⵙⵉⵜ ⵅⴼ ⵓⵙⵙⴰⵏ ⵏⵏⴽ.',
+  'status.almost': 'ⴰⵙⵙ ⵉⴼⵓⵍⴽⵉⵏ ⴰⵔ ⵖⵉⵍⴰ: {date}',
+  'status.everyone': 'ⴽⵓ ⵢⴰⵏ ⵉⵣⵎⵔ ⴰⵙⵙ ⵏ {date}',
+  'status.count': { one: '{n} ⵙⴳ {total} ⵉⵣⵎⵔ', other: '{n} ⵙⴳ {total} ⵣⵎⵔⵏ' },
+  'status.tie': 'ⵎⵏⵏⴰⵡ ⵏ ⵡⵓⵙⵙⴰⵏ ⴰⴷ ⵉⵣⵡⴰⵔⵏ',
+  'status.tieEveryone': 'ⵎⵏⵏⴰⵡ ⵏ ⵡⵓⵙⵙⴰⵏ ⴰⴷ ⵉⵛⵇⵇⴰⵏ ⵉ ⴽⵓ ⵢⴰⵏ',
+  'status.tieCount': { one: '{n} ⵙⴳ {total} ⵉⵣⵎⵔ ⴳ ⴽⵓ ⵢⴰⵏ ⵙⴳ ⵡⵓⵙⵙⴰⵏ ⴰⴷ:', other: '{n} ⵙⴳ {total} ⵣⵎⵔⵏ ⴳ ⴽⵓ ⵢⴰⵏ ⵙⴳ ⵡⵓⵙⵙⴰⵏ ⴰⴷ:' },
+  'status.pick': 'ⵙⵜⵉ ⵡⴰⴷ',
+  'status.fix': 'ⵙⴱⴷⴷ',
+  'status.final': 'ⵉⵜⵜⵓⵎⵙⴰⵙⴰ: {date}',
+  'status.unfix': 'ⵙⵙⵓⵖⵍ',
+  'err.save': 'ⵓⵔ ⵉⵜⵜⵓⵃⴹⴰ. ⴰⵍⵙ ⴰⵔⵎ.',
+  'err.duplicate_option': 'ⴰⵙⵙ ⴰⴷ ⵉⵍⵍⴰ ⵢⴰⴷ.',
+  'err.option_in_use': 'ⵢⴰⵏ ⵢⴰⴹⵏ ⵉⵙⵜⵉ ⴰⵙⵙ ⴰⴷ.',
+  'err.title_required': 'ⴰⵔⴰ ⵎⴰ ⴷ ⵜⵉⵖⴰⵡⵙⴰ.',
+  'err.name_required': 'ⴰⵔⴰ ⵉⵙⵎ ⵏⵏⴽ.',
+  'err.invalid_date': 'ⵙⵜⵉ ⵎⴰ ⵉⵜⵜ ⵢⴰⵏ ⵡⴰⵙⵙ.',
+  'err.limit_reached': 'ⴰⵎⵙⴰⴳⴰⵔ ⴰⴷ ⵉⵄⵎⵎⵔ.',
+  'err.generic': 'ⵜⵍⵍⴰ ⴽⵔⴰ ⵏ ⵜⵣⴳⵍⵜ. ⴰⵍⵙ ⴰⵔⵎ.',
+  'notfound.title': 'ⴰⵎⵙⴰⴳⴰⵔ ⴰⴷ ⵓⵔ ⵉⵍⵍⵉ',
+  'notfound.text': 'ⵙⵙⴼⵍⴷ ⴰⵙⵖⵏ, ⵏⵖ ⵙⴽⵔ ⵢⴰⵏ ⴰⵎⴰⵢⵏⵓ.',
+  'notfound.new': 'ⴰⵎⵙⴰⴳⴰⵔ ⴰⵎⴰⵢⵏⵓ',
+  'footer': 'Whenly · ⴱⴰⵟⵍ, ⴱⵍⴰ ⴰⵎⵉⴹⴰⵏ',
+  'donate.button': 'ⵜⵉⴽⴽⵉ',
+  'donate.intro': 'ⵉⵄⵊⴱ ⵉⵢⵉ ⴰⴷ ⵜⵙⵙⵎⵔⵙⴷ Whenly! 🎉 ⴰⴷ ⵉⵇⵇⵉⵎ ⴱⴰⵟⵍ. ⵜⵉⴽⴽⵉ ⵜⴰⵎⵥⵥⴰⵏⵜ ⴰⵔ ⵉⵢⵉ ⵜⵙⵙⴼⵔⴰⵃ:',
+  'donate.joke': 'ⵜⵉⵔⵉⴷ ⵜ ⵙ ⵜⵉⴷⵜ? ⵉⵎⵉⵍ ⵓⵔ ⵜⵙⵙⵉⵡⵉⴷⴷ 😄',
+  'donate.free': '… ⵏⵖ ⵙⵜⵉ ⴰⵜⵉⴳ ⵏⵏⴽ',
+  'donate.thanks': 'ⵜⴰⵏⵎⵎⵉⵔⵜ! 🙏',
+  'close': 'ⵔⴳⵍ',
+  'lang.pick': 'ⵙⵜⵉ ⵜⵓⵜⵍⴰⵢⵜ',
+  'share.text': 'ⴰⴷ ⵏⵙⵜⵉ ⴰⵙⵙ (ⴱⵍⴰ ⴰⵎⵉⴹⴰⵏ). ⵙⵉⵜ ⵖⴰⵙ ⵅⴼ ⵓⵙⵙⴰⵏ ⵏⵏⴰ ⵜⵣⵎⵔⴷ:',
+  'poll.another': 'ⴰⵙⵙ ⵢⴰⴹⵏ ⴰⴷ ⵜⵙⵜⵉⴷ?',
+  'footer.privacy': 'ⵜⵓⴷⵔⵜ ⵜⵓⵙⵍⵉⴳⵜ',
+  'err.offline': 'ⵓⵔ ⵜⵇⵇⵏⴷ. ⵓⵔ ⵜⵜⵓⵃⴹⴰⵏⵜ ⵉⵙⵏⴼⴰⵍ.',
+  'err.server': 'ⴰⵙⵔⴱⴷ ⵓⵔ ⵉⵜⵔⴰⵔ ⵖⵉⵍⴰ.',
+  'retry': 'ⴰⵍⵙ ⴰⵔⵎ',
+  'removed.info': 'ⵢⴰⵏ ⵉⴽⴽⵙ {name} ({date}).',
+  'recent.title': 'ⵉⵎⵙⴰⴳⴰⵔⵏ ⵏⵏⴽ',
+  'recent.hint': 'ⵖⴰⵙ ⴳ ⵓⵎⴰⵙⵙ ⴰⴷ',
+},
+ku: {
+  'make.title': 'Kengî em hev bibînin?',
+  'make.tagline': 'Bi hev re rojekê hilbijêrin. Bê hesab, bê zehmet.',
+  'make.what': 'Mijar çi ye?',
+  'make.what.ph': 'mînak: Şîv, padel, dawiya hefteyê li deryayê',
+  'make.name': 'Navê te',
+  'make.name.ph': 'mînak: Kuşîm',
+  'make.submit': 'Anketê çêke',
+  'share.ready': 'Amade ye. Vê lînkê parve bike:',
+  'share.copy': 'Kopî bike',
+  'share.copied': 'Hat kopîkirin',
+  'share.button': 'Parve bike',
+  'legend.you': 'tu dikarî',
+  'legend.other': 'kesekî din dikare',
+  'update.text': 'Guhertoyeke nû ya Whenly heye.',
+  'update.button': 'Nû bike',
+  'install.text': 'Whenly wek sepanekê li ekrana destpêkê zêde bike.',
+  'install.button': 'Saz bike',
+  'install.ios': 'Li  ⬆  (Parve bike) bitikîne, paşê “Li Ekrana Malê zêde bike”.',
+  'title.edit': 'sernavê biguherîne',
+  'title.save': 'Tomar bike',
+  'poll.nameFirst': 'Pêşî navê xwe binivîse da ku rojan nîşan bikî.',
+  'poll.next': 'Bidomîne',
+  'pick.who': 'Tu yek ji wan î? Li navê xwe bitikîne:',
+  'visits': 'Hejmara serdanan: {n}',
+  'cal.hint': 'Rojên ku ji te re dibin nîşan bike',
+  'cal.prev': 'Meha berê',
+  'cal.next': 'Meha bê',
+  'cal.actAs': 'Tu wek {name} nîşan dikî',
+  'cal.switch': 'ji bo kesekî din dagire',
+  'cal.newName.ph': 'an navekî nû binivîse',
+  'time.label': 'Dem (ne mecbûrî, her kes dikare biguherîne)',
+  'poll.nobody': 'hîn kes tune',
+  'poll.you': 'tu',
+  'poll.at': 'saet {time}',
+  'poll.leave': '{name} ji vê anketê derxe',
+  'poll.leaveYes': 'Erê, {name} derxe',
+  'poll.leaveNo': 'Na, bila bimîne',
+  'status.none': 'Hîn roj tune. Rojên xwe nîşan bike.',
+  'status.almost': 'Roja herî baş heta niha: {date}',
+  'status.everyone': 'Her kes dikare {date}',
+  'status.count': { one: '{n} ji {total} dikare', other: '{n} ji {total} dikarin' },
+  'status.tie': 'Çend roj li pêş in',
+  'status.tieEveryone': 'Çend roj ji her kesî re dibin',
+  'status.tieCount': { one: '{n} ji {total} dikare her yek ji van:', other: '{n} ji {total} dikarin her yek ji van:' },
+  'status.pick': 'Vê hilbijêre',
+  'status.fix': 'Biryar bide',
+  'status.final': 'Biryar hat dayîn: {date}',
+  'status.unfix': 'Betal bike',
+  'err.save': 'Nehat tomarkirin. Dîsa biceribîne.',
+  'err.duplicate_option': 'Ew roj jixwe heye.',
+  'err.option_in_use': 'Kesekî din ev roj nîşan kiriye.',
+  'err.title_required': 'Binivîse mijar çi ye.',
+  'err.name_required': 'Navê xwe binivîse.',
+  'err.invalid_date': 'Herî kêm rojekê hilbijêre.',
+  'err.limit_reached': 'Ev anket tije ye.',
+  'err.generic': 'Tiştek çewt çû. Dîsa biceribîne.',
+  'notfound.title': 'Ev anket tune',
+  'notfound.text': 'Lînkê kontrol bike, an yeke nû çêke.',
+  'notfound.new': 'Anketa nû',
+  'footer': 'Whenly · belaş, bê hesab',
+  'donate.button': 'Bexşîn',
+  'donate.intro': 'Kêfxweş im ku tu Whenly bi kar tînî! 🎉 Belaş dimîne. Diyariyeke biçûk min kêfxweş dike:',
+  'donate.joke': 'Bi rastî heyranekî mezin î? Wê demê xwe negire 😄',
+  'donate.free': '… an mîqdara xwe hilbijêre',
+  'donate.thanks': 'Spas! 🙏',
+  'close': 'Bigire',
+  'lang.pick': 'Zimên hilbijêre',
+  'share.text': 'Werin em rojekê hilbijêrin (hesab ne pêwîst e). Tenê li rojên ku tu dikarî bitikîne:',
+  'poll.another': 'Rojeke din hilbijêrî?',
+  'footer.privacy': 'Nepenîtî',
+  'err.offline': 'Tu offline yî. Guhertin nayên tomarkirin.',
+  'err.server': 'Server niha bersiv nade.',
+  'retry': 'Dîsa biceribîne',
+  'removed.info': 'Kesekî {name} derxist ({date}).',
+  'recent.title': 'Anketên te',
+  'recent.hint': 'Tenê li ser vê amûrê',
+},
+sn: {
+  'make.title': 'Tosangana rinhi?',
+  'make.tagline': 'Sarudzai zuva pamwe chete. Hapana account, hapana nyaya.',
+  'make.what': 'Zviri pamusoro pei?',
+  'make.what.ph': 'semuenzaniso: Kudya kwemanheru, padel, weekend kugungwa',
+  'make.name': 'Zita rako',
+  'make.name.ph': 'semuenzaniso: Kushim',
+  'make.submit': 'Gadzira poll',
+  'share.ready': 'Zvaita. Govera link iyi:',
+  'share.copy': 'Kopa',
+  'share.copied': 'Yakopwa',
+  'share.button': 'Govera',
+  'legend.you': 'iwe unokwanisa',
+  'legend.other': 'mumwe munhu anokwanisa',
+  'update.text': 'Pane vhezheni itsva yeWhenly.',
+  'update.button': 'Vandudza',
+  'install.text': 'Isa Whenly pahome screen yako, seapp.',
+  'install.button': 'Isa',
+  'install.ios': 'Baya  ⬆  (Govera), wobva wasarudza “Add to Home Screen”.',
+  'title.edit': 'shandura musoro',
+  'title.save': 'Chengeta',
+  'poll.nameFirst': 'Tanga wanyora zita rako kuti usarudze mazuva.',
+  'poll.next': 'Enderera',
+  'pick.who': 'Uri mumwe wavo? Dzvanya zita rako:',
+  'visits': 'Vashanyi: {n}',
+  'cal.hint': 'Dzvanya mazuva anokuitira',
+  'cal.prev': 'Mwedzi wapfuura',
+  'cal.next': 'Mwedzi unotevera',
+  'cal.actAs': 'Uri kusarudza sa {name}',
+  'cal.switch': 'zadzira mumwe munhu',
+  'cal.newName.ph': 'kana kunyora zita idzva',
+  'time.label': 'Nguva (hazvisi pamutemo, munhu wese anogona kushandura)',
+  'poll.nobody': 'hapana parizvino',
+  'poll.you': 'iwe',
+  'poll.at': 'na {time}',
+  'poll.leave': 'Bvisa {name} papoll iyi',
+  'poll.leaveYes': 'Hongu, bvisa {name}',
+  'poll.leaveNo': 'Regai zvakadaro',
+  'status.none': 'Hapana zuva parizvino. Dzvanya mazuva ako.',
+  'status.almost': 'Zuva rakanakisa parizvino: {date}',
+  'status.everyone': 'Vese vanokwanisa {date}',
+  'status.count': { one: '{n} pa {total} anokwanisa', other: '{n} pa {total} vanokwanisa' },
+  'status.tie': 'Mazuva akati wandei ari kutungamira',
+  'status.tieEveryone': 'Mazuva akati wandei anoitira vese',
+  'status.tieCount': { one: '{n} pa {total} anokwanisa rimwe nerimwe reaya:', other: '{n} pa {total} vanokwanisa rimwe nerimwe reaya:' },
+  'status.pick': 'Sarudza iri',
+  'status.fix': 'Simbisa',
+  'status.final': 'Zvabvumiranwa: {date}',
+  'status.unfix': 'Dzosa',
+  'err.save': 'Hazvina kuchengetwa. Edza zvakare.',
+  'err.duplicate_option': 'Zuva iroro ratovapo.',
+  'err.option_in_use': 'Mumwe munhu asarudza zuva iri.',
+  'err.title_required': 'Nyora kuti zviri pamusoro pei.',
+  'err.name_required': 'Nyora zita rako.',
+  'err.invalid_date': 'Sarudza zuva rimwe chete kana kupfuura.',
+  'err.limit_reached': 'Poll iyi yazara.',
+  'err.generic': 'Pane chakanganisika. Edza zvakare.',
+  'notfound.title': 'Poll iyi haipo',
+  'notfound.text': 'Tarisa link, kana kugadzira itsva.',
+  'notfound.new': 'Poll itsva',
+  'footer': 'Whenly · mahara, hapana account',
+  'donate.button': 'Tsigira',
+  'donate.intro': 'Ndinofara kuti unoshandisa Whenly! 🎉 Inoramba iri mahara. Chipo chidiki chinondifadza:',
+  'donate.joke': 'Unoida zvakanyanya here? Saka usazvidzore 😄',
+  'donate.free': '… kana sarudza mari yako',
+  'donate.thanks': 'Ndatenda! 🙏',
+  'close': 'Vhara',
+  'lang.pick': 'Sarudza mutauro',
+  'share.text': 'Ngatisarudzei zuva (hapana account inodiwa). Dzvanya chete mazuva aunokwanisa:',
+  'poll.another': 'Sarudza rimwe zuva?',
+  'footer.privacy': 'Zvakavanzika',
+  'err.offline': 'Hauna kubatana neinternet. Shanduko hadzisi kuchengetwa.',
+  'err.server': 'Server haisi kupindura parizvino.',
+  'retry': 'Edza zvakare',
+  'removed.info': 'Mumwe munhu abvisa {name} ({date}).',
+  'recent.title': 'Ma-poll ako',
+  'recent.hint': 'Pamudziyo uno chete',
 },
 };
 const BRAND = 'Whenly';
@@ -1852,6 +2247,8 @@ const VERSIE = VERSION.startsWith('__') ? 'dev' : VERSION;
 const PAYPAL = 'ABoullbahaiem';
 // Eén vaste kleur per persoon (volgorde van binnenkomst), goed leesbaar op wit.
 const KLEUREN = ['#0072B2', '#E69F00', '#009E73', '#CC79A7', '#D55E00', '#56B4E9', '#8E63C6', '#6B7580'];
+// dezelfde kleuren, donker genoeg voor tekst (vinkje, naam): minstens 4.5:1 op wit
+const KLEUREN_TEKST = ['#005A8E', '#8A5F00', '#00704F', '#9E4E7C', '#A34800', '#1F6E9C', '#6A47A0', '#4F5964'];
 const LS = {
   name: 'prikdatum.name',
   lang: 'prikdatum.lang',
@@ -1859,7 +2256,20 @@ const LS = {
   act: (id) => 'prikdatum.act.' + id,      // tijdelijk: aanklikken namens iemand anders
   visited: (id) => 'prikdatum.v.' + id,    // deze browser telde al één bezoek
   just: 'prikdatum.justCreated',
+  recent: 'prikdatum.recent',              // afspraken die je in deze browser opende (id, titel)
 };
+
+// Recente afspraken van deze browser (max 10, nieuwste eerst): zo raak je een link nooit kwijt.
+function recentLees() {
+  try { const r = JSON.parse(localStorage.getItem(LS.recent) || '[]'); return Array.isArray(r) ? r : []; } catch { return []; }
+}
+function recentBewaar(id, title) {
+  try {
+    const lijst = recentLees().filter((x) => x && x.id !== id);
+    lijst.unshift({ id, title: String(title || '').slice(0, 80), t: Date.now() });
+    localStorage.setItem(LS.recent, JSON.stringify(lijst.slice(0, 10)));
+  } catch {}
+}
 
 /* ---------- taal en regio bepalen ---------- */
 function browserTalen() {
@@ -1873,7 +2283,7 @@ function basisTaal(tag) {
 // Eerst de bewaarde keuze, dan de talen van de browser op volgorde van voorkeur, anders Engels.
 function bepaalTaal() {
   // /nl/, /ar/ ... : de taal in de link wint (en wordt onthouden)
-  const uitPad = /^\/([a-z]{2})\/?$/.exec(location.pathname);
+  const uitPad = /^\/([a-z]{2,3})\/?$/.exec(location.pathname);
   if (uitPad && TALEN[uitPad[1]]) {
     try { localStorage.setItem(LS.lang, uitPad[1]); } catch {}
     return uitPad[1];
@@ -1903,6 +2313,50 @@ function datumLocale() {
   try { new Intl.DateTimeFormat(l); } catch { return TALEN[state.lang].locale + '-u-ca-gregory-nu-latn'; }
   return l.includes('-u-') ? l : l + '-u-ca-gregory-nu-latn';
 }
+// Maand- en dagnamen (CLDR) voor talen waarvoor browsers geen kalenderdata hebben.
+// Zonder dit zouden datums stil in de taal van de browser verschijnen.
+const DATUM_NAMEN = {
+  zgh: { vorm: 'wd d m', wdLang: ['ⴰⵢⵏⴰⵙ', 'ⴰⵙⵉⵏⴰⵙ', 'ⴰⴽⵕⴰⵙ', 'ⴰⴽⵡⴰⵙ', 'ⴰⵙⵉⵎⵡⴰⵙ', 'ⴰⵙⵉⴹⵢⴰⵙ', 'ⴰⵙⴰⵎⴰⵙ'], wdKort: ['ⴰⵢⵏ', 'ⴰⵙⵉ', 'ⴰⴽⵕ', 'ⴰⴽⵡ', 'ⴰⵙⵉⵎ', 'ⴰⵙⵉⴹ', 'ⴰⵙⴰ'], mLang: ['ⵉⵏⵏⴰⵢⵔ', 'ⴱⵕⴰⵢⵕ', 'ⵎⴰⵕⵚ', 'ⵉⴱⵔⵉⵔ', 'ⵎⴰⵢⵢⵓ', 'ⵢⵓⵏⵢⵓ', 'ⵢⵓⵍⵢⵓⵣ', 'ⵖⵓⵛⵜ', 'ⵛⵓⵜⴰⵏⴱⵉⵔ', 'ⴽⵜⵓⴱⵔ', 'ⵏⵓⵡⴰⵏⴱⵉⵔ', 'ⴷⵓⵊⴰⵏⴱⵉⵔ'], mKort: ['ⵉⵏⵏ', 'ⴱⵕⴰ', 'ⵎⴰⵕ', 'ⵉⴱⵔ', 'ⵎⴰⵢ', 'ⵢⵓⵏ', 'ⵢⵓⵍ', 'ⵖⵓⵛ', 'ⵛⵓⵜ', 'ⴽⵜⵓ', 'ⵏⵓⵡ', 'ⴷⵓⵊ'] },
+  ku: { vorm: 'd m, wd', wdLang: ['duşem', 'sêşem', 'çarşem', 'pêncşem', 'înî', 'şemî', 'yekşem'], wdKort: ['dşm', 'sşm', 'çşm', 'pşm', 'înî', 'şem', 'yşm'], mLang: ['rêbendan', 'sibat', 'adar', 'nîsan', 'gulan', 'hezîran', 'tîrmeh', 'tebax', 'îlon', 'cotmeh', 'mijdar', 'berfanbar'], mKort: ['rbn', 'sbt', 'adr', 'nsn', 'gln', 'hzr', 'trm', 'tbx', 'îln', 'cot', 'mjd', 'brf'] },
+  sn: { vorm: 'm d, wd', wdLang: ['Muvhuro', 'Chipiri', 'Chitatu', 'China', 'Chishanu', 'Mugovera', 'Svondo'], wdKort: ['Muv', 'Chp', 'Cht', 'Chn', 'Chs', 'Mug', 'Svo'], mLang: ['Ndira', 'Kukadzi', 'Kurume', 'Kubvumbi', 'Chivabvu', 'Chikumi', 'Chikunguru', 'Nyamavhuvhu', 'Gunyana', 'Gumiguru', 'Mbudzi', 'Zvita'], mKort: ['Ndi', 'Kuk', 'Kur', 'Kub', 'Chv', 'Chk', 'Chg', 'Nya', 'Gun', 'Gum', 'Mbu', 'Zvi'] },
+};
+
+// Kent de browser deze taal voor datums? Zo niet: eigen namen uit DATUM_NAMEN.
+function intlKent(loc) {
+  try { return Intl.DateTimeFormat.supportedLocalesOf([loc.split('-u-')[0]]).length > 0; } catch { return false; }
+}
+// Datumopmaak: Intl waar het kan, anders een eenvoudige eigen opmaak met CLDR-namen.
+// Geeft een object met format(date) en formatRange(a, b), zoals Intl.DateTimeFormat.
+function dtf(opties) {
+  const loc = datumLocale();
+  const namen = DATUM_NAMEN[state.lang];
+  if (!namen || intlKent(loc)) return new Intl.DateTimeFormat(loc, opties);
+  const wdIdx = (d) => (d.getDay() + 6) % 7; // ma = 0
+  const pad2 = (n) => String(n).padStart(2, '0');
+  const format = (d) => {
+    const o = opties || {};
+    if (o.hour !== undefined) return pad2(d.getHours()) + ':' + pad2(d.getMinutes());
+    if (o.weekday && o.day === undefined && o.month === undefined) {
+      const w = wdIdx(d);
+      return o.weekday === 'long' ? namen.wdLang[w] : o.weekday === 'narrow' ? namen.wdKort[w].slice(0, 1) : namen.wdKort[w];
+    }
+    if (o.month && o.day === undefined) {
+      const m = o.month === 'long' ? namen.mLang[d.getMonth()] : namen.mKort[d.getMonth()];
+      return o.year ? m + ' ' + d.getFullYear() : m;
+    }
+    const lang = o.month === 'long';
+    const wd = o.weekday ? (o.weekday === 'long' ? namen.wdLang[wdIdx(d)] : namen.wdKort[wdIdx(d)]) : '';
+    const mn = lang ? namen.mLang[d.getMonth()] : namen.mKort[d.getMonth()];
+    let s = namen.vorm.replace('wd', wd).replace('d', String(d.getDate())).replace('m', mn).replace(/^, |, $/g, '').trim();
+    if (o.year) s += ' ' + d.getFullYear();
+    return s;
+  };
+  const formatRange = (a, b) => (a.getFullYear() === b.getFullYear())
+    ? namen.mLang[a.getMonth()] + ' – ' + namen.mLang[b.getMonth()] + ' ' + a.getFullYear()
+    : format(a) + ' – ' + format(b);
+  return { format, formatRange };
+}
+
 // Eerste dag van de week: 1 = maandag ... 7 = zondag. Via Intl als de browser
 // dat kent, anders een tabel per regio (CLDR).
 const WEEK_ZONDAG = new Set('AG AS BD BR BS BT BW BZ CA CO DM DO ET GT GU HK HN ID IL IN JM JP KE KH KR LA MH MM MO MT MX MZ NI NP PA PE PH PK PR PY SA SG SV TH TT TW UM US VE VI WS YE ZA ZW'.split(' '));
@@ -1930,6 +2384,7 @@ const state = {
   me: null,            // namens wie je nu aanklikt (meestal = own)
   inflight: 0,
   kalMaand: null,
+  kalGezet: false,      // startmaand al gekozen (eerste toekomstige dag of definitieve dag)
   titelEdit: false,
   nieuwOpen: false,
   tapDag: null,
@@ -1959,7 +2414,7 @@ function fmtTijd(tijd) {
   const m = /^(\d{1,2}):(\d{2})$/.exec(tijd || '');
   if (!m) return tijd || '';
   try {
-    return new Intl.DateTimeFormat(datumLocale(), { hour: 'numeric', minute: '2-digit' })
+    return dtf({ hour: 'numeric', minute: '2-digit' })
       .format(new Date(2024, 0, 1, Number(m[1]), Number(m[2])));
   } catch { return tijd; }
 }
@@ -1968,7 +2423,7 @@ function fmtDatum(datum, tijd) {
   const d = new Date(datum + 'T12:00:00');
   const opties = { weekday: 'short', day: 'numeric', month: 'short' };
   if (d.getFullYear() !== new Date().getFullYear()) opties.year = 'numeric';
-  let s = new Intl.DateTimeFormat(datumLocale(), opties).format(d);
+  let s = dtf(opties).format(d);
   if (tijd) s += ' ' + t('poll.at', { time: fmtTijd(tijd) });
   return s;
 }
@@ -2045,7 +2500,8 @@ function pasTaalToe() {
   const voet = document.getElementById('voet');
   voet.textContent = '';
   const merk = el('a', null, BRAND); merk.href = '/';
-  voet.append(merk, document.createTextNode(t('footer').replace(/^Whenly/, '') + ' · v' + VERSIE));
+  const priv = el('a', 'privacy', t('footer.privacy')); priv.href = '/privacy';
+  voet.append(merk, document.createTextNode(t('footer').replace(/^Whenly/, '') + ' · '), priv, document.createTextNode(' · v' + VERSIE));
 }
 
 function sluitTalen() {
@@ -2209,6 +2665,28 @@ function schermMaken() {
   };
 
   scherm.append(titelKop, tagline, watLabel, titelIn, naamLabel, naamIn, el('div'), maakBtn, foutRegel);
+
+  // je eerdere afspraken (alleen in deze browser), zodat een link nooit kwijt is
+  const recent = recentLees();
+  let recentKop = null, recentHint = null;
+  if (recent.length) {
+    const doos = el('div', 'recent');
+    recentKop = el('h2');
+    recentHint = el('p', 'hint');
+    const ul = el('ul');
+    for (const r of recent) {
+      const li = el('li');
+      const a = el('a'); a.href = '/p/' + r.id; a.append(bdi(r.title || r.id));
+      li.append(a); ul.append(li);
+    }
+    doos.append(recentKop, recentHint, ul);
+    scherm.append(doos);
+  }
+  const hertaalBasis = hertaal;
+  hertaal = () => {
+    hertaalBasis();
+    if (recentKop) { recentKop.textContent = t('recent.title'); recentHint.textContent = t('recent.hint'); }
+  };
   hertaal();
   checkKnop();
   titelIn.focus();
@@ -2237,6 +2715,9 @@ function schermAfspraak(pollId) {
   const titelKop = el('h1'); titelKop.dir = 'auto';
   const deelKnop = el('button', 'sec klein'); deelKnop.type = 'button';
   deelKnop.style.cssText = 'margin:0 0 4px; padding:6px 0;';
+  const nieuwKnop = el('a', 'sec klein'); nieuwKnop.href = '/';
+  nieuwKnop.style.cssText = 'display:inline-flex; align-items:center; color:var(--groen); font-weight:600; text-decoration:none; padding:6px 0; min-height:44px;';
+  const knoppenRij = el('div', 'knoppenrij'); knoppenRij.append(deelKnop, nieuwKnop);
   const titelEditBtn = el('button', 'sec'); titelEditBtn.type = 'button';
   const titelEditor = el('div', 'titeleditor verborgen');
   const titelIn = el('input'); titelIn.type = 'text'; titelIn.maxLength = 80; titelIn.autocomplete = 'off'; titelIn.dir = 'auto';
@@ -2288,8 +2769,33 @@ function schermAfspraak(pollId) {
   wegZone.append(wegBtn, wegBevestig);
 
   const bezoek = el('p', 'bezoek verborgen');
+  const weggehaaldLijn = el('p', 'weggehaald verborgen');
 
-  scherm.append(deel, titelRij, deelKnop, statusBlok, naamZone, wieBar, chipsLabel, chips, nieuwRij, kalHint, kal, legenda, tapLijn, lijstFout, wegZone, bezoek);
+  // melding bij offline of een server die niet antwoordt, met "opnieuw"
+  const foutBalk = el('div', 'melding fout verborgen'); foutBalk.setAttribute('role', 'alert');
+  const foutTekstEl = el('span', 'tekst');
+  const foutRetry = el('button', 'klein'); foutRetry.type = 'button';
+  foutBalk.append(foutTekstEl, foutRetry);
+  foutRetry.addEventListener('click', () => { state.lastJson = ''; haalOp(true); });
+  function toonFout(sleutel) {
+    foutTekstEl.textContent = t(sleutel);
+    foutRetry.textContent = t('retry');
+    foutBalk.classList.remove('verborgen');
+    // nog niets geladen: geen leeg formulier tonen, alleen de melding
+    if (!state.data) naamZone.classList.add('verborgen');
+  }
+  function verbergFout() { foutBalk.classList.add('verborgen'); }
+  window.addEventListener('offline', () => toonFout('err.offline'));
+  window.addEventListener('online', () => { verbergFout(); state.lastJson = ''; haalOp(true); });
+
+  statusBlok.setAttribute('role', 'status');
+  statusBlok.setAttribute('aria-live', 'polite');
+  lijstFout.setAttribute('role', 'alert');
+  naamFout.setAttribute('role', 'alert');
+  titelIn.setAttribute('aria-label', t('make.what'));
+  nieuwIn.setAttribute('aria-label', t('cal.newName.ph'));
+
+  scherm.append(foutBalk, deel, titelRij, knoppenRij, statusBlok, naamZone, wieBar, chipsLabel, chips, weggehaaldLijn, nieuwRij, kalHint, kal, legenda, tapLijn, lijstFout, wegZone, bezoek);
 
   const nu = new Date();
   state.kalMaand = new Date(nu.getFullYear(), nu.getMonth(), 1);
@@ -2297,6 +2803,10 @@ function schermAfspraak(pollId) {
   function kleurVan(pid) {
     const i = state.data.participants.findIndex((p) => p.id === pid);
     return KLEUREN[(i >= 0 ? i : 0) % KLEUREN.length];
+  }
+  function kleurTekstVan(pid) {
+    const i = state.data.participants.findIndex((p) => p.id === pid);
+    return KLEUREN_TEKST[(i >= 0 ? i : 0) % KLEUREN_TEKST.length];
   }
 
   /* --- deelbalk --- */
@@ -2354,6 +2864,7 @@ function schermAfspraak(pollId) {
     titelKop.classList.remove('verborgen');
     titelEditBtn.classList.remove('verborgen');
     if (r.ok) { state.lastJson = ''; await haalOp(true); }
+    else { lijstFout.textContent = foutTekst(r.data); lijstFout.classList.remove('verborgen'); }
   }
   titelOk.addEventListener('click', bewaarTitel);
   titelIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') bewaarTitel(); });
@@ -2445,7 +2956,15 @@ function schermAfspraak(pollId) {
   });
 
   /* --- kalenderklik: dag aan/uit --- */
-  async function klikDag(datum) {
+  // Klikken worden na elkaar afgehandeld (een keten): snel twee dagen aanklikken
+  // kan zo geen stem overschrijven, en een tweede klik op een nog niet
+  // bevestigde dag wacht tot die dag een echt id heeft.
+  let klikKeten = Promise.resolve();
+  function klikDag(datum) {
+    klikKeten = klikKeten.then(() => klikDagNu(datum)).catch(() => {});
+    return klikKeten;
+  }
+  async function klikDagNu(datum) {
     if (!state.me) { naamIn.focus(); return; }
     state.tapDag = datum;
     lijstFout.classList.add('verborgen');
@@ -2462,6 +2981,10 @@ function schermAfspraak(pollId) {
           participantId: state.me, date: datum, time: null,
         });
         if (!r.ok && (!r.data || r.data.error !== 'duplicate_option')) throw r;
+        if (r.ok && r.data && r.data.optionId) {
+          const tmp = state.data.options.find((o) => o.id === '_tmp' && o.date === datum);
+          if (tmp) tmp.id = r.data.optionId;
+        }
       } else if (opt.votes.includes(state.me)) {
         if (opt.votes.length === 1) {
           d.options = d.options.filter((o) => o.id !== opt.id);
@@ -2514,8 +3037,12 @@ function schermAfspraak(pollId) {
   async function zetFinal(optionId) {
     state.inflight++;
     try {
-      await api('/polls/' + pollId + '/final', 'PUT', { optionId });
+      const r = await api('/polls/' + pollId + '/final', 'PUT', { optionId });
+      if (!r.ok) throw r;
       state.lastJson = '';
+    } catch (r) {
+      lijstFout.textContent = foutTekst(r && r.data);
+      lijstFout.classList.remove('verborgen');
     } finally {
       state.inflight--;
     }
@@ -2639,7 +3166,7 @@ function schermAfspraak(pollId) {
     const d = state.data;
     const locale = datumLocale();
     const blok = el('div', 'maandblok');
-    blok.append(el('div', 'maandnaam', new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' }).format(m)));
+    blok.append(el('div', 'maandnaam', dtf({ month: 'long', year: 'numeric' }).format(m)));
 
     const grid = el('div', 'kalgrid');
     // weekstart per regio (ma in Europa, zo in de VS/India/Japan, za in Egypte ...)
@@ -2649,8 +3176,8 @@ function schermAfspraak(pollId) {
     const wdVorm = state.lang === 'ar' ? 'narrow' : 'short';
     for (let i = 0; i < 7; i++) {
       const wd = new Date(maandag); wd.setDate(maandag.getDate() + (eersteDag - 1) + i);
-      const cel = el('div', 'kalwd', new Intl.DateTimeFormat(locale, { weekday: wdVorm }).format(wd));
-      cel.title = new Intl.DateTimeFormat(locale, { weekday: 'long' }).format(wd);
+      const cel = el('div', 'kalwd', dtf({ weekday: wdVorm }).format(wd));
+      cel.title = dtf({ weekday: 'long' }).format(wd);
       grid.append(cel);
     }
     const eerste = new Date(m.getFullYear(), m.getMonth(), 1);
@@ -2668,6 +3195,14 @@ function schermAfspraak(pollId) {
       if (mijn) b.classList.add('mijn');
       if (opt && d.finalOptionId === opt.id) b.classList.add('definitief');
       b.dataset.date = datum;
+      // toegankelijke naam: volledige datum plus wie kan (of "nog niemand")
+      const lang = dtf({ weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(datum + 'T12:00:00'));
+      const wie = opt
+        ? (opt.votes.map((pid) => pid === state.me ? t('poll.you') : (d.participants.find((p) => p.id === pid) || {}).name).filter(Boolean).join(', ') || t('poll.nobody'))
+        : t('poll.nobody');
+      b.setAttribute('aria-label', lang + ': ' + wie);
+      if (state.me) b.setAttribute('aria-pressed', mijn ? 'true' : 'false');
+      if (datum === vandaag) b.setAttribute('aria-current', 'date');
       b.append(el('span', null, String(dag)));
       // stipjes: wie kan er die dag (jij als vinkje in jouw kleur)
       const dots = el('span', 'ddots');
@@ -2681,7 +3216,7 @@ function schermAfspraak(pollId) {
         for (const pid of toon) {
           if (pid === state.me) {
             const v = el('span', 'dvink', '✓');
-            v.style.color = kleurVan(pid);
+            v.style.color = kleurTekstVan(pid);
             dots.append(v);
           } else {
             const s = el('span', 'ddot');
@@ -2717,7 +3252,7 @@ function schermAfspraak(pollId) {
     mnd.id = 'kalmaand';
     mnd.dataset.maand = m0.getFullYear() + '-' + String(m0.getMonth() + 1).padStart(2, '0');
     // formatRange kent de conventies per taal ("oktober – november 2026", "2026年10月～11月")
-    const fmtM = new Intl.DateTimeFormat(locale, { month: 'long', year: 'numeric' });
+    const fmtM = dtf({ month: 'long', year: 'numeric' });
     try {
       mnd.textContent = fmtM.formatRange(m0, m1);
     } catch {
@@ -2767,7 +3302,7 @@ function schermAfspraak(pollId) {
     const [voor, na] = t('cal.actAs').split('{name}');
     wieTekst.textContent = voor || '';
     wieNaam.textContent = ik ? ik.name : '';
-    wieNaam.style.color = ik ? kleurVan(ik.id) : '';
+    wieNaam.style.color = ik ? kleurTekstVan(ik.id) : '';
     wieNa.textContent = na || '';
     wieWissel.textContent = t('cal.switch');
 
@@ -2782,6 +3317,8 @@ function schermAfspraak(pollId) {
     for (const p of d.participants) {
       const b = el('button', 'chip' + (p.id === state.me ? ' ik' : ''));
       b.type = 'button';
+      b.dataset.pid = p.id;
+      b.setAttribute('aria-pressed', p.id === state.me ? 'true' : 'false');
       const stip = el('span', 'stip');
       stip.style.background = kleurVan(p.id);
       b.append(stip, bdi(p.name), el('span', null, p.id === state.own ? ' (' + t('poll.you') + ')' : ''));
@@ -2800,11 +3337,22 @@ function schermAfspraak(pollId) {
       });
       chips.append(b);
     }
+    // info voor de groep: iemand (niet de app) heeft een naam weggehaald
+    weggehaaldLijn.textContent = '';
+    const weg = d.removed || [];
+    weggehaaldLijn.classList.toggle('verborgen', weg.length === 0);
+    for (const w of weg) {
+      const regel = el('span');
+      const [voorW, naW] = t('removed.info', { name: '\u0000', date: fmtDatum(String(w.deletedAt).slice(0, 10)) }).split('\u0000');
+      regel.append(document.createTextNode(voorW || ''), bdi(w.name), document.createTextNode((naW || '') + ' '));
+      weggehaaldLijn.append(regel);
+    }
     nieuwRij.classList.toggle('verborgen', !(state.me && state.nieuwOpen));
     nieuwIn.placeholder = t('cal.newName.ph');
     nieuwOk.textContent = t('poll.next');
 
     deelKnop.textContent = t('share.button');
+    nieuwKnop.textContent = t('notfound.new');
     // legenda onder de kalender
     legenda.textContent = '';
     const lg1 = el('span'); lg1.append(el('span', 'vk', '✓'), el('span', null, t('legend.you')));
@@ -2821,9 +3369,31 @@ function schermAfspraak(pollId) {
     bezoek.textContent = t('visits', { n: d.visits || 0 });
     bezoek.classList.remove('verborgen');
 
+    // startmaand: de definitieve dag, anders de eerste dag vanaf vandaag, anders nu
+    if (!state.kalGezet) {
+      state.kalGezet = true;
+      const vandaag = isoDag(new Date());
+      const fin = d.finalOptionId && d.options.find((o) => o.id === d.finalOptionId);
+      const doel = fin ? fin.date : (d.options.map((o) => o.date).filter((x) => x >= vandaag).sort()[0] || null);
+      if (doel) state.kalMaand = new Date(Number(doel.slice(0, 4)), Number(doel.slice(5, 7)) - 1, 1);
+    }
+
+    // focus terugzetten na het herbouwen (toetsenbord: Enter op een dag of een naamchip)
+    const actief = document.activeElement;
+    const focusDag = actief && actief.dataset ? actief.dataset.date : null;
+    const focusPid = actief && actief.dataset ? actief.dataset.pid : null;
+
     bouwStatus();
     bouwKal();
     bouwTapLijn();
+
+    if (focusDag) {
+      const terug = kal.querySelector('.dag[data-date="' + focusDag + '"]');
+      if (terug) terug.focus({ preventScroll: true });
+    } else if (focusPid) {
+      const terug = chips.querySelector('.chip[data-pid="' + focusPid + '"]');
+      if (terug) terug.focus({ preventScroll: true });
+    }
   }
 
   function schermOnbekend() {
@@ -2847,17 +3417,20 @@ function schermAfspraak(pollId) {
       res = await fetch('/api/polls/' + pollId, { cache: 'no-store' });
       tekst = await res.text();
     } catch {
+      toonFout(navigator.onLine === false ? 'err.offline' : 'err.server');
       return;
     }
     if (res.status === 404) {
       schermOnbekend();
       return;
     }
-    if (!res.ok) return;
+    if (!res.ok) { toonFout('err.server'); return; }
+    verbergFout();
     if (!forceer && state.inflight > 0) return; // race: oudere data negeren
     if (tekst === state.lastJson) return;
     state.lastJson = tekst;
     state.data = JSON.parse(tekst);
+    recentBewaar(pollId, state.data.title);
     const bestaat = (pid) => state.data.participants.some((p) => p.id === pid);
     if (state.own && !bestaat(state.own)) {
       state.own = null;

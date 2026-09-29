@@ -7,7 +7,7 @@ directory = "./public"
 not_found_handling = "single-page-application"
 binding = "ASSETS"
 # alleen deze paden gaan door de worker (taalpagina's, noindex op /p/*); de rest is puur statisch
-run_worker_first = ["/api/*", "/", "/p/*", "/en", "/nl", "/fr", "/de", "/es", "/pt", "/pl", "/uk", "/ru", "/tr", "/ar", "/ur", "/hi", "/bn", "/id", "/vi", "/zh", "/ja", "/ko", "/sw", "/en/", "/nl/", "/fr/", "/de/", "/es/", "/pt/", "/pl/", "/uk/", "/ru/", "/tr/", "/ar/", "/ur/", "/hi/", "/bn/", "/id/", "/vi/", "/zh/", "/ja/", "/ko/", "/sw/"]
+run_worker_first = ["/api/*", "/__scheduled", "/", "/p/*", "/en", "/nl", "/fr", "/de", "/es", "/pt", "/pl", "/uk", "/ru", "/tr", "/ar", "/ur", "/hi", "/bn", "/id", "/vi", "/zh", "/ja", "/ko", "/sw", "/zgh", "/ku", "/sn", "/en/", "/nl/", "/fr/", "/de/", "/es/", "/pt/", "/pl/", "/uk/", "/ru/", "/tr/", "/ar/", "/ur/", "/hi/", "/bn/", "/id/", "/vi/", "/zh/", "/ja/", "/ko/", "/sw/", "/zgh/", "/ku/", "/sn/"]
 
 [[d1_databases]]
 binding = "DB"
@@ -28,3 +28,7 @@ simple = { limit = 120, period = 60 }
 
 [observability]
 enabled = true
+
+# dagelijkse opruiming van oude afspraken (zie scheduled() in de worker)
+[triggers]
+crons = ["17 3 * * *"]

@@ -33,8 +33,11 @@ const META = {
   ja: { rtl: false, title: 'いつ会いましょう？', desc: 'みんなで日程を決めよう。アカウント不要、手間なし。' },
   ko: { rtl: false, title: '언제 만날까요?', desc: '함께 날짜를 정하세요. 계정 없이, 번거로움 없이.' },
   sw: { rtl: false, title: 'Tukutane lini?', desc: 'Pangeni tarehe pamoja. Bila akaunti, bila usumbufu.' },
+  zgh: { rtl: false, title: 'ⵎⴰⵏⴰⴳ ⴰⴷ ⵏⵎⵢⴰⴳⴰⵔ?', desc: 'ⵙⵜⵉⵜ ⴰⵙⵙ ⵙ ⵓⵎⵢⴰⵡⴰⵙ. ⴱⵍⴰ ⴰⵎⵉⴹⴰⵏ, ⴱⵍⴰ ⴰⵖⵓⵏ.' },
+  ku: { rtl: false, title: 'Kengî em hev bibînin?', desc: 'Bi hev re rojekê hilbijêrin. Bê hesab, bê zehmet.' },
+  sn: { rtl: false, title: 'Tosangana rinhi?', desc: 'Sarudzai zuva pamwe chete. Hapana account, hapana nyaya.' },
 };
-const OG_LOCALE = { en: 'en_GB', nl: 'nl_BE', fr: 'fr_BE', de: 'de_DE', es: 'es_ES', pt: 'pt_PT', pl: 'pl_PL', uk: 'uk_UA', ru: 'ru_RU', tr: 'tr_TR', ar: 'ar_EG', ur: 'ur_PK', hi: 'hi_IN', bn: 'bn_BD', id: 'id_ID', vi: 'vi_VN', zh: 'zh_CN', ja: 'ja_JP', ko: 'ko_KR', sw: 'sw_KE' };
+const OG_LOCALE = { en: 'en_GB', nl: 'nl_BE', fr: 'fr_BE', de: 'de_DE', es: 'es_ES', pt: 'pt_PT', pl: 'pl_PL', uk: 'uk_UA', ru: 'ru_RU', tr: 'tr_TR', ar: 'ar_EG', ur: 'ur_PK', hi: 'hi_IN', bn: 'bn_BD', id: 'id_ID', vi: 'vi_VN', zh: 'zh_CN', ja: 'ja_JP', ko: 'ko_KR', sw: 'sw_KE', zgh: 'zgh_MA', ku: 'ku_TR', sn: 'sn_ZW' };
 
 function escHtml(s) {
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -101,6 +104,9 @@ async function teVeel(env, request, binding) {
   const rl = env[binding];
   const ip = request.headers.get('CF-Connecting-IP');
   if (!rl || !ip) return false;
+  // lokale dev (wrangler dev geeft 127.0.0.1 mee): niet beperken, zodat de testsuite kan draaien.
+  // In productie zet Cloudflare hier nooit een loopback-adres.
+  if (ip === '127.0.0.1' || ip === '::1') return false;
   try {
     const { success } = await rl.limit({ key: ip });
     return !success;
@@ -213,6 +219,14 @@ async function getPoll(env, id) {
   return env.DB.prepare('SELECT * FROM polls WHERE id = ?').bind(id).first();
 }
 
+// Elke wijziging of bezoek telt als activiteit; afspraken zonder activiteit
+// worden na ACTIVITEIT_DAGEN opgeruimd (zie scheduled()).
+const ACTIVITEIT_DAGEN = 365;
+const WEGGEHAALD_DAGEN = 30;
+function raak(env, pollId) {
+  return env.DB.prepare('UPDATE polls SET last_activity_at = ? WHERE id = ?').bind(now(), pollId);
+}
+
 async function getFullPoll(env, id) {
   const poll = await getPoll(env, id);
   if (!poll) return null;
@@ -221,7 +235,7 @@ async function getFullPoll(env, id) {
       'SELECT id, date, time, added_by FROM options WHERE poll_id = ? ORDER BY date, time'
     ).bind(id),
     env.DB.prepare(
-      'SELECT id, name FROM participants WHERE poll_id = ? ORDER BY created_at, id'
+      'SELECT id, name, deleted_at FROM participants WHERE poll_id = ? ORDER BY created_at, id'
     ).bind(id),
     env.DB.prepare(
       `SELECT v.participant_id, v.option_id
@@ -229,6 +243,8 @@ async function getFullPoll(env, id) {
         WHERE o.poll_id = ?`
     ).bind(id),
   ]);
+  const actief = partRes.results.filter((p) => !p.deleted_at);
+  const weggehaald = partRes.results.filter((p) => p.deleted_at);
   const votesByOption = new Map();
   for (const v of voteRes.results) {
     if (!votesByOption.has(v.option_id)) votesByOption.set(v.option_id, []);
@@ -246,7 +262,9 @@ async function getFullPoll(env, id) {
       addedBy: o.added_by,
       votes: votesByOption.get(o.id) || [],
     })),
-    participants: partRes.results.map((p) => ({ id: p.id, name: p.name })),
+    participants: actief.map((p) => ({ id: p.id, name: p.name })),
+    // info voor de groep: "iemand heeft X weggehaald" (geen fout van de app)
+    removed: weggehaald.map((p) => ({ name: p.name, deletedAt: p.deleted_at })),
   };
 }
 
@@ -291,18 +309,31 @@ async function joinPoll(env, pollId, body) {
   if (!name) return fail('name_required');
   const key = normKey(name);
   const existing = await env.DB.prepare(
-    'SELECT id, name FROM participants WHERE poll_id = ? AND name_key = ?'
+    'SELECT id, name, deleted_at FROM participants WHERE poll_id = ? AND name_key = ?'
   ).bind(pollId, key).first();
-  if (existing) return json({ participantId: existing.id, name: existing.name });
+  if (existing) {
+    if (existing.deleted_at) {
+      // dezelfde naam komt terug: weer actief maken (zonder oude stemmen)
+      await env.DB.batch([
+        env.DB.prepare('UPDATE participants SET deleted_at = NULL, name = ? WHERE id = ?').bind(name, existing.id),
+        raak(env, pollId),
+      ]);
+      return json({ participantId: existing.id, name });
+    }
+    return json({ participantId: existing.id, name: existing.name });
+  }
   const aantal = await env.DB.prepare(
-    'SELECT COUNT(*) AS c FROM participants WHERE poll_id = ?'
+    'SELECT COUNT(*) AS c FROM participants WHERE poll_id = ? AND deleted_at IS NULL'
   ).bind(pollId).first();
   if (aantal && aantal.c >= MAX_PARTICIPANTS) return fail('limit_reached');
   const id = newId();
   try {
-    await env.DB.prepare(
-      'INSERT INTO participants (id, poll_id, name, name_key, created_at) VALUES (?, ?, ?, ?, ?)'
-    ).bind(id, pollId, name, key, now()).run();
+    await env.DB.batch([
+      env.DB.prepare(
+        'INSERT INTO participants (id, poll_id, name, name_key, created_at) VALUES (?, ?, ?, ?, ?)'
+      ).bind(id, pollId, name, key, now()),
+      raak(env, pollId),
+    ]);
   } catch {
     // race op UNIQUE (poll_id, name_key): haal de winnaar op
     const winner = await env.DB.prepare(
@@ -317,7 +348,7 @@ async function joinPoll(env, pollId, body) {
 // 5.4 PUT /api/polls/:id/participants/:pid/votes
 async function putVotes(env, pollId, pid, body) {
   const participant = await env.DB.prepare(
-    'SELECT id FROM participants WHERE id = ? AND poll_id = ?'
+    'SELECT id FROM participants WHERE id = ? AND poll_id = ? AND deleted_at IS NULL'
   ).bind(pid, pollId).first();
   if (!participant) return fail('not_found', 404);
   if (!Array.isArray(body.optionIds)) return fail('generic');
@@ -332,6 +363,7 @@ async function putVotes(env, pollId, pid, body) {
   }
   const stmts = [
     env.DB.prepare('DELETE FROM votes WHERE participant_id = ?').bind(pid),
+    raak(env, pollId),
   ];
   for (const oid of valid) {
     stmts.push(
@@ -347,7 +379,7 @@ async function addOption(env, pollId, body) {
   const poll = await getPoll(env, pollId);
   if (!poll) return fail('not_found', 404);
   const participant = await env.DB.prepare(
-    'SELECT id FROM participants WHERE id = ? AND poll_id = ?'
+    'SELECT id FROM participants WHERE id = ? AND poll_id = ? AND deleted_at IS NULL'
   ).bind(body.participantId ?? '', pollId).first();
   if (!participant) return fail('not_found', 404);
   if (!validDate(body.date) || !validTime(body.time)) return fail('invalid_date');
@@ -368,6 +400,7 @@ async function addOption(env, pollId, body) {
       ).bind(optionId, pollId, body.date, time, participant.id, now()),
       env.DB.prepare('INSERT INTO votes (participant_id, option_id) VALUES (?, ?)')
         .bind(participant.id, optionId),
+      raak(env, pollId),
     ]);
   } catch {
     return fail('duplicate_option'); // race op UNIQUE (poll_id, date, time)
@@ -386,7 +419,7 @@ async function deleteOption(env, pollId, oid, requesterId) {
   ).bind(oid).all();
   const foreign = votes.results.some((v) => v.participant_id !== requesterId);
   if (foreign) return fail('option_in_use');
-  const stmts = [env.DB.prepare('DELETE FROM options WHERE id = ?').bind(oid)];
+  const stmts = [env.DB.prepare('DELETE FROM options WHERE id = ?').bind(oid), raak(env, pollId)];
   const poll = await getPoll(env, pollId);
   if (poll && poll.final_option_id === oid) {
     stmts.push(
@@ -400,11 +433,16 @@ async function deleteOption(env, pollId, oid, requesterId) {
 // 5.7 DELETE /api/polls/:id/participants/:pid
 async function deleteParticipant(env, pollId, pid) {
   const participant = await env.DB.prepare(
-    'SELECT id FROM participants WHERE id = ? AND poll_id = ?'
+    'SELECT id FROM participants WHERE id = ? AND poll_id = ? AND deleted_at IS NULL'
   ).bind(pid, pollId).first();
   if (!participant) return fail('not_found', 404);
-  await env.DB.prepare('DELETE FROM participants WHERE id = ?').bind(pid).run();
-  // votes verdwijnen via ON DELETE CASCADE; opties die hij toevoegde blijven
+  // zacht weghalen: de naam blijft WEGGEHAALD_DAGEN als info zichtbaar
+  // ("iemand heeft X weggehaald"), de stemmen verdwijnen meteen.
+  await env.DB.batch([
+    env.DB.prepare('DELETE FROM votes WHERE participant_id = ?').bind(pid),
+    env.DB.prepare('UPDATE participants SET deleted_at = ? WHERE id = ?').bind(now(), pid),
+    raak(env, pollId),
+  ]);
   return json({});
 }
 
@@ -412,7 +450,7 @@ async function deleteParticipant(env, pollId, pid) {
 async function bumpVisit(env, pollId) {
   const poll = await getPoll(env, pollId);
   if (!poll) return fail('not_found', 404);
-  await env.DB.prepare('UPDATE polls SET visits = visits + 1 WHERE id = ?').bind(pollId).run();
+  await env.DB.prepare('UPDATE polls SET visits = visits + 1, last_activity_at = ? WHERE id = ?').bind(now(), pollId).run();
   return json({});
 }
 
@@ -422,7 +460,7 @@ async function putTitle(env, pollId, body) {
   if (!poll) return fail('not_found', 404);
   const title = cleanTitle(body.title);
   if (!title) return fail('title_required');
-  await env.DB.prepare('UPDATE polls SET title = ? WHERE id = ?').bind(title, pollId).run();
+  await env.DB.prepare('UPDATE polls SET title = ?, last_activity_at = ? WHERE id = ?').bind(title, now(), pollId).run();
   return json({});
 }
 
@@ -434,7 +472,7 @@ async function putOptionTime(env, pollId, oid, body) {
   if (!option) return fail('not_found', 404);
   if (!validTime(body.time)) return fail('invalid_date');
   const time = body.time ? body.time : null;
-  await env.DB.prepare('UPDATE options SET time = ? WHERE id = ?').bind(time, oid).run();
+  await env.DB.batch([env.DB.prepare('UPDATE options SET time = ? WHERE id = ?').bind(time, oid), raak(env, pollId)]);
   return json({});
 }
 
@@ -443,19 +481,38 @@ async function putFinal(env, pollId, body) {
   const poll = await getPoll(env, pollId);
   if (!poll) return fail('not_found', 404);
   if (body.optionId === null) {
-    await env.DB.prepare('UPDATE polls SET final_option_id = NULL WHERE id = ?').bind(pollId).run();
+    await env.DB.prepare('UPDATE polls SET final_option_id = NULL, last_activity_at = ? WHERE id = ?').bind(now(), pollId).run();
     return json({});
   }
   const option = await env.DB.prepare(
     'SELECT id FROM options WHERE id = ? AND poll_id = ?'
   ).bind(body.optionId ?? '', pollId).first();
   if (!option) return fail('not_found', 404);
-  await env.DB.prepare('UPDATE polls SET final_option_id = ? WHERE id = ?')
-    .bind(option.id, pollId).run();
+  await env.DB.prepare('UPDATE polls SET final_option_id = ?, last_activity_at = ? WHERE id = ?')
+    .bind(option.id, now(), pollId).run();
   return json({});
 }
 
+// Dagelijkse opruiming (Cron Trigger): afspraken zonder activiteit sinds ACTIVITEIT_DAGEN
+// verdwijnen volledig (opties, deelnemers en stemmen via ON DELETE CASCADE);
+// weggehaalde deelnemers verdwijnen na WEGGEHAALD_DAGEN definitief.
+async function opruimen(env) {
+  const grensPoll = new Date(Date.now() - ACTIVITEIT_DAGEN * 86400000).toISOString();
+  const grensWeg = new Date(Date.now() - WEGGEHAALD_DAGEN * 86400000).toISOString();
+  const [a, b] = await env.DB.batch([
+    env.DB.prepare('DELETE FROM polls WHERE COALESCE(last_activity_at, created_at) < ?').bind(grensPoll),
+    env.DB.prepare('DELETE FROM participants WHERE deleted_at IS NOT NULL AND deleted_at < ?').bind(grensWeg),
+  ]);
+  const uit = { polls: a.meta.changes, participants: b.meta.changes };
+  console.log('opruimen', JSON.stringify(uit));
+  return uit;
+}
+
 export default {
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(opruimen(env));
+  },
+
   async fetch(request, env) {
     const url = new URL(request.url);
     // ['api', 'polls', <id>, <sub>, <subid>, ...]

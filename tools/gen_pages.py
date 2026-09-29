@@ -90,7 +90,7 @@ def page(*, lang, title, desc, path, body, extra_head='', dir_='ltr', nav_app='O
 <meta name="description" content="{html.escape(desc, quote=True)}">
 <link rel="canonical" href="{canon}">
 <link rel="icon" href="/favicon.png" type="image/png">
-<meta name="theme-color" content="#2F8F5B">
+<meta name="theme-color" content="#26784C">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Whenly">
 <meta property="og:title" content="{html.escape(title, quote=True)}">
@@ -103,7 +103,7 @@ def page(*, lang, title, desc, path, body, extra_head='', dir_='ltr', nav_app='O
 </head>
 <body>
 <div class="col">
-<nav><a href="/">Whenly</a><a href="/faq">{nav_faq}</a><a class="app" href="/">{nav_app}</a></nav>
+<nav><a href="/">Whenly</a><a href="/faq">{nav_faq}</a><a href="/privacy">Privacy</a><a class="app" href="/">{nav_app}</a></nav>
 {body}
 <p class="voet"><a href="/">Whenly</a> · gratis, zonder account · free, no account</p>
 </div>
@@ -135,7 +135,7 @@ FAQ_NL = [
     ('Is Whenly gratis?', 'Ja. Whenly is volledig gratis en blijft gratis. Geen betaalmuur, geen reclame.'),
     ('Moet ik een account maken?', 'Nee. Niemand hoeft een account te maken, ook niet wie de afspraak aanmaakt. Je typt je naam en klikt je dagen aan.'),
     ('Werkt het op mijn telefoon?', 'Ja. Whenly werkt in elke browser en kan als app op je startscherm worden gezet (PWA), zonder appstore.'),
-    ('In welke talen werkt Whenly?', 'Twintig talen, waaronder Nederlands, Engels, Frans, Duits, Spaans, Portugees, Pools, Oekraïens, Russisch, Turks, Arabisch, Urdu, Hindi, Bengaals, Indonesisch, Vietnamees, Chinees, Japans, Koreaans en Swahili. De taal volgt je browser en is te wisselen via de wereldbol.'),
+    ('In welke talen werkt Whenly?', 'Drieëntwintig talen, waaronder Nederlands, Engels, Frans, Duits, Spaans, Portugees, Pools, Oekraïens, Russisch, Turks, Arabisch, Urdu, Hindi, Bengaals, Indonesisch, Vietnamees, Chinees, Japans, Koreaans, Swahili, Tamazight, Koerdisch en Shona. De taal volgt je browser en is te wisselen via de wereldbol.'),
     ('Wat is het verschil met Doodle?', 'Whenly vraagt niemand om te registreren, toont geen reclame en is gratis. Je klikt dagen aan op een kalender in plaats van velden in te vullen, en een stoplicht toont wanneer iedereen kan.'),
     ('Kan ik voor iemand anders een datum invullen?', 'Ja. Kies "iemand anders invullen", typ een naam en klik de dagen voor die persoon aan.'),
     ('Wie kan mijn afspraak zien?', 'Iedereen met de link. De link is een lange willekeurige code die niet te raden is. Pagina\'s van afspraken worden niet geïndexeerd door zoekmachines. Deel de link dus alleen met je groep.'),
@@ -145,7 +145,7 @@ FAQ_EN = [
     ('Is Whenly free?', 'Yes. Whenly is completely free and stays free. No paywall, no ads.'),
     ('Do I need an account?', 'No. Nobody needs an account, not even the person who creates the poll. Type your name and tap your days.'),
     ('Does it work on my phone?', 'Yes. Whenly works in any browser and can be added to your home screen like an app (PWA), no app store needed.'),
-    ('Which languages does Whenly support?', 'Twenty, including English, Dutch, French, German, Spanish, Portuguese, Polish, Ukrainian, Russian, Turkish, Arabic, Urdu, Hindi, Bengali, Indonesian, Vietnamese, Chinese, Japanese, Korean and Swahili. It follows your browser language and you can switch with the globe button.'),
+    ('Which languages does Whenly support?', 'Twenty-three, including English, Dutch, French, German, Spanish, Portuguese, Polish, Ukrainian, Russian, Turkish, Arabic, Urdu, Hindi, Bengali, Indonesian, Vietnamese, Chinese, Japanese, Korean, Swahili, Tamazight, Kurdish and Shona. It follows your browser language and you can switch with the globe button.'),
     ('How is it different from Doodle?', 'Whenly asks nobody to sign up, shows no ads and is free. You tap days on a calendar instead of filling in fields, and a traffic light shows when everyone can make it.'),
     ('Can I fill in dates for someone else?', 'Yes. Choose "fill in for someone else", type a name and tap the days for that person.'),
     ('Who can see my poll?', 'Anyone with the link. The link is a long random code that cannot be guessed, and poll pages are not indexed by search engines. Share the link only with your group.'),
@@ -165,13 +165,52 @@ def faq_page():
         'mainEntity': [{'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in FAQ_NL + FAQ_EN],
     }
     extra = '<script type="application/ld+json">' + json.dumps(ld, ensure_ascii=False) + '</script>'
-    return page(lang='nl', title='Veelgestelde vragen', desc='Antwoorden over Whenly: gratis, zonder account, 20 talen, privacy. FAQ in het Nederlands en Engels.', path='/faq', body=body, extra_head=extra)
+    return page(lang='nl', title='Veelgestelde vragen', desc='Antwoorden over Whenly: gratis, zonder account, 23 talen, privacy. FAQ in het Nederlands en Engels.', path='/faq', body=body, extra_head=extra)
+
+
+PRIVACY_NL = """
+<h1>Privacy</h1>
+<p class="datum">Kort en zonder juridisch jargon. English below.</p>
+<h2>Wat Whenly bewaart</h2>
+<p>Alleen wat je zelf intypt: de titel van de afspraak, de namen van de deelnemers, de aangeklikte dagen en eventueel een uur. Verder niets. Geen e-mailadres, geen telefoonnummer, geen account, geen wachtwoord.</p>
+<h2>Wat Whenly niet doet</h2>
+<p>Geen tracking, geen advertenties, geen cookies van derden, geen analytics. Je browser onthoudt lokaal alleen je taal, je naam en welke naam de jouwe is in een afspraak, zodat je niet elke keer opnieuw hoeft te typen. Dat blijft op je eigen toestel.</p>
+<h2>Wie kan een afspraak zien</h2>
+<p>Iedereen met de link. De link is een lange willekeurige code die niet te raden is, en afspraakpagina's worden niet door zoekmachines geïndexeerd. Deel de link dus alleen met je groep. Iedereen met de link kan ook namen en dagen aanpassen of weghalen; als iemand een naam weghaalt, blijft dat 30 dagen als korte melding zichtbaar zodat de groep weet dat het geen fout van de app was.</p>
+<h2>Hoe lang</h2>
+<p>Een afspraak wordt automatisch en volledig verwijderd na 12 maanden zonder activiteit (geen bezoek, geen wijziging). Een weggehaalde naam verdwijnt definitief na 30 dagen.</p>
+<h2>Waar</h2>
+<p>De gegevens staan op servers van Cloudflare (Workers en D1). Whenly is open source; de code staat op <a href="https://github.com/boulbaal/whenly">GitHub</a>.</p>
+<h2>Vragen of iets laten verwijderen</h2>
+<p>Open een issue op <a href="https://github.com/boulbaal/whenly/issues">GitHub</a>. Wil je een afspraak eerder weg? Haal je naam weg via de knop onderaan de afspraak; de rest verdwijnt vanzelf na 12 maanden zonder activiteit.</p>
+"""
+PRIVACY_EN = """
+<h2>Privacy (English)</h2>
+<h2>What Whenly stores</h2>
+<p>Only what you type yourself: the poll title, the participants' names, the tapped days and an optional time. Nothing else. No email address, no phone number, no account, no password.</p>
+<h2>What Whenly does not do</h2>
+<p>No tracking, no ads, no third-party cookies, no analytics. Your browser locally remembers only your language, your name and which name is yours in a poll, so you do not have to retype it. That stays on your own device.</p>
+<h2>Who can see a poll</h2>
+<p>Anyone with the link. The link is a long random code that cannot be guessed, and poll pages are not indexed by search engines, so share the link only with your group. Anyone with the link can also change or remove names and days; when someone removes a name, a short note stays visible for 30 days so the group knows it was not an app error.</p>
+<h2>How long</h2>
+<p>A poll is deleted automatically and completely after 12 months without activity (no visit, no change). A removed name disappears for good after 30 days.</p>
+<h2>Where</h2>
+<p>Data is stored on Cloudflare servers (Workers and D1). Whenly is open source; the code is on <a href="https://github.com/boulbaal/whenly">GitHub</a>.</p>
+<h2>Questions or removal requests</h2>
+<p>Open an issue on <a href="https://github.com/boulbaal/whenly/issues">GitHub</a>. Want a poll gone sooner? Remove your name with the button at the bottom of the poll; the rest disappears by itself after 12 months without activity.</p>
+"""
+
+
+def privacy_page():
+    body = PRIVACY_NL + '<div lang="en">' + PRIVACY_EN + '</div>\n<a class="cta" href="/">Open Whenly</a>'
+    return page(lang='nl', title='Privacy', desc='Wat Whenly bewaart (alleen titel, namen en dagen), hoe lang (12 maanden zonder activiteit) en wat het niet doet (geen tracking, geen reclame). NL en EN.', path='/privacy', body=body)
 
 
 def main():
     vandaag = datetime.date.today().isoformat()
     paginas = []
     write('faq.html', faq_page()); paginas.append('/faq')
+    write('privacy.html', privacy_page()); paginas.append('/privacy')
 
     t, h = md_page('vergelijking-whenly-doodle-when2meet.md', '/vergelijking',
                    'Eerlijke vergelijking van Whenly, Doodle en When2meet: account, reclame, kost, mobiel, talen, open source.')
@@ -185,7 +224,7 @@ def main():
                    'Praktische aanpak om met een grote groep een datum te vinden zonder dat het weken duurt.', datum='28 september 2026')
     write('blog/datum-prikken-met-een-grote-groep.html', h); paginas.append('/blog/datum-prikken-met-een-grote-groep')
 
-    talen = 'en nl fr de es pt pl uk ru tr ar ur hi bn id vi zh ja ko sw'.split()
+    talen = 'en nl fr de es pt pl uk ru tr ar ur hi bn id vi zh ja ko sw zgh ku sn'.split()
     urls = [SITE + '/'] + [f'{SITE}/{l}/' for l in talen] + [SITE + p for p in paginas]
     sm = ['<?xml version="1.0" encoding="UTF-8"?>', '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">']
     for u in urls:

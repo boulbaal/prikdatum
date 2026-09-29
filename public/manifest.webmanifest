@@ -1,19 +1,27 @@
 {
+  "id": "/",
   "name": "Whenly",
   "short_name": "Whenly",
-  "description": "Prik samen een datum. Zonder account, zonder gedoe.",
+  "description": "Pick a date together with friends, family or colleagues. No account, no ads, free forever. 23 languages.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "orientation": "portrait",
   "background_color": "#FFFFFF",
-  "theme_color": "#2F8F5B",
-  "lang": "nl",
+  "theme_color": "#26784C",
+  "lang": "en",
+  "dir": "auto",
   "categories": ["productivity", "social", "utilities"],
   "icons": [
     { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
-    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "screenshots": [
+    { "src": "/screenshots/phone.png", "sizes": "780x1600", "type": "image/png", "form_factor": "narrow", "label": "A poll on a phone: everyone can make Friday" },
+    { "src": "/screenshots/desktop.png", "sizes": "1600x1200", "type": "image/png", "form_factor": "wide", "label": "A poll on a desktop with two months of calendar" }
+  ],
+  "shortcuts": [
+    { "name": "New poll", "short_name": "New", "url": "/", "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }] }
   ]
 }

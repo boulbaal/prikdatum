@@ -4,7 +4,7 @@ import os
 from PIL import Image, ImageDraw, ImageFont
 
 OUT = os.path.join(os.path.dirname(__file__), '..', 'public')
-GROEN = (47, 143, 91)       # #2F8F5B
+GROEN = (38, 120, 76)        # #26784C
 LICHTGROEN = (232, 245, 238)
 WIT = (255, 255, 255)
 TEKST = (31, 41, 51)
@@ -58,10 +58,11 @@ def kalender_glyph(img, cx, cy, s, kleur_body=WIT, kleur_accent=GROEN, rand=None
     d.line([(vx + int(w * 0.16), vy + int(h * 0.16)), (vx + int(w * 0.46), vy - int(h * 0.18))], fill=kleur_accent, width=lw, joint='curve')
 
 
-def maak_icoon(maat, pad_frac=0.14, achtergrond=GROEN, glyph_body=WIT, glyph_accent=GROEN, opaque=True):
+def maak_icoon(maat, pad_frac=0.14, achtergrond=GROEN, glyph_body=WIT, glyph_accent=GROEN, opaque=True, vierkant=False):
     img = Image.new('RGBA', (maat, maat), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    r = int(maat * 0.22)
+    # vierkant = tot in de hoeken gevuld (maskable icon en Apple: het toestel rondt zelf af)
+    r = 0 if vierkant else int(maat * 0.22)
     rounded(d, [0, 0, maat, maat], r, achtergrond + ((255,) if opaque else (255,)))
     kalender_glyph(img, maat // 2, maat // 2, int(maat * (1 - 2 * pad_frac)),
                    kleur_body=glyph_body, kleur_accent=glyph_accent)
@@ -73,8 +74,11 @@ def main():
     # maskable + gewone iconen (groene achtergrond, witte kalender met groen vinkje)
     for maat in (192, 512):
         maak_icoon(maat, pad_frac=0.20).save(os.path.join(OUT, f'icon-{maat}.png'))
-    # apple-touch (geen transparantie, iets minder padding)
-    maak_icoon(180, pad_frac=0.16).convert('RGB').save(os.path.join(OUT, 'apple-touch-icon.png'))
+    # maskable: tot in de hoeken gevuld, glyph binnen de veilige zone (80% van het midden)
+    for maat in (192, 512):
+        maak_icoon(maat, pad_frac=0.24, vierkant=True).convert('RGB').save(os.path.join(OUT, f'icon-maskable-{maat}.png'))
+    # apple-touch: vierkant zonder transparantie (iOS rondt zelf af, anders zwarte hoeken)
+    maak_icoon(180, pad_frac=0.18, vierkant=True).convert('RGB').save(os.path.join(OUT, 'apple-touch-icon.png'))
     # favicon 32 + 48 in één .png (browsers gebruiken de png)
     maak_icoon(64, pad_frac=0.10).save(os.path.join(OUT, 'favicon.png'))
 
@@ -94,7 +98,7 @@ def main():
     og.save(os.path.join(OUT, 'og.png'))
 
     print('iconen geschreven naar', os.path.abspath(OUT))
-    for n in ('icon-192.png', 'icon-512.png', 'apple-touch-icon.png', 'favicon.png', 'og.png'):
+    for n in ('icon-192.png', 'icon-512.png', 'icon-maskable-192.png', 'icon-maskable-512.png', 'apple-touch-icon.png', 'favicon.png', 'og.png'):
         p = os.path.join(OUT, n)
         print(' ', n, os.path.getsize(p), 'bytes')
 

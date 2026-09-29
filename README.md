@@ -17,7 +17,7 @@ Geen accounts. Geen wachtwoorden. Geen beheerder. Geen opslaan-knop. Iedereen me
 - **Iedereen is gelijk** — wie de link heeft kan dagen aanklikken, de titel aanpassen, het uur wijzigen en de knoop doorhakken. Er is niets dat alleen "de maker" kan.
 - **Je naam is je identiteit** — dezelfde naam op een ander toestel geeft je je eigen vinkjes terug. En via "iemand anders invullen" zet je tijdelijk de dagen van iemand die je die al doorgaf, zonder je eigen naam te verliezen.
 - **Nooit iets kapot** — je kunt alleen weghalen wat van jezelf is of wat niemand anders gebruikt.
-- **20 talen** (o.a. Nederlands, Engels, Frans, Arabisch, Hindi, Chinees, Russisch), automatisch op basis van je browser, wisselbaar via de wereldbol, zonder herladen. Rechts-naar-links voor Arabisch en Urdu, weekstart en tijdnotatie per land.
+- **23 talen** (o.a. Nederlands, Engels, Frans, Arabisch, Hindi, Chinees, Russisch, Tamazight, Koerdisch, Shona), automatisch op basis van je browser, wisselbaar via de wereldbol, zonder herladen. Rechts-naar-links voor Arabisch en Urdu, weekstart en tijdnotatie per land.
 - **Licht en gratis** — één HTML-bestand, één Worker, één SQLite-database (Cloudflare D1). Geen frameworks, geen build-stap, geen externe scripts of fonts. Past ruim binnen het gratis plan van Cloudflare.
 
 ## Techniek
@@ -63,6 +63,8 @@ Nodig: een computer met Node 18+ en een gratis Cloudflare-account (cloudflare.co
 4. Maak de tabellen:
 
        npm run db:remote
+
+   Bestaande database van vóór de levenscyclus-update? Draai dan ook `npm run db:migrate`.
 
 5. Zet online (commit eerst, het commitnummer wordt de versie):
 
