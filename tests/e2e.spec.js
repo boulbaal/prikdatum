@@ -31,6 +31,16 @@ async function apiMaakPoll(request, body) {
   return await res.json();
 }
 
+// Maakt een afspraak en laat een tweede persoon (Sofie) op alle dagen kunnen,
+// zodat het statusblok een dag toont (dagen met maar één iemand blijven daar weg).
+async function apiMaakPollMetTwee(request, body) {
+  const poll = await apiMaakPoll(request, body);
+  const full = await (await request.get('/api/polls/' + poll.id)).json();
+  const s = await (await request.post(`/api/polls/${poll.id}/participants`, { data: { name: 'Sofie' } })).json();
+  await request.put(`/api/polls/${poll.id}/participants/${s.participantId}/votes`, { data: { optionIds: full.options.map((o) => o.id) } });
+  return { ...poll, sofieId: s.participantId };
+}
+
 // Bladert de kalender naar de gevraagde maand ('YYYY-MM').
 async function toonMaand(page, doel) {
   for (let i = 0; i < 24; i++) {
@@ -351,7 +361,7 @@ test.describe('API', () => {
    ================================================================ */
 
 test.describe("Scenario's", () => {
-  test('S1-S9 het volledige verhaal', async ({ browser }, testInfo) => {
+  test('S1-S9 het volledige verhaal', async ({ browser, request }, testInfo) => {
     test.setTimeout(300_000);
 
     /* ---------- S1: maken en dagen aanklikken ---------- */
@@ -396,9 +406,9 @@ test.describe("Scenario's", () => {
     await dag(ali, D2).click();
     await expect(dag(ali, D2)).toHaveClass(/mijn/);
     // Ali alleen kan op beide -> iedereen (1 van 1) -> GROEN, tie
-    await expect(ali.locator('.status .balk')).toHaveClass(/groen/);
-    await expect(ali.locator('.status .groot')).toHaveText('Meerdere dagen lukken voor iedereen');
-    await expect(ali.locator('.status .sub')).toHaveText('1 van 1 kan op elk van deze:');
+    // alleen Ali: dagen met één iemand horen niet in het statusblok
+    await expect(ali.locator('.status .balk')).toHaveClass(/rood/);
+    await expect(ali.locator('.status .groot')).toHaveText('Nog geen dag waarop twee of meer mensen kunnen. Deel de link!');
 
     /* ---------- S2: Sofie komt binnen, ziet de namen en typt haar eigen ---------- */
     const sofieCtx = await browser.newContext(ctxOpties(testInfo));
@@ -525,9 +535,21 @@ test.describe("Scenario's", () => {
 
     /* ---------- S9: weggaan ---------- */
     await expect(sofie2.locator('.chip.ik')).toContainText('Sofie');
-    await sofie2.locator('.weg:not(.alles) > button').click(); // "Haal Sofie weg uit deze afspraak"
-    await sofie2.locator('.weg:not(.alles) .bevestig button.ja').click(); // "Ja, haal Sofie weg"
+    // de x op de naam: eerst "toch niet", dan echt
+    const sofieWrap = sofie2.locator('.chipwrap', { has: sofie2.locator('.chip', { hasText: 'Sofie' }) });
+    await expect(sofieWrap.locator('.chip-x')).toHaveAttribute('aria-label', 'Haal Sofie weg uit deze afspraak');
+    await sofieWrap.locator('.chip-x').click();
+    await expect(sofie2.locator('.chipvraag button.ja')).toHaveText('Ja, haal Sofie weg');
+    await sofie2.locator('.chipvraag button.nee').click();
+    await expect(sofie2.locator('.chipvraag')).toHaveCount(0);
+    await expect(sofie2.locator('.chip', { hasText: 'Sofie' })).toBeVisible();
+    await sofieWrap.locator('.chip-x').click();
+    await sofie2.locator('.chipvraag button.ja').click();
     await expect(sofie2.locator('#joinnaam')).toBeVisible();
+    await expect(sofie2.locator('.chip', { hasText: 'Sofie' })).toHaveCount(0);
+    await expect(sofie2.locator('.weggehaald')).toContainText('Iemand heeft Sofie weggehaald');
+    // haar vinkje op D1 is mee weg
+    expect((await (await request.get('/api/polls/' + pollUrl.split('/p/')[1])).json()).options.find((o) => o.date === D1).votes.length).toBe(1);
     await sofie2.fill('#joinnaam', 'Sofie');
     await sofie2.press('#joinnaam', 'Enter');
     await toonMaand(sofie2, MAAND);
@@ -575,16 +597,20 @@ test.describe("Scenario's", () => {
     await expect(page.locator('.status .balk')).toHaveClass(/rood/);
     await expect(page.locator('.status .groot')).toHaveText('Nog geen datum. Klik je dagen aan.');
 
-    // Ali klikt een dag -> 1 van 3 kan -> ORANJE
+    // Ali klikt een dag -> 1 van 3: nog steeds ROOD, want één iemand telt niet als "leidende dag"
     await toonMaand(page, MAAND);
     await dag(page, D1).click();
-    await expect(page.locator('.status .balk')).toHaveClass(/oranje/);
-    await expect(page.locator('.status .groot')).toHaveText(/Beste dag tot nu: vr 9 okt/);
-    await expect(page.locator('.status .sub')).toHaveText('1 van 3 kan');
+    await expect(page.locator('.status .balk')).toHaveClass(/rood/);
+    await expect(page.locator('.status .groot')).toHaveText('Nog geen dag waarop twee of meer mensen kunnen. Deel de link!');
 
-    // Ridwane en Ilyas kunnen ook op 9 okt -> 3 van 3 -> GROEN
+    // Ridwane kan ook op 9 okt -> 2 van 3 -> ORANJE
     const o9 = (await (await request.get('/api/polls/' + id)).json()).options.find((x) => x.date === D1).id;
     await request.put(`/api/polls/${id}/participants/${r.participantId}/votes`, { data: { optionIds: [o9] } });
+    await expect(page.locator('.status .balk')).toHaveClass(/oranje/, { timeout: 13_000 });
+    await expect(page.locator('.status .groot')).toHaveText(/Beste dag tot nu: vr 9 okt/);
+    await expect(page.locator('.status .sub')).toHaveText('2 van 3 kunnen');
+
+    // Ilyas ook -> 3 van 3 -> GROEN
     await request.put(`/api/polls/${id}/participants/${i.participantId}/votes`, { data: { optionIds: [o9] } });
     await expect(page.locator('.status .balk')).toHaveClass(/groen/, { timeout: 13_000 });
     await expect(page.locator('.status .groot')).toHaveText(/Iedereen kan op vr 9 okt/);
@@ -669,7 +695,7 @@ test.describe("Scenario's", () => {
   });
 
   test('S11 taal wisselen met het vlaggetje', async ({ browser, request }, testInfo) => {
-    const { id } = await apiMaakPoll(request, {
+    const { id } = await apiMaakPollMetTwee(request, {
       title: 'Etentje', name: 'Ali', options: [{ date: D1, time: T1 }],
     });
     const ctx = await browser.newContext(ctxOpties(testInfo));
@@ -715,7 +741,7 @@ test.describe("Scenario's", () => {
   });
 
   test('S17 Arabisch: rechts-naar-links, weekstart zaterdag, één letter per weekdag', async ({ browser, request }, testInfo) => {
-    const { id } = await apiMaakPoll(request, {
+    const { id } = await apiMaakPollMetTwee(request, {
       title: 'عشاء', name: 'علي', options: [{ date: D1, time: T1 }],
     });
     const ctx = await browser.newContext(ctxOpties(testInfo, { locale: 'ar-EG' }));
@@ -736,7 +762,7 @@ test.describe("Scenario's", () => {
   });
 
   test('S18 en-US: week begint op zondag, 12-uursklok, maand-dag volgorde', async ({ browser, request }, testInfo) => {
-    const { id } = await apiMaakPoll(request, {
+    const { id } = await apiMaakPollMetTwee(request, {
       title: 'Dinner', name: 'Ali', options: [{ date: D1, time: T1 }],
     });
     const ctx = await browser.newContext(ctxOpties(testInfo, { locale: 'en-US' }));
@@ -898,7 +924,7 @@ test.describe("Scenario's", () => {
   });
 
   test('S25 Tamazight, Koerdisch en Shona: eigen datumnamen als de browser de taal niet kent', async ({ browser, request }, testInfo) => {
-    const { id } = await apiMaakPoll(request, { title: 'Imnsi', name: 'Kushim', options: [{ date: D1, time: T1 }] });
+    const { id } = await apiMaakPollMetTwee(request, { title: 'Imnsi', name: 'Kushim', options: [{ date: D1, time: T1 }] });
     const gevallen = [
       ['zgh', 'ⵎⴰⵏⴰⴳ ⴰⴷ ⵏⵎⵢⴰⴳⴰⵔ?', /ⴰⵙⵉⵎ 9 ⴽⵜⵓ ⴳ 18:00/, 'ⴰⵢⵏ', 'ⴽⵜⵓⴱⵔ 2026'],
       ['ku', 'Kengî em hev bibînin?', /9 cot, înî saet 18:00/, 'dşm', 'cotmeh 2026'],

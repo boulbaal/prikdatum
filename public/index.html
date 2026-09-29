@@ -52,10 +52,22 @@
     line-height: 1.5;
   }
   .col {
-    max-width: 560px;
+    max-width: 1180px;
     margin: 0 auto;
-    padding: 24px 16px 80px;
+    padding: 20px 24px 60px;
   }
+  @media (max-width: 600px) { .col { padding: 16px 16px 48px; } }
+  /* afspraak: links het overzicht, rechts de kalender (op brede schermen naast elkaar) */
+  .lay { display: grid; grid-template-columns: 1fr; gap: 8px 48px; align-items: start; }
+  @media (min-width: 900px) {
+    .lay { grid-template-columns: minmax(320px, 440px) minmax(0, 1fr); }
+    .lay > .kolom-rechts { position: sticky; top: 16px; }
+  }
+  .kolom-links, .kolom-rechts { min-width: 0; }
+  .kaart { background: #F6F8F9; border-radius: 14px; padding: 16px 18px; margin: 12px 0 0; }
+  /* startpagina: formulier links, eerdere afspraken rechts */
+  .start { display: grid; grid-template-columns: 1fr; gap: 8px 48px; }
+  @media (min-width: 900px) { .start { grid-template-columns: minmax(320px, 520px) minmax(0, 1fr); } .start .recent { margin-top: 16px; } }
   h1 {
     font-size: 26px;
     font-weight: 600;
@@ -174,9 +186,9 @@
   /* deelbalk */
   .deel {
     background: var(--lichtgroen);
-    border-radius: 8px;
-    padding: 12px;
-    margin: 16px 0 0;
+    border-radius: 14px;
+    padding: 14px 18px;
+    margin: 12px 0 0;
     font-size: 15px;
   }
   .deel .url { user-select: all; word-break: break-all; display: block; margin: 4px 0 10px; }
@@ -185,15 +197,25 @@
   .deel .knoppen button.delen { background: #fff; color: var(--groen); border: 1px solid var(--groen); }
 
   /* titel aanpassen */
-  .titelrij button.sec { font-size: 13px; color: var(--gedempt); padding: 4px 0; min-height: 44px; text-decoration: underline; font-weight: 400; }
-  .titeleditor { display: flex; gap: 8px; margin: 12px 0 4px; }
+  /* de afspraak zelf: een kaart met accent, want dit is waar het om gaat */
+  .titelrij {
+    display: flex; flex-direction: column; gap: 4px;
+    background: #fff; border: 1px solid var(--lijn); border-inline-start: 5px solid var(--groen);
+    border-radius: 16px; padding: 18px 22px 10px;
+    box-shadow: 0 8px 28px rgba(31, 41, 51, .07);
+    margin-top: 12px;
+  }
+  .titelrij h1 { margin: 0; font-size: 30px; line-height: 1.2; letter-spacing: -.01em; }
+  .titelacties { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  .titelacties button.sec, .titelacties .weg button { font-size: 13px; color: var(--gedempt); padding: 4px 0; min-height: 44px; text-decoration: underline; font-weight: 400; background: none; }
+  .titeleditor { display: flex; gap: 8px; margin: 8px 0 4px; flex: 1 1 100%; }
 
   /* statusblok */
   .status { margin: 12px 0 4px; }
   .status .balk {
     background: var(--lichtgroen);
-    border-radius: 8px;
-    padding: 14px;
+    border-radius: 14px;
+    padding: 16px 18px;
   }
   .status .balk .groot { font-size: 20px; font-weight: 600; color: var(--groen); }
   .status .balk.groen  { background: var(--lichtgroen); }
@@ -237,6 +259,23 @@
   .chip bdi { overflow-wrap: anywhere; }
   .chip.ik { border-color: var(--groen); background: var(--lichtgroen); font-weight: 600; }
   .chip.toevoegen { border-style: dashed; color: var(--groen); font-weight: 600; }
+  .chipwrap { position: relative; display: inline-flex; padding: 8px 8px 0 0; }
+  .chipwrap .chip { padding-inline-end: 18px; }
+  .chip-x {
+    position: absolute; top: -8px; inset-inline-end: -8px;
+    width: 44px; height: 44px; min-height: 44px; padding: 0;
+    background: none; border: none; color: var(--gedempt);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .chip-x span {
+    width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 1px solid var(--rand);
+    display: flex; align-items: center; justify-content: center; font-size: 15px; line-height: 1; font-weight: 400;
+  }
+  .chip-x:hover span, .chip-x:focus-visible span { border-color: var(--rood); color: var(--rood); }
+  .chipvraag { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; border: 1px solid var(--rood); border-radius: 22px; padding: 2px 6px 2px 12px; font-size: 14px; background: var(--lichtrood); }
+  .chipvraag button { background: none; padding: 8px 8px; font-size: 14px; min-height: 40px; }
+  .chipvraag button.ja { color: var(--rood); }
+  .chipvraag button.nee { color: var(--gedempt); font-weight: 400; }
   .nieuw { display: flex; gap: 8px; margin-top: 8px; }
 
   /* kalender */
@@ -245,8 +284,9 @@
   .kalkop { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
   .kalkop .mnd { font-weight: 600; }
   .kalkop button { background: none; color: var(--groen); font-size: 22px; padding: 4px 16px; }
-  .maanden { display: flex; flex-wrap: wrap; gap: 20px; }
-  .maandblok { flex: 1 1 240px; min-width: 0; }
+  .maanden { display: flex; flex-wrap: wrap; gap: 24px; }
+  .maandblok { flex: 1 1 260px; min-width: 0; }
+  @media (min-width: 900px) { .kalgrid { gap: 6px; } .dag { min-height: 56px; } }
   .maandnaam { font-weight: 600; text-align: center; margin-bottom: 4px; }
   .kalgrid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
   .kalwd { font-size: 12px; color: var(--gedempt); text-align: center; padding: 2px 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -281,7 +321,7 @@
   .taplijn .wanneer { color: var(--tekst); font-weight: 600; }
 
   /* weggaan */
-  .weg { margin-top: 40px; font-size: 13px; }
+  .weg { font-size: 13px; }
   .weg button {
     background: none;
     color: var(--gedempt);
@@ -292,7 +332,7 @@
   }
   .weg .bevestig button { margin-inline-end: 8px; text-decoration: none; }
   .weg .bevestig button.ja { color: var(--rood); }
-  .weg.alles { margin-top: 8px; }
+  .weg.alles { margin-top: 0; }
 
   .bezoek {
     margin-top: 10px;
@@ -493,6 +533,7 @@ en: {
   'poll.leaveYes': 'Yes, remove {name}',
   'poll.leaveNo': 'Never mind',
   'status.none': 'No date yet. Click your days.',
+  'status.alone': 'No day yet that two or more people can make. Share the link!',
   'status.almost': 'Best day so far: {date}',
   'status.everyone': 'Everyone can make {date}',
   'status.count': { one: '{n} of {total} can make it', other: '{n} of {total} can make it' },
@@ -579,6 +620,7 @@ nl: {
   'poll.leaveYes': 'Ja, haal {name} weg',
   'poll.leaveNo': 'Toch niet',
   'status.none': 'Nog geen datum. Klik je dagen aan.',
+  'status.alone': 'Nog geen dag waarop twee of meer mensen kunnen. Deel de link!',
   'status.almost': 'Beste dag tot nu: {date}',
   'status.everyone': 'Iedereen kan op {date}',
   'status.count': { one: '{n} van {total} kan', other: '{n} van {total} kunnen' },
@@ -665,6 +707,7 @@ fr: {
   'poll.leaveYes': 'Oui, retirer {name}',
   'poll.leaveNo': 'Finalement non',
   'status.none': 'Pas encore de date. Coche tes jours.',
+  'status.alone': 'Pas encore de jour où deux personnes ou plus peuvent. Partage le lien !',
   'status.almost': "Meilleur jour jusqu'ici : {date}",
   'status.everyone': 'Tout le monde peut le {date}',
   'status.count': { one: '{n} sur {total} peut', other: '{n} sur {total} peuvent' },
@@ -751,6 +794,7 @@ de: {
   'poll.leaveYes': 'Ja, {name} entfernen',
   'poll.leaveNo': 'Doch nicht',
   'status.none': 'Noch kein Termin. Klicke deine Tage an.',
+  'status.alone': 'Noch kein Tag, an dem zwei oder mehr Personen können. Teile den Link!',
   'status.almost': 'Bester Tag bisher: {date}',
   'status.everyone': 'Alle können am {date}',
   'status.count': { one: '{n} von {total} kann', other: '{n} von {total} können' },
@@ -837,6 +881,7 @@ es: {
   'poll.leaveYes': 'Sí, quitar a {name}',
   'poll.leaveNo': 'Mejor no',
   'status.none': 'Aún no hay fecha. Marca tus días.',
+  'status.alone': 'Aún no hay un día en que puedan dos o más personas. ¡Comparte el enlace!',
   'status.almost': 'Mejor día hasta ahora: {date}',
   'status.everyone': 'Todos pueden el {date}',
   'status.count': { one: '{n} de {total} puede', other: '{n} de {total} pueden' },
@@ -923,6 +968,7 @@ pt: {
   'poll.leaveYes': 'Sim, remover {name}',
   'poll.leaveNo': 'Afinal não',
   'status.none': 'Ainda sem data. Marca os teus dias.',
+  'status.alone': 'Ainda não há um dia em que duas ou mais pessoas possam. Partilha o link!',
   'status.almost': 'Melhor dia até agora: {date}',
   'status.everyone': 'Toda a gente pode em {date}',
   'status.count': { one: '{n} de {total} pode', other: '{n} de {total} podem' },
@@ -1009,6 +1055,7 @@ pl: {
   'poll.leaveYes': 'Tak, usuń {name}',
   'poll.leaveNo': 'Jednak nie',
   'status.none': 'Nie ma jeszcze daty. Zaznacz swoje dni.',
+  'status.alone': 'Nie ma jeszcze dnia, w który mogą dwie lub więcej osób. Udostępnij link!',
   'status.almost': 'Najlepszy dzień do tej pory: {date}',
   'status.everyone': 'Wszyscy mogą {date}',
   'status.count': { one: '{n} z {total} może', few: '{n} z {total} mogą', many: '{n} z {total} może', other: '{n} z {total} może' },
@@ -1095,6 +1142,7 @@ uk: {
   'poll.leaveYes': 'Так, видалити {name}',
   'poll.leaveNo': 'Не треба',
   'status.none': 'Дати ще немає. Відмітьте свої дні.',
+  'status.alone': 'Ще немає дня, коли можуть двоє або більше. Поділіться посиланням!',
   'status.almost': 'Найкращий день поки що: {date}',
   'status.everyone': 'Усі можуть {date}',
   'status.count': { one: '{n} з {total} може', few: '{n} з {total} можуть', many: '{n} з {total} можуть', other: '{n} з {total} можуть' },
@@ -1181,6 +1229,7 @@ ru: {
   'poll.leaveYes': 'Да, удалить {name}',
   'poll.leaveNo': 'Не надо',
   'status.none': 'Даты пока нет. Отметьте свои дни.',
+  'status.alone': 'Пока нет дня, когда могут двое или больше. Поделитесь ссылкой!',
   'status.almost': 'Лучший день пока: {date}',
   'status.everyone': 'Все могут {date}',
   'status.count': { one: '{n} из {total} может', few: '{n} из {total} могут', many: '{n} из {total} могут', other: '{n} из {total} могут' },
@@ -1267,6 +1316,7 @@ tr: {
   'poll.leaveYes': 'Evet, {name} adını kaldır',
   'poll.leaveNo': 'Vazgeç',
   'status.none': 'Henüz tarih yok. Günlerini işaretle.',
+  'status.alone': 'Henüz iki veya daha fazla kişinin uygun olduğu bir gün yok. Bağlantıyı paylaş!',
   'status.almost': 'Şimdilik en iyi gün: {date}',
   'status.everyone': 'Herkes {date} uygun',
   'status.count': { one: '{total} kişiden {n} uygun', other: '{total} kişiden {n} uygun' },
@@ -1353,6 +1403,7 @@ ar: {
   'poll.leaveYes': 'نعم، أزل {name}',
   'poll.leaveNo': 'تراجع',
   'status.none': 'لا يوجد موعد بعد. حدد أيامك.',
+  'status.alone': 'لا يوجد بعد يوم يناسب شخصين أو أكثر. شارك الرابط!',
   'status.almost': 'أفضل يوم حتى الآن: {date}',
   'status.everyone': 'الجميع متاحون يوم {date}',
   'status.count': { zero: '{n} من {total} متاحون', one: '{n} من {total} متاح', two: '{n} من {total} متاحان', few: '{n} من {total} متاحون', many: '{n} من {total} متاحون', other: '{n} من {total} متاحون' },
@@ -1439,6 +1490,7 @@ ur: {
   'poll.leaveYes': 'ہاں، {name} کو ہٹائیں',
   'poll.leaveNo': 'رہنے دیں',
   'status.none': 'ابھی کوئی تاریخ نہیں۔ اپنے دن چنیں۔',
+  'status.alone': 'ابھی کوئی ایسا دن نہیں جس میں دو یا زیادہ لوگ آ سکیں۔ لنک شیئر کریں!',
   'status.almost': 'اب تک کا بہترین دن: {date}',
   'status.everyone': 'سب {date} کو آ سکتے ہیں',
   'status.count': { one: '{total} میں سے {n} آ سکتا ہے', other: '{total} میں سے {n} آ سکتے ہیں' },
@@ -1525,6 +1577,7 @@ hi: {
   'poll.leaveYes': 'हाँ, {name} को हटाएँ',
   'poll.leaveNo': 'रहने दें',
   'status.none': 'अभी कोई तारीख़ नहीं। अपने दिन चुनें।',
+  'status.alone': 'अभी ऐसा कोई दिन नहीं जब दो या अधिक लोग आ सकें। लिंक शेयर करें!',
   'status.almost': 'अब तक का सबसे अच्छा दिन: {date}',
   'status.everyone': 'सभी {date} आ सकते हैं',
   'status.count': { one: '{total} में से {n} आ सकता है', other: '{total} में से {n} आ सकते हैं' },
@@ -1611,6 +1664,7 @@ bn: {
   'poll.leaveYes': 'হ্যাঁ, {name}-কে সরান',
   'poll.leaveNo': 'থাক',
   'status.none': 'এখনো কোনো তারিখ নেই। আপনার দিন বেছে নিন।',
+  'status.alone': 'এখনো এমন কোনো দিন নেই যেদিন দুজন বা বেশি পারবেন। লিংক শেয়ার করুন!',
   'status.almost': 'এখন পর্যন্ত সেরা দিন: {date}',
   'status.everyone': 'সবাই {date} পারবেন',
   'status.count': { one: '{total} জনের মধ্যে {n} জন পারবেন', other: '{total} জনের মধ্যে {n} জন পারবেন' },
@@ -1697,6 +1751,7 @@ id: {
   'poll.leaveYes': 'Ya, hapus {name}',
   'poll.leaveNo': 'Batal',
   'status.none': 'Belum ada tanggal. Klik hari kamu.',
+  'status.alone': 'Belum ada hari yang cocok untuk dua orang atau lebih. Bagikan tautannya!',
   'status.almost': 'Hari terbaik sejauh ini: {date}',
   'status.everyone': 'Semua bisa pada {date}',
   'status.count': { other: '{n} dari {total} bisa' },
@@ -1783,6 +1838,7 @@ vi: {
   'poll.leaveYes': 'Có, xóa {name}',
   'poll.leaveNo': 'Thôi',
   'status.none': 'Chưa có ngày nào. Hãy chọn ngày của bạn.',
+  'status.alone': 'Chưa có ngày nào mà hai người trở lên rảnh. Hãy chia sẻ liên kết!',
   'status.almost': 'Ngày tốt nhất đến giờ: {date}',
   'status.everyone': 'Mọi người đều rảnh {date}',
   'status.count': { other: '{n}/{total} người rảnh' },
@@ -1869,6 +1925,7 @@ zh: {
   'poll.leaveYes': '是，移除 {name}',
   'poll.leaveNo': '算了',
   'status.none': '还没有日期。点选你的日子。',
+  'status.alone': '还没有两人以上都可以的日子。分享链接吧！',
   'status.almost': '目前最佳日期：{date}',
   'status.everyone': '{date} 所有人都可以',
   'status.count': { other: '{total} 人中有 {n} 人可以' },
@@ -1955,6 +2012,7 @@ ja: {
   'poll.leaveYes': 'はい、{name} を削除',
   'poll.leaveNo': 'やめる',
   'status.none': 'まだ日程がありません。都合のよい日をタップ。',
+  'status.alone': 'まだ2人以上が参加できる日はありません。リンクを共有しよう！',
   'status.almost': '今のところ最有力：{date}',
   'status.everyone': '{date} は全員OK',
   'status.count': { other: '{total}人中{n}人OK' },
@@ -2041,6 +2099,7 @@ ko: {
   'poll.leaveYes': '네, {name} 삭제',
   'poll.leaveNo': '취소',
   'status.none': '아직 날짜가 없어요. 가능한 날을 누르세요.',
+  'status.alone': '아직 두 명 이상 가능한 날이 없어요. 링크를 공유하세요!',
   'status.almost': '지금까지 가장 좋은 날: {date}',
   'status.everyone': '{date}에 모두 가능',
   'status.count': { other: '{total}명 중 {n}명 가능' },
@@ -2127,6 +2186,7 @@ sw: {
   'poll.leaveYes': 'Ndiyo, ondoa {name}',
   'poll.leaveNo': 'Acha',
   'status.none': 'Bado hakuna tarehe. Bofya siku zako.',
+  'status.alone': 'Bado hakuna siku ambayo watu wawili au zaidi wanaweza. Shiriki kiungo!',
   'status.almost': 'Siku bora hadi sasa: {date}',
   'status.everyone': 'Kila mtu anaweza {date}',
   'status.count': { one: '{n} kati ya {total} anaweza', other: '{n} kati ya {total} wanaweza' },
@@ -2213,6 +2273,7 @@ zgh: {
   'poll.leaveYes': 'ⵢⴰⵀ, ⴽⴽⵙ {name}',
   'poll.leaveNo': 'ⵓⵀⵓ, ⴰⵊⵊ ⵜ',
   'status.none': 'ⵓⵔ ⵜⴰ ⵉⵍⵍⵉ ⵓⵙⵙ. ⵙⵉⵜ ⵅⴼ ⵓⵙⵙⴰⵏ ⵏⵏⴽ.',
+  'status.alone': 'ⵓⵔ ⵜⴰ ⵉⵍⵍⵉ ⵡⴰⵙⵙ ⵏⵏⴰ ⵣⵎⵔⵏ ⵙⵉⵏ ⵏⵖ ⵓⴳⴳⴰⵔ. ⴱⴹⵓ ⴰⵙⵖⵏ!',
   'status.almost': 'ⴰⵙⵙ ⵉⴼⵓⵍⴽⵉⵏ ⴰⵔ ⵖⵉⵍⴰ: {date}',
   'status.everyone': 'ⴽⵓ ⵢⴰⵏ ⵉⵣⵎⵔ ⴰⵙⵙ ⵏ {date}',
   'status.count': { one: '{n} ⵙⴳ {total} ⵉⵣⵎⵔ', other: '{n} ⵙⴳ {total} ⵣⵎⵔⵏ' },
@@ -2299,6 +2360,7 @@ ku: {
   'poll.leaveYes': 'Erê, {name} derxe',
   'poll.leaveNo': 'Na, bila bimîne',
   'status.none': 'Hîn roj tune. Rojên xwe nîşan bike.',
+  'status.alone': 'Hîn rojek tune ku du kes an zêdetir dikarin. Lînkê parve bike!',
   'status.almost': 'Roja herî baş heta niha: {date}',
   'status.everyone': 'Her kes dikare {date}',
   'status.count': { one: '{n} ji {total} dikare', other: '{n} ji {total} dikarin' },
@@ -2385,6 +2447,7 @@ sn: {
   'poll.leaveYes': 'Hongu, bvisa {name}',
   'poll.leaveNo': 'Regai zvakadaro',
   'status.none': 'Hapana zuva parizvino. Dzvanya mazuva ako.',
+  'status.alone': 'Hapana zuva parizvino rinokwanisa vanhu vaviri kana kupfuura. Govera link!',
   'status.almost': 'Zuva rakanakisa parizvino: {date}',
   'status.everyone': 'Vese vanokwanisa {date}',
   'status.count': { one: '{n} pa {total} anokwanisa', other: '{n} pa {total} vanokwanisa' },
@@ -2587,6 +2650,7 @@ const state = {
   kalGezet: false,      // startmaand al gekozen (eerste toekomstige dag of definitieve dag)
   titelEdit: false,
   nieuwOpen: false,
+  wegVraag: null,      // deelnemer-id waarvoor "weghalen?" openstaat
   tapDag: null,
 };
 state.locale = bepaalLocale(state.lang);
@@ -2865,7 +2929,11 @@ function schermMaken() {
     maakBtn.textContent = t('make.submit');
   };
 
-  scherm.append(titelKop, tagline, watLabel, titelIn, naamLabel, naamIn, el('div'), maakBtn, foutRegel);
+  const start = el('div', 'start');
+  const formKolom = el('div');
+  formKolom.append(titelKop, tagline, watLabel, titelIn, naamLabel, naamIn, el('div'), maakBtn, foutRegel);
+  start.append(formKolom);
+  scherm.append(start);
 
   // net een afspraak verwijderd: dat even bevestigen
   let verwijderdMelding = null;
@@ -2873,7 +2941,7 @@ function schermMaken() {
     if (sessionStorage.getItem(LS.deleted)) {
       sessionStorage.removeItem(LS.deleted);
       verwijderdMelding = el('p', 'deel'); verwijderdMelding.setAttribute('role', 'status');
-      scherm.append(verwijderdMelding);
+      formKolom.prepend(verwijderdMelding);
     }
   } catch {}
 
@@ -2891,7 +2959,7 @@ function schermMaken() {
       li.append(a); ul.append(li);
     }
     doos.append(recentKop, recentHint, ul);
-    scherm.append(doos);
+    start.append(doos);
   }
   const hertaalBasis = hertaal;
   hertaal = () => {
@@ -2945,7 +3013,8 @@ function schermAfspraak(pollId) {
   const titelIn = el('input'); titelIn.type = 'text'; titelIn.maxLength = 80; titelIn.autocomplete = 'off'; titelIn.dir = 'auto';
   const titelOk = el('button', 'klein'); titelOk.type = 'button';
   titelEditor.append(titelIn, titelOk);
-  titelRij.append(titelKop, titelEditBtn, titelEditor);
+  const titelActies = el('div', 'titelacties');
+  titelRij.append(titelKop, titelActies, titelEditor);
 
   const statusBlok = el('div', 'status');
 
@@ -2983,14 +3052,6 @@ function schermAfspraak(pollId) {
   const tapLijn = el('p', 'taplijn');
   const lijstFout = el('p', 'fout verborgen');
 
-  const wegZone = el('div', 'weg');
-  const wegBtn = el('button'); wegBtn.type = 'button';
-  const wegBevestig = el('span', 'bevestig verborgen');
-  const wegJa = el('button', 'ja'); wegJa.type = 'button';
-  const wegNee = el('button'); wegNee.type = 'button';
-  wegBevestig.append(wegJa, wegNee);
-  wegZone.append(wegBtn, wegBevestig);
-
   // de hele afspraak verwijderen: jouw gegevens, jouw controle (met bevestiging)
   const alleZone = el('div', 'weg alles');
   const alleBtn = el('button'); alleBtn.type = 'button';
@@ -2999,6 +3060,7 @@ function schermAfspraak(pollId) {
   const alleNee = el('button'); alleNee.type = 'button';
   alleBevestig.append(alleJa, alleNee);
   alleZone.append(alleBtn, alleBevestig);
+  titelActies.append(titelEditBtn, alleZone);
 
   const bezoek = document.getElementById('bezoek');
   const weggehaaldLijn = el('p', 'weggehaald verborgen');
@@ -3027,7 +3089,13 @@ function schermAfspraak(pollId) {
   titelIn.setAttribute('aria-label', t('make.what'));
   nieuwIn.setAttribute('aria-label', t('cal.newName.ph'));
 
-  scherm.append(foutBalk, deel, titelRij, statusBlok, naamZone, chipsLabel, chips, nieuwRij, wieBar, weggehaaldLijn, kalHint, kal, legenda, tapLijn, lijstFout, wegZone, alleZone);
+  const lay = el('div', 'lay');
+  const links = el('div', 'kolom-links');
+  const rechts = el('div', 'kolom-rechts');
+  links.append(titelRij, deel, statusBlok, naamZone, chipsLabel, chips, nieuwRij, wieBar, weggehaaldLijn);
+  rechts.append(kalHint, kal, legenda, tapLijn, lijstFout);
+  lay.append(links, rechts);
+  scherm.append(foutBalk, lay);
 
   const nu = new Date();
   state.kalMaand = new Date(nu.getFullYear(), nu.getMonth(), 1);
@@ -3162,30 +3230,24 @@ function schermAfspraak(pollId) {
   });
   nieuwIn.addEventListener('keydown', (e) => { if (e.key === 'Enter') nieuwOk.click(); });
 
-  /* --- deelnemer weghalen (wie je nu bent) --- */
-  wegBtn.addEventListener('click', () => {
-    wegBtn.classList.add('verborgen');
-    wegBevestig.classList.remove('verborgen');
-  });
-  wegNee.addEventListener('click', () => {
-    wegBevestig.classList.add('verborgen');
-    wegBtn.classList.remove('verborgen');
-  });
-  wegJa.addEventListener('click', async () => {
-    const weg = state.me;
-    const r = await api('/polls/' + pollId + '/participants/' + weg, 'DELETE');
-    wegBevestig.classList.add('verborgen');
-    wegBtn.classList.remove('verborgen');
-    if (r.ok) {
-      if (weg === state.own) {
+  /* --- deelnemer weghalen (x op de naam): naam en alle vinkjes weg --- */
+  async function haalWeg(pid) {
+    const r = await api('/polls/' + pollId + '/participants/' + pid, 'DELETE');
+    state.wegVraag = null;
+    if (r.ok || r.status === 404) {
+      if (pid === state.own) {
         state.own = null;
         try { localStorage.removeItem(LS.p(pollId)); } catch {}
       }
-      zetActing(state.own);
+      if (pid === state.me) zetActing(state.own);
       state.lastJson = '';
       await haalOp(true);
+    } else {
+      lijstFout.textContent = foutTekst(r.data);
+      lijstFout.classList.remove('verborgen');
+      render();
     }
-  });
+  }
 
   /* --- hele afspraak verwijderen --- */
   alleBtn.addEventListener('click', () => {
@@ -3344,6 +3406,49 @@ function schermAfspraak(pollId) {
     return tijd;
   }
 
+  /* --- confetti: een klein feestje als iedereen kan, met meer dan twee leden (1x per afspraak per sessie) --- */
+  function confetti() {
+    try {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const c = document.createElement('canvas');
+      c.setAttribute('aria-hidden', 'true');
+      c.style.cssText = 'position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50;';
+      document.body.append(c);
+      const ctx = c.getContext('2d');
+      const dpr = window.devicePixelRatio || 1;
+      c.width = innerWidth * dpr; c.height = innerHeight * dpr; ctx.scale(dpr, dpr);
+      const kleuren = ['#26784C', '#0072B2', '#E69F00', '#CC79A7', '#56B4E9', '#D55E00'];
+      const stukjes = Array.from({ length: 90 }, () => ({
+        x: innerWidth / 2 + (Math.random() - 0.5) * innerWidth * 0.5, y: -10 - Math.random() * 60,
+        vx: (Math.random() - 0.5) * 3, vy: 1.5 + Math.random() * 2.5, r: 3 + Math.random() * 4,
+        k: kleuren[Math.floor(Math.random() * kleuren.length)], a: Math.random() * Math.PI, va: (Math.random() - 0.5) * 0.2,
+      }));
+      const start = performance.now();
+      const stap = (nu) => {
+        const tt = (nu - start) / 1000;
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+        for (const p of stukjes) {
+          p.x += p.vx; p.y += p.vy; p.vy += 0.03; p.a += p.va;
+          ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.a);
+          ctx.globalAlpha = Math.max(0, 1 - tt / 2.6);
+          ctx.fillStyle = p.k; ctx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r);
+          ctx.restore();
+        }
+        if (tt < 2.8) requestAnimationFrame(stap); else c.remove();
+      };
+      requestAnimationFrame(stap);
+    } catch {}
+  }
+  function misschienConfetti(iedereenKan, n) {
+    if (!iedereenKan || n < 3) return;
+    const sleutel = 'prikdatum.feest.' + pollId;
+    try {
+      if (sessionStorage.getItem(sleutel)) return;
+      sessionStorage.setItem(sleutel, '1');
+    } catch {}
+    confetti();
+  }
+
   /* --- statusblok --- */
   function bouwStatus() {
     const actief = document.activeElement;
@@ -3378,9 +3483,15 @@ function schermAfspraak(pollId) {
         const balk = el('div', 'balk rood');
         balk.append(el('div', 'groot', t('status.none')));
         blok.append(balk);
+      } else if (max < 2) {
+        // stoplicht ROOD: wel dagen, maar nergens twee of meer mensen
+        const balk = el('div', 'balk rood');
+        balk.append(el('div', 'groot', t('status.alone')));
+        blok.append(balk);
       } else {
         // stoplicht: GROEN als iedereen kan, anders ORANJE
         const iedereen = max === n; // n >= 1 hier gegarandeerd
+        misschienConfetti(iedereen, n);
         const top = d.options.filter((o) => o.votes.length === max);
         const balk = el('div', 'balk ' + (iedereen ? 'groen' : 'oranje'));
         if (top.length === 1) {
@@ -3578,6 +3689,18 @@ function schermAfspraak(pollId) {
     chipsLabel.textContent = state.me ? t('members.title') : t('pick.who');
     chips.textContent = '';
     for (const p of d.participants) {
+      if (state.wegVraag === p.id) {
+        // inline bevestiging in plaats van de chip
+        const vraag = el('span', 'chipvraag');
+        const ja = el('button', 'ja', t('poll.leaveYes', { name: p.name })); ja.type = 'button';
+        const nee = el('button', 'nee', t('poll.leaveNo')); nee.type = 'button';
+        ja.addEventListener('click', () => haalWeg(p.id));
+        nee.addEventListener('click', () => { state.wegVraag = null; render(); });
+        vraag.append(ja, nee);
+        chips.append(vraag);
+        continue;
+      }
+      const wrap = el('span', 'chipwrap');
       const b = el('button', 'chip' + (p.id === state.me ? ' ik' : ''));
       b.type = 'button';
       b.dataset.pid = p.id;
@@ -3598,7 +3721,16 @@ function schermAfspraak(pollId) {
         state.lastJson = '';
         await haalOp(true);
       });
-      chips.append(b);
+      wrap.append(b);
+      if (state.me) {
+        const x = el('button', 'chip-x'); x.type = 'button';
+        x.append(el('span', null, '\u00D7'));
+        x.setAttribute('aria-label', t('poll.leave', { name: p.name }));
+        x.title = t('poll.leave', { name: p.name });
+        x.addEventListener('click', (e) => { e.stopPropagation(); state.wegVraag = p.id; render(); });
+        wrap.append(x);
+      }
+      chips.append(wrap);
     }
     // "+ Lid toevoegen" als laatste chip (voor iemand anders invullen)
     if (state.me) {
@@ -3633,11 +3765,6 @@ function schermAfspraak(pollId) {
     legenda.append(lg1, lg2);
 
     kalHint.textContent = state.me ? t('cal.hint') : t('poll.nameFirst');
-    const wegNaam = ik ? ik.name : '';
-    wegBtn.textContent = t('poll.leave', { name: wegNaam });
-    wegJa.textContent = t('poll.leaveYes', { name: wegNaam });
-    wegNee.textContent = t('poll.leaveNo');
-    wegZone.classList.toggle('verborgen', !state.me);
     alleBtn.textContent = t('poll.delete');
     alleJa.textContent = t('poll.deleteYes');
     alleNee.textContent = t('poll.leaveNo');
